@@ -1,0 +1,16 @@
+Fitter Status : Successful - Thu Apr 23 14:16:03 2026
+Quartus Prime Version : 23.1std.1 Build 993 05/14/2024 SC Lite Edition
+Revision Name : RushTunnelFPGA
+Top-level Entity Name : RushTunnelFPGA
+Family : Cyclone IV E
+Device : EP4CE22F17C6
+Timing Models : Final
+Total logic elements : 2,307 / 22,320 ( 10 % )
+    Total combinational functions : 2,304 / 22,320 ( 10 % )
+    Dedicated logic registers : 329 / 22,320 ( 1 % )
+Total registers : 329
+Total pins : 18 / 154 ( 12 % )
+Total virtual pins : 0
+Total memory bits : 0 / 608,256 ( 0 % )
+Embedded Multiplier 9-bit elements : 14 / 132 ( 11 % )
+Total PLLs : 0 / 4 ( 0 % )

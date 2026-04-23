@@ -1,0 +1,81 @@
+{
+	"partitions" : [
+		{
+			"name" : "Top",
+			"pins" : [
+				{
+					"name" : "RED[0]",
+					"strict" : false
+				},
+				{
+					"name" : "RED[1]",
+					"strict" : false
+				},
+				{
+					"name" : "RED[2]",
+					"strict" : false
+				},
+				{
+					"name" : "RED[3]",
+					"strict" : false
+				},
+				{
+					"name" : "GREEN[0]",
+					"strict" : false
+				},
+				{
+					"name" : "GREEN[1]",
+					"strict" : false
+				},
+				{
+					"name" : "GREEN[2]",
+					"strict" : false
+				},
+				{
+					"name" : "GREEN[3]",
+					"strict" : false
+				},
+				{
+					"name" : "BLUE[0]",
+					"strict" : false
+				},
+				{
+					"name" : "BLUE[1]",
+					"strict" : false
+				},
+				{
+					"name" : "BLUE[2]",
+					"strict" : false
+				},
+				{
+					"name" : "BLUE[3]",
+					"strict" : false
+				},
+				{
+					"name" : "SYNC[0]",
+					"strict" : false
+				},
+				{
+					"name" : "SYNC[1]",
+					"strict" : false
+				},
+				{
+					"name" : "GP_L_1",
+					"strict" : false
+				},
+				{
+					"name" : "GP_C_1",
+					"strict" : false
+				},
+				{
+					"name" : "CLK_50",
+					"strict" : false
+				},
+				{
+					"name" : "GP_D_1",
+					"strict" : false
+				}
+			]
+		}
+	]
+}

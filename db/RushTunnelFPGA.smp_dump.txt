@@ -1,0 +1,14 @@
+
+State Machine - |RushTunnelFPGA|game_fsm:u_fsm|state
+Name state.S_GAME_OVER state.S_PLAYING state.S_IDLE 
+state.S_IDLE 0 0 0 
+state.S_PLAYING 0 1 1 
+state.S_GAME_OVER 1 0 1 
+
+State Machine - |RushTunnelFPGA|snes_controller:u_snes|state
+Name state.S_DONE state.S_BIT_HIGH state.S_BIT_LOW state.S_LATCH state.S_WAIT 
+state.S_WAIT 0 0 0 0 0 
+state.S_LATCH 0 0 0 1 1 
+state.S_BIT_LOW 0 0 1 0 1 
+state.S_BIT_HIGH 0 1 0 0 1 
+state.S_DONE 1 0 0 0 1 

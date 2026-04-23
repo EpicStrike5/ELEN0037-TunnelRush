@@ -1,0 +1,1462 @@
+Analysis & Synthesis report for RushTunnelFPGA
+Thu Apr 23 14:15:49 2026
+Quartus Prime Version 23.1std.1 Build 993 05/14/2024 SC Lite Edition
+
+
+---------------------
+; Table of Contents ;
+---------------------
+  1. Legal Notice
+  2. Analysis & Synthesis Summary
+  3. Analysis & Synthesis Settings
+  4. Parallel Compilation
+  5. Analysis & Synthesis Source Files Read
+  6. Analysis & Synthesis Resource Usage Summary
+  7. Analysis & Synthesis Resource Utilization by Entity
+  8. Analysis & Synthesis DSP Block Usage Summary
+  9. State Machine - |RushTunnelFPGA|game_fsm:u_fsm|state
+ 10. State Machine - |RushTunnelFPGA|snes_controller:u_snes|state
+ 11. Registers Removed During Synthesis
+ 12. General Register Statistics
+ 13. Inverted Register Statistics
+ 14. Multiplexer Restructuring Statistics (Restructuring Performed)
+ 15. Parameter Settings for Inferred Entity Instance: tunnel_renderer:u_tunnel|colour_palette:u_pal|lpm_mult:Mult3
+ 16. Parameter Settings for Inferred Entity Instance: tunnel_renderer:u_tunnel|colour_palette:u_pal|lpm_mult:Mult4
+ 17. Parameter Settings for Inferred Entity Instance: tunnel_renderer:u_tunnel|colour_palette:u_pal|lpm_mult:Mult5
+ 18. Parameter Settings for Inferred Entity Instance: tunnel_renderer:u_tunnel|tunnel_core:u_core|lpm_mult:Mult1
+ 19. Parameter Settings for Inferred Entity Instance: tunnel_renderer:u_tunnel|tunnel_core:u_core|lpm_mult:Mult0
+ 20. Parameter Settings for Inferred Entity Instance: tunnel_renderer:u_tunnel|coord_transform:u_xfm|lpm_mult:Mult0
+ 21. Parameter Settings for Inferred Entity Instance: tunnel_renderer:u_tunnel|coord_transform:u_xfm|lpm_mult:Mult3
+ 22. Parameter Settings for Inferred Entity Instance: tunnel_renderer:u_tunnel|colour_palette:u_pal|lpm_mult:Mult1
+ 23. Parameter Settings for Inferred Entity Instance: tunnel_renderer:u_tunnel|coord_transform:u_xfm|lpm_mult:Mult1
+ 24. Parameter Settings for Inferred Entity Instance: tunnel_renderer:u_tunnel|coord_transform:u_xfm|lpm_mult:Mult2
+ 25. Parameter Settings for Inferred Entity Instance: tunnel_renderer:u_tunnel|colour_palette:u_pal|lpm_mult:Mult0
+ 26. Parameter Settings for Inferred Entity Instance: tunnel_renderer:u_tunnel|colour_palette:u_pal|lpm_mult:Mult2
+ 27. Parameter Settings for Inferred Entity Instance: lpm_mult:Mult1
+ 28. Parameter Settings for Inferred Entity Instance: lpm_mult:Mult0
+ 29. lpm_mult Parameter Settings by Entity Instance
+ 30. Port Connectivity Checks: "obstacle_manager:u_obs"
+ 31. Port Connectivity Checks: "tunnel_renderer:u_tunnel|tunnel_background:u_bg"
+ 32. Port Connectivity Checks: "stage_manager:u_stage"
+ 33. Port Connectivity Checks: "vga_controller:u_vga"
+ 34. Post-Synthesis Netlist Statistics for Top Partition
+ 35. Elapsed Time Per Partition
+ 36. Analysis & Synthesis Messages
+
+
+
+----------------
+; Legal Notice ;
+----------------
+Copyright (C) 2024  Intel Corporation. All rights reserved.
+Your use of Intel Corporation's design tools, logic functions 
+and other software and tools, and any partner logic 
+functions, and any output files from any of the foregoing 
+(including device programming or simulation files), and any 
+associated documentation or information are expressly subject 
+to the terms and conditions of the Intel Program License 
+Subscription Agreement, the Intel Quartus Prime License Agreement,
+the Intel FPGA IP License Agreement, or other applicable license
+agreement, including, without limitation, that your use is for
+the sole purpose of programming logic devices manufactured by
+Intel and sold by Intel or its authorized distributors.  Please
+refer to the applicable agreement for further details, at
+https://fpgasoftware.intel.com/eula.
+
+
+
++-------------------------------------------------------------------------------------+
+; Analysis & Synthesis Summary                                                        ;
++------------------------------------+------------------------------------------------+
+; Analysis & Synthesis Status        ; Successful - Thu Apr 23 14:15:49 2026          ;
+; Quartus Prime Version              ; 23.1std.1 Build 993 05/14/2024 SC Lite Edition ;
+; Revision Name                      ; RushTunnelFPGA                                 ;
+; Top-level Entity Name              ; RushTunnelFPGA                                 ;
+; Family                             ; Cyclone IV E                                   ;
+; Total logic elements               ; 2,314                                          ;
+;     Total combinational functions  ; 2,304                                          ;
+;     Dedicated logic registers      ; 329                                            ;
+; Total registers                    ; 329                                            ;
+; Total pins                         ; 18                                             ;
+; Total virtual pins                 ; 0                                              ;
+; Total memory bits                  ; 0                                              ;
+; Embedded Multiplier 9-bit elements ; 14                                             ;
+; Total PLLs                         ; 0                                              ;
++------------------------------------+------------------------------------------------+
+
+
++------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Settings                                                                              ;
++------------------------------------------------------------------+--------------------+--------------------+
+; Option                                                           ; Setting            ; Default Value      ;
++------------------------------------------------------------------+--------------------+--------------------+
+; Device                                                           ; EP4CE22F17C6       ;                    ;
+; Top-level entity name                                            ; RushTunnelFPGA     ; RushTunnelFPGA     ;
+; Family name                                                      ; Cyclone IV E       ; Cyclone V          ;
+; Use smart compilation                                            ; Off                ; Off                ;
+; Enable parallel Assembler and Timing Analyzer during compilation ; On                 ; On                 ;
+; Enable compact report table                                      ; Off                ; Off                ;
+; Restructure Multiplexers                                         ; Auto               ; Auto               ;
+; Create Debugging Nodes for IP Cores                              ; Off                ; Off                ;
+; Preserve fewer node names                                        ; On                 ; On                 ;
+; Intel FPGA IP Evaluation Mode                                    ; Enable             ; Enable             ;
+; Verilog Version                                                  ; Verilog_2001       ; Verilog_2001       ;
+; VHDL Version                                                     ; VHDL_1993          ; VHDL_1993          ;
+; State Machine Processing                                         ; Auto               ; Auto               ;
+; Safe State Machine                                               ; Off                ; Off                ;
+; Extract Verilog State Machines                                   ; On                 ; On                 ;
+; Extract VHDL State Machines                                      ; On                 ; On                 ;
+; Ignore Verilog initial constructs                                ; Off                ; Off                ;
+; Iteration limit for constant Verilog loops                       ; 5000               ; 5000               ;
+; Iteration limit for non-constant Verilog loops                   ; 250                ; 250                ;
+; Add Pass-Through Logic to Inferred RAMs                          ; On                 ; On                 ;
+; Infer RAMs from Raw Logic                                        ; On                 ; On                 ;
+; Parallel Synthesis                                               ; On                 ; On                 ;
+; DSP Block Balancing                                              ; Auto               ; Auto               ;
+; NOT Gate Push-Back                                               ; On                 ; On                 ;
+; Power-Up Don't Care                                              ; On                 ; On                 ;
+; Remove Redundant Logic Cells                                     ; Off                ; Off                ;
+; Remove Duplicate Registers                                       ; On                 ; On                 ;
+; Ignore CARRY Buffers                                             ; Off                ; Off                ;
+; Ignore CASCADE Buffers                                           ; Off                ; Off                ;
+; Ignore GLOBAL Buffers                                            ; Off                ; Off                ;
+; Ignore ROW GLOBAL Buffers                                        ; Off                ; Off                ;
+; Ignore LCELL Buffers                                             ; Off                ; Off                ;
+; Ignore SOFT Buffers                                              ; On                 ; On                 ;
+; Limit AHDL Integers to 32 Bits                                   ; Off                ; Off                ;
+; Optimization Technique                                           ; Balanced           ; Balanced           ;
+; Carry Chain Length                                               ; 70                 ; 70                 ;
+; Auto Carry Chains                                                ; On                 ; On                 ;
+; Auto Open-Drain Pins                                             ; On                 ; On                 ;
+; Perform WYSIWYG Primitive Resynthesis                            ; Off                ; Off                ;
+; Auto ROM Replacement                                             ; On                 ; On                 ;
+; Auto RAM Replacement                                             ; On                 ; On                 ;
+; Auto DSP Block Replacement                                       ; On                 ; On                 ;
+; Auto Shift Register Replacement                                  ; Auto               ; Auto               ;
+; Allow Shift Register Merging across Hierarchies                  ; Auto               ; Auto               ;
+; Auto Clock Enable Replacement                                    ; On                 ; On                 ;
+; Strict RAM Replacement                                           ; Off                ; Off                ;
+; Allow Synchronous Control Signals                                ; On                 ; On                 ;
+; Force Use of Synchronous Clear Signals                           ; Off                ; Off                ;
+; Auto RAM Block Balancing                                         ; On                 ; On                 ;
+; Auto RAM to Logic Cell Conversion                                ; Off                ; Off                ;
+; Auto Resource Sharing                                            ; Off                ; Off                ;
+; Allow Any RAM Size For Recognition                               ; Off                ; Off                ;
+; Allow Any ROM Size For Recognition                               ; Off                ; Off                ;
+; Allow Any Shift Register Size For Recognition                    ; Off                ; Off                ;
+; Use LogicLock Constraints during Resource Balancing              ; On                 ; On                 ;
+; Ignore translate_off and synthesis_off directives                ; Off                ; Off                ;
+; Timing-Driven Synthesis                                          ; On                 ; On                 ;
+; Report Parameter Settings                                        ; On                 ; On                 ;
+; Report Source Assignments                                        ; On                 ; On                 ;
+; Report Connectivity Checks                                       ; On                 ; On                 ;
+; Ignore Maximum Fan-Out Assignments                               ; Off                ; Off                ;
+; Synchronization Register Chain Length                            ; 2                  ; 2                  ;
+; Power Optimization During Synthesis                              ; Normal compilation ; Normal compilation ;
+; HDL message level                                                ; Level2             ; Level2             ;
+; Suppress Register Optimization Related Messages                  ; Off                ; Off                ;
+; Number of Removed Registers Reported in Synthesis Report         ; 5000               ; 5000               ;
+; Number of Swept Nodes Reported in Synthesis Report               ; 5000               ; 5000               ;
+; Number of Inverted Registers Reported in Synthesis Report        ; 100                ; 100                ;
+; Clock MUX Protection                                             ; On                 ; On                 ;
+; Auto Gated Clock Conversion                                      ; Off                ; Off                ;
+; Block Design Naming                                              ; Auto               ; Auto               ;
+; SDC constraint protection                                        ; Off                ; Off                ;
+; Synthesis Effort                                                 ; Auto               ; Auto               ;
+; Shift Register Replacement - Allow Asynchronous Clear Signal     ; On                 ; On                 ;
+; Pre-Mapping Resynthesis Optimization                             ; Off                ; Off                ;
+; Analysis & Synthesis Message Level                               ; Medium             ; Medium             ;
+; Disable Register Merging Across Hierarchies                      ; Auto               ; Auto               ;
+; Resource Aware Inference For Block RAM                           ; On                 ; On                 ;
++------------------------------------------------------------------+--------------------+--------------------+
+
+
++------------------------------------------+
+; Parallel Compilation                     ;
++----------------------------+-------------+
+; Processors                 ; Number      ;
++----------------------------+-------------+
+; Number detected on machine ; 12          ;
+; Maximum allowed            ; 6           ;
+;                            ;             ;
+; Average used               ; 1.00        ;
+; Maximum used               ; 6           ;
+;                            ;             ;
+; Usage by Processor         ; % Time Used ;
+;     Processor 1            ; 100.0%      ;
+;     Processor 2            ;   0.0%      ;
+;     Processor 3            ;   0.0%      ;
+;     Processor 4            ;   0.0%      ;
+;     Processor 5            ;   0.0%      ;
+;     Processor 6            ;   0.0%      ;
++----------------------------+-------------+
+
+
++---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Source Files Read                                                                                                                                          ;
++----------------------------------+-----------------+------------------------------+-----------------------------------------------------------------------------------+---------+
+; File Name with User-Entered Path ; Used in Netlist ; File Type                    ; File Name with Absolute Path                                                      ; Library ;
++----------------------------------+-----------------+------------------------------+-----------------------------------------------------------------------------------+---------+
+; RushTunnelFPGA.vhd               ; yes             ; User VHDL File               ; C:/Users/Thomas/Documents/Uliege/ICDesign/Project/RushTunnelFPGA.vhd              ;         ;
+; vga_controller.vhd               ; yes             ; User VHDL File               ; C:/Users/Thomas/Documents/Uliege/ICDesign/Project/vga_controller.vhd              ;         ;
+; tunnel_renderer.vhd              ; yes             ; User VHDL File               ; C:/Users/Thomas/Documents/Uliege/ICDesign/Project/tunnel_renderer.vhd             ;         ;
+; snes_controller.vhd              ; yes             ; User VHDL File               ; C:/Users/Thomas/Documents/Uliege/ICDesign/Project/snes_controller.vhd             ;         ;
+; game_fsm.vhd                     ; yes             ; User VHDL File               ; C:/Users/Thomas/Documents/Uliege/ICDesign/Project/game_fsm.vhd                    ;         ;
+; obstacle_manager.vhd             ; yes             ; User VHDL File               ; C:/Users/Thomas/Documents/Uliege/ICDesign/Project/obstacle_manager.vhd            ;         ;
+; trig_rom.vhd                     ; yes             ; User VHDL File               ; C:/Users/Thomas/Documents/Uliege/ICDesign/Project/trig_rom.vhd                    ;         ;
+; tunnel_core.vhd                  ; yes             ; User VHDL File               ; C:/Users/Thomas/Documents/Uliege/ICDesign/Project/tunnel_core.vhd                 ;         ;
+; tunnel_background.vhd            ; yes             ; User VHDL File               ; C:/Users/Thomas/Documents/Uliege/ICDesign/Project/tunnel_background.vhd           ;         ;
+; colour_palette.vhd               ; yes             ; User VHDL File               ; C:/Users/Thomas/Documents/Uliege/ICDesign/Project/colour_palette.vhd              ;         ;
+; coord_transform.vhd              ; yes             ; User VHDL File               ; C:/Users/Thomas/Documents/Uliege/ICDesign/Project/coord_transform.vhd             ;         ;
+; stage_manager.vhd                ; yes             ; User VHDL File               ; C:/Users/Thomas/Documents/Uliege/ICDesign/Project/stage_manager.vhd               ;         ;
+; lpm_mult.tdf                     ; yes             ; Megafunction                 ; c:/intelfpga_lite/23.1std/quartus/libraries/megafunctions/lpm_mult.tdf            ;         ;
+; aglobal231.inc                   ; yes             ; Megafunction                 ; c:/intelfpga_lite/23.1std/quartus/libraries/megafunctions/aglobal231.inc          ;         ;
+; lpm_add_sub.inc                  ; yes             ; Megafunction                 ; c:/intelfpga_lite/23.1std/quartus/libraries/megafunctions/lpm_add_sub.inc         ;         ;
+; multcore.inc                     ; yes             ; Megafunction                 ; c:/intelfpga_lite/23.1std/quartus/libraries/megafunctions/multcore.inc            ;         ;
+; bypassff.inc                     ; yes             ; Megafunction                 ; c:/intelfpga_lite/23.1std/quartus/libraries/megafunctions/bypassff.inc            ;         ;
+; altshift.inc                     ; yes             ; Megafunction                 ; c:/intelfpga_lite/23.1std/quartus/libraries/megafunctions/altshift.inc            ;         ;
+; db/mult_j8t.tdf                  ; yes             ; Auto-Generated Megafunction  ; C:/Users/Thomas/Documents/Uliege/ICDesign/Project/db/mult_j8t.tdf                 ;         ;
+; db/mult_oct.tdf                  ; yes             ; Auto-Generated Megafunction  ; C:/Users/Thomas/Documents/Uliege/ICDesign/Project/db/mult_oct.tdf                 ;         ;
+; db/mult_e4t.tdf                  ; yes             ; Auto-Generated Megafunction  ; C:/Users/Thomas/Documents/Uliege/ICDesign/Project/db/mult_e4t.tdf                 ;         ;
+; db/mult_r2t.tdf                  ; yes             ; Auto-Generated Megafunction  ; C:/Users/Thomas/Documents/Uliege/ICDesign/Project/db/mult_r2t.tdf                 ;         ;
+; multcore.tdf                     ; yes             ; Megafunction                 ; c:/intelfpga_lite/23.1std/quartus/libraries/megafunctions/multcore.tdf            ;         ;
+; csa_add.inc                      ; yes             ; Megafunction                 ; c:/intelfpga_lite/23.1std/quartus/libraries/megafunctions/csa_add.inc             ;         ;
+; mpar_add.inc                     ; yes             ; Megafunction                 ; c:/intelfpga_lite/23.1std/quartus/libraries/megafunctions/mpar_add.inc            ;         ;
+; muleabz.inc                      ; yes             ; Megafunction                 ; c:/intelfpga_lite/23.1std/quartus/libraries/megafunctions/muleabz.inc             ;         ;
+; mul_lfrg.inc                     ; yes             ; Megafunction                 ; c:/intelfpga_lite/23.1std/quartus/libraries/megafunctions/mul_lfrg.inc            ;         ;
+; mul_boothc.inc                   ; yes             ; Megafunction                 ; c:/intelfpga_lite/23.1std/quartus/libraries/megafunctions/mul_boothc.inc          ;         ;
+; alt_ded_mult.inc                 ; yes             ; Megafunction                 ; c:/intelfpga_lite/23.1std/quartus/libraries/megafunctions/alt_ded_mult.inc        ;         ;
+; alt_ded_mult_y.inc               ; yes             ; Megafunction                 ; c:/intelfpga_lite/23.1std/quartus/libraries/megafunctions/alt_ded_mult_y.inc      ;         ;
+; dffpipe.inc                      ; yes             ; Megafunction                 ; c:/intelfpga_lite/23.1std/quartus/libraries/megafunctions/dffpipe.inc             ;         ;
+; mul_lfrg.tdf                     ; yes             ; Megafunction                 ; c:/intelfpga_lite/23.1std/quartus/libraries/megafunctions/mul_lfrg.tdf            ;         ;
+; mpar_add.tdf                     ; yes             ; Megafunction                 ; c:/intelfpga_lite/23.1std/quartus/libraries/megafunctions/mpar_add.tdf            ;         ;
+; lpm_add_sub.tdf                  ; yes             ; Megafunction                 ; c:/intelfpga_lite/23.1std/quartus/libraries/megafunctions/lpm_add_sub.tdf         ;         ;
+; addcore.inc                      ; yes             ; Megafunction                 ; c:/intelfpga_lite/23.1std/quartus/libraries/megafunctions/addcore.inc             ;         ;
+; look_add.inc                     ; yes             ; Megafunction                 ; c:/intelfpga_lite/23.1std/quartus/libraries/megafunctions/look_add.inc            ;         ;
+; alt_stratix_add_sub.inc          ; yes             ; Megafunction                 ; c:/intelfpga_lite/23.1std/quartus/libraries/megafunctions/alt_stratix_add_sub.inc ;         ;
+; db/add_sub_2of.tdf               ; yes             ; Auto-Generated Megafunction  ; C:/Users/Thomas/Documents/Uliege/ICDesign/Project/db/add_sub_2of.tdf              ;         ;
+; db/add_sub_k4h.tdf               ; yes             ; Auto-Generated Megafunction  ; C:/Users/Thomas/Documents/Uliege/ICDesign/Project/db/add_sub_k4h.tdf              ;         ;
+; altshift.tdf                     ; yes             ; Megafunction                 ; c:/intelfpga_lite/23.1std/quartus/libraries/megafunctions/altshift.tdf            ;         ;
+; db/add_sub_k9h.tdf               ; yes             ; Auto-Generated Megafunction  ; C:/Users/Thomas/Documents/Uliege/ICDesign/Project/db/add_sub_k9h.tdf              ;         ;
+; db/add_sub_ikh.tdf               ; yes             ; Auto-Generated Megafunction  ; C:/Users/Thomas/Documents/Uliege/ICDesign/Project/db/add_sub_ikh.tdf              ;         ;
++----------------------------------+-----------------+------------------------------+-----------------------------------------------------------------------------------+---------+
+
+
++------------------------------------------------------------+
+; Analysis & Synthesis Resource Usage Summary                ;
++---------------------------------------------+--------------+
+; Resource                                    ; Usage        ;
++---------------------------------------------+--------------+
+; Estimated Total logic elements              ; 2,314        ;
+;                                             ;              ;
+; Total combinational functions               ; 2304         ;
+; Logic element usage by number of LUT inputs ;              ;
+;     -- 4 input functions                    ; 881          ;
+;     -- 3 input functions                    ; 953          ;
+;     -- <=2 input functions                  ; 470          ;
+;                                             ;              ;
+; Logic elements by mode                      ;              ;
+;     -- normal mode                          ; 1364         ;
+;     -- arithmetic mode                      ; 940          ;
+;                                             ;              ;
+; Total registers                             ; 329          ;
+;     -- Dedicated logic registers            ; 329          ;
+;     -- I/O registers                        ; 0            ;
+;                                             ;              ;
+; I/O pins                                    ; 18           ;
+;                                             ;              ;
+; Embedded Multiplier 9-bit elements          ; 14           ;
+;                                             ;              ;
+; Maximum fan-out node                        ; CLK_50~input ;
+; Maximum fan-out                             ; 329          ;
+; Total fan-out                               ; 8338         ;
+; Average fan-out                             ; 3.11         ;
++---------------------------------------------+--------------+
+
+
++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Resource Utilization by Entity                                                                                                                                                                                                                                                                                                                               ;
++---------------------------------------------------+---------------------+---------------------------+-------------+--------------+---------+-----------+------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------+--------------+
+; Compilation Hierarchy Node                        ; Combinational ALUTs ; Dedicated Logic Registers ; Memory Bits ; DSP Elements ; DSP 9x9 ; DSP 18x18 ; Pins ; Virtual Pins ; Full Hierarchy Name                                                                                                                                             ; Entity Name       ; Library Name ;
++---------------------------------------------------+---------------------+---------------------------+-------------+--------------+---------+-----------+------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------+--------------+
+; |RushTunnelFPGA                                   ; 2304 (64)           ; 329 (47)                  ; 0           ; 14           ; 2       ; 6         ; 18   ; 0            ; |RushTunnelFPGA                                                                                                                                                 ; RushTunnelFPGA    ; work         ;
+;    |game_fsm:u_fsm|                               ; 169 (169)           ; 64 (64)                   ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RushTunnelFPGA|game_fsm:u_fsm                                                                                                                                  ; game_fsm          ; work         ;
+;    |lpm_mult:Mult0|                               ; 45 (0)              ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RushTunnelFPGA|lpm_mult:Mult0                                                                                                                                  ; lpm_mult          ; work         ;
+;       |multcore:mult_core|                        ; 45 (20)             ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RushTunnelFPGA|lpm_mult:Mult0|multcore:mult_core                                                                                                               ; multcore          ; work         ;
+;          |mpar_add:padder|                        ; 25 (0)              ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RushTunnelFPGA|lpm_mult:Mult0|multcore:mult_core|mpar_add:padder                                                                                               ; mpar_add          ; work         ;
+;             |lpm_add_sub:adder[0]|                ; 14 (0)              ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RushTunnelFPGA|lpm_mult:Mult0|multcore:mult_core|mpar_add:padder|lpm_add_sub:adder[0]                                                                          ; lpm_add_sub       ; work         ;
+;                |add_sub_k9h:auto_generated|       ; 14 (14)             ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RushTunnelFPGA|lpm_mult:Mult0|multcore:mult_core|mpar_add:padder|lpm_add_sub:adder[0]|add_sub_k9h:auto_generated                                               ; add_sub_k9h       ; work         ;
+;             |mpar_add:sub_par_add|                ; 11 (0)              ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RushTunnelFPGA|lpm_mult:Mult0|multcore:mult_core|mpar_add:padder|mpar_add:sub_par_add                                                                          ; mpar_add          ; work         ;
+;                |lpm_add_sub:adder[0]|             ; 11 (0)              ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RushTunnelFPGA|lpm_mult:Mult0|multcore:mult_core|mpar_add:padder|mpar_add:sub_par_add|lpm_add_sub:adder[0]                                                     ; lpm_add_sub       ; work         ;
+;                   |add_sub_ikh:auto_generated|    ; 11 (11)             ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RushTunnelFPGA|lpm_mult:Mult0|multcore:mult_core|mpar_add:padder|mpar_add:sub_par_add|lpm_add_sub:adder[0]|add_sub_ikh:auto_generated                          ; add_sub_ikh       ; work         ;
+;    |lpm_mult:Mult1|                               ; 45 (0)              ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RushTunnelFPGA|lpm_mult:Mult1                                                                                                                                  ; lpm_mult          ; work         ;
+;       |multcore:mult_core|                        ; 45 (20)             ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RushTunnelFPGA|lpm_mult:Mult1|multcore:mult_core                                                                                                               ; multcore          ; work         ;
+;          |mpar_add:padder|                        ; 25 (0)              ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RushTunnelFPGA|lpm_mult:Mult1|multcore:mult_core|mpar_add:padder                                                                                               ; mpar_add          ; work         ;
+;             |lpm_add_sub:adder[0]|                ; 14 (0)              ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RushTunnelFPGA|lpm_mult:Mult1|multcore:mult_core|mpar_add:padder|lpm_add_sub:adder[0]                                                                          ; lpm_add_sub       ; work         ;
+;                |add_sub_k9h:auto_generated|       ; 14 (14)             ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RushTunnelFPGA|lpm_mult:Mult1|multcore:mult_core|mpar_add:padder|lpm_add_sub:adder[0]|add_sub_k9h:auto_generated                                               ; add_sub_k9h       ; work         ;
+;             |mpar_add:sub_par_add|                ; 11 (0)              ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RushTunnelFPGA|lpm_mult:Mult1|multcore:mult_core|mpar_add:padder|mpar_add:sub_par_add                                                                          ; mpar_add          ; work         ;
+;                |lpm_add_sub:adder[0]|             ; 11 (0)              ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RushTunnelFPGA|lpm_mult:Mult1|multcore:mult_core|mpar_add:padder|mpar_add:sub_par_add|lpm_add_sub:adder[0]                                                     ; lpm_add_sub       ; work         ;
+;                   |add_sub_ikh:auto_generated|    ; 11 (11)             ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RushTunnelFPGA|lpm_mult:Mult1|multcore:mult_core|mpar_add:padder|mpar_add:sub_par_add|lpm_add_sub:adder[0]|add_sub_ikh:auto_generated                          ; add_sub_ikh       ; work         ;
+;    |obstacle_manager:u_obs|                       ; 165 (165)           ; 92 (92)                   ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RushTunnelFPGA|obstacle_manager:u_obs                                                                                                                          ; obstacle_manager  ; work         ;
+;    |snes_controller:u_snes|                       ; 63 (63)             ; 37 (37)                   ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RushTunnelFPGA|snes_controller:u_snes                                                                                                                          ; snes_controller   ; work         ;
+;    |stage_manager:u_stage|                        ; 47 (47)             ; 31 (31)                   ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RushTunnelFPGA|stage_manager:u_stage                                                                                                                           ; stage_manager     ; work         ;
+;    |trig_rom:u_trig_ship|                         ; 278 (278)           ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RushTunnelFPGA|trig_rom:u_trig_ship                                                                                                                            ; trig_rom          ; work         ;
+;    |trig_rom:u_trig_tun|                          ; 279 (279)           ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RushTunnelFPGA|trig_rom:u_trig_tun                                                                                                                             ; trig_rom          ; work         ;
+;    |tunnel_renderer:u_tunnel|                     ; 1101 (97)           ; 36 (0)                    ; 0           ; 14           ; 2       ; 6         ; 0    ; 0            ; |RushTunnelFPGA|tunnel_renderer:u_tunnel                                                                                                                        ; tunnel_renderer   ; work         ;
+;       |colour_palette:u_pal|                      ; 168 (71)            ; 12 (12)                   ; 0           ; 2            ; 2       ; 0         ; 0    ; 0            ; |RushTunnelFPGA|tunnel_renderer:u_tunnel|colour_palette:u_pal                                                                                                   ; colour_palette    ; work         ;
+;          |lpm_mult:Mult0|                         ; 0 (0)               ; 0 (0)                     ; 0           ; 1            ; 1       ; 0         ; 0    ; 0            ; |RushTunnelFPGA|tunnel_renderer:u_tunnel|colour_palette:u_pal|lpm_mult:Mult0                                                                                    ; lpm_mult          ; work         ;
+;             |mult_r2t:auto_generated|             ; 0 (0)               ; 0 (0)                     ; 0           ; 1            ; 1       ; 0         ; 0    ; 0            ; |RushTunnelFPGA|tunnel_renderer:u_tunnel|colour_palette:u_pal|lpm_mult:Mult0|mult_r2t:auto_generated                                                            ; mult_r2t          ; work         ;
+;          |lpm_mult:Mult1|                         ; 0 (0)               ; 0 (0)                     ; 0           ; 1            ; 1       ; 0         ; 0    ; 0            ; |RushTunnelFPGA|tunnel_renderer:u_tunnel|colour_palette:u_pal|lpm_mult:Mult1                                                                                    ; lpm_mult          ; work         ;
+;             |mult_r2t:auto_generated|             ; 0 (0)               ; 0 (0)                     ; 0           ; 1            ; 1       ; 0         ; 0    ; 0            ; |RushTunnelFPGA|tunnel_renderer:u_tunnel|colour_palette:u_pal|lpm_mult:Mult1|mult_r2t:auto_generated                                                            ; mult_r2t          ; work         ;
+;          |lpm_mult:Mult2|                         ; 18 (0)              ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RushTunnelFPGA|tunnel_renderer:u_tunnel|colour_palette:u_pal|lpm_mult:Mult2                                                                                    ; lpm_mult          ; work         ;
+;             |multcore:mult_core|                  ; 18 (1)              ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RushTunnelFPGA|tunnel_renderer:u_tunnel|colour_palette:u_pal|lpm_mult:Mult2|multcore:mult_core                                                                 ; multcore          ; work         ;
+;                |mpar_add:padder|                  ; 11 (3)              ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RushTunnelFPGA|tunnel_renderer:u_tunnel|colour_palette:u_pal|lpm_mult:Mult2|multcore:mult_core|mpar_add:padder                                                 ; mpar_add          ; work         ;
+;                   |lpm_add_sub:adder[0]|          ; 8 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RushTunnelFPGA|tunnel_renderer:u_tunnel|colour_palette:u_pal|lpm_mult:Mult2|multcore:mult_core|mpar_add:padder|lpm_add_sub:adder[0]                            ; lpm_add_sub       ; work         ;
+;                      |add_sub_k4h:auto_generated| ; 8 (8)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RushTunnelFPGA|tunnel_renderer:u_tunnel|colour_palette:u_pal|lpm_mult:Mult2|multcore:mult_core|mpar_add:padder|lpm_add_sub:adder[0]|add_sub_k4h:auto_generated ; add_sub_k4h       ; work         ;
+;                |mul_lfrg:$00031|                  ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RushTunnelFPGA|tunnel_renderer:u_tunnel|colour_palette:u_pal|lpm_mult:Mult2|multcore:mult_core|mul_lfrg:$00031                                                 ; mul_lfrg          ; work         ;
+;                |mul_lfrg:$00035|                  ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RushTunnelFPGA|tunnel_renderer:u_tunnel|colour_palette:u_pal|lpm_mult:Mult2|multcore:mult_core|mul_lfrg:$00035                                                 ; mul_lfrg          ; work         ;
+;                |mul_lfrg:mul_lfrg_first_mod|      ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RushTunnelFPGA|tunnel_renderer:u_tunnel|colour_palette:u_pal|lpm_mult:Mult2|multcore:mult_core|mul_lfrg:mul_lfrg_first_mod                                     ; mul_lfrg          ; work         ;
+;                |mul_lfrg:mul_lfrg_last_mod|       ; 3 (3)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RushTunnelFPGA|tunnel_renderer:u_tunnel|colour_palette:u_pal|lpm_mult:Mult2|multcore:mult_core|mul_lfrg:mul_lfrg_last_mod                                      ; mul_lfrg          ; work         ;
+;          |lpm_mult:Mult3|                         ; 27 (0)              ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RushTunnelFPGA|tunnel_renderer:u_tunnel|colour_palette:u_pal|lpm_mult:Mult3                                                                                    ; lpm_mult          ; work         ;
+;             |mult_j8t:auto_generated|             ; 27 (27)             ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RushTunnelFPGA|tunnel_renderer:u_tunnel|colour_palette:u_pal|lpm_mult:Mult3|mult_j8t:auto_generated                                                            ; mult_j8t          ; work         ;
+;          |lpm_mult:Mult4|                         ; 26 (0)              ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RushTunnelFPGA|tunnel_renderer:u_tunnel|colour_palette:u_pal|lpm_mult:Mult4                                                                                    ; lpm_mult          ; work         ;
+;             |mult_j8t:auto_generated|             ; 26 (26)             ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RushTunnelFPGA|tunnel_renderer:u_tunnel|colour_palette:u_pal|lpm_mult:Mult4|mult_j8t:auto_generated                                                            ; mult_j8t          ; work         ;
+;          |lpm_mult:Mult5|                         ; 26 (0)              ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RushTunnelFPGA|tunnel_renderer:u_tunnel|colour_palette:u_pal|lpm_mult:Mult5                                                                                    ; lpm_mult          ; work         ;
+;             |mult_j8t:auto_generated|             ; 26 (26)             ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RushTunnelFPGA|tunnel_renderer:u_tunnel|colour_palette:u_pal|lpm_mult:Mult5|mult_j8t:auto_generated                                                            ; mult_j8t          ; work         ;
+;       |coord_transform:u_xfm|                     ; 128 (128)           ; 24 (24)                   ; 0           ; 8            ; 0       ; 4         ; 0    ; 0            ; |RushTunnelFPGA|tunnel_renderer:u_tunnel|coord_transform:u_xfm                                                                                                  ; coord_transform   ; work         ;
+;          |lpm_mult:Mult0|                         ; 0 (0)               ; 0 (0)                     ; 0           ; 2            ; 0       ; 1         ; 0    ; 0            ; |RushTunnelFPGA|tunnel_renderer:u_tunnel|coord_transform:u_xfm|lpm_mult:Mult0                                                                                   ; lpm_mult          ; work         ;
+;             |mult_e4t:auto_generated|             ; 0 (0)               ; 0 (0)                     ; 0           ; 2            ; 0       ; 1         ; 0    ; 0            ; |RushTunnelFPGA|tunnel_renderer:u_tunnel|coord_transform:u_xfm|lpm_mult:Mult0|mult_e4t:auto_generated                                                           ; mult_e4t          ; work         ;
+;          |lpm_mult:Mult1|                         ; 0 (0)               ; 0 (0)                     ; 0           ; 2            ; 0       ; 1         ; 0    ; 0            ; |RushTunnelFPGA|tunnel_renderer:u_tunnel|coord_transform:u_xfm|lpm_mult:Mult1                                                                                   ; lpm_mult          ; work         ;
+;             |mult_e4t:auto_generated|             ; 0 (0)               ; 0 (0)                     ; 0           ; 2            ; 0       ; 1         ; 0    ; 0            ; |RushTunnelFPGA|tunnel_renderer:u_tunnel|coord_transform:u_xfm|lpm_mult:Mult1|mult_e4t:auto_generated                                                           ; mult_e4t          ; work         ;
+;          |lpm_mult:Mult2|                         ; 0 (0)               ; 0 (0)                     ; 0           ; 2            ; 0       ; 1         ; 0    ; 0            ; |RushTunnelFPGA|tunnel_renderer:u_tunnel|coord_transform:u_xfm|lpm_mult:Mult2                                                                                   ; lpm_mult          ; work         ;
+;             |mult_e4t:auto_generated|             ; 0 (0)               ; 0 (0)                     ; 0           ; 2            ; 0       ; 1         ; 0    ; 0            ; |RushTunnelFPGA|tunnel_renderer:u_tunnel|coord_transform:u_xfm|lpm_mult:Mult2|mult_e4t:auto_generated                                                           ; mult_e4t          ; work         ;
+;          |lpm_mult:Mult3|                         ; 0 (0)               ; 0 (0)                     ; 0           ; 2            ; 0       ; 1         ; 0    ; 0            ; |RushTunnelFPGA|tunnel_renderer:u_tunnel|coord_transform:u_xfm|lpm_mult:Mult3                                                                                   ; lpm_mult          ; work         ;
+;             |mult_e4t:auto_generated|             ; 0 (0)               ; 0 (0)                     ; 0           ; 2            ; 0       ; 1         ; 0    ; 0            ; |RushTunnelFPGA|tunnel_renderer:u_tunnel|coord_transform:u_xfm|lpm_mult:Mult3|mult_e4t:auto_generated                                                           ; mult_e4t          ; work         ;
+;       |tunnel_background:u_bg|                    ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RushTunnelFPGA|tunnel_renderer:u_tunnel|tunnel_background:u_bg                                                                                                 ; tunnel_background ; work         ;
+;       |tunnel_core:u_core|                        ; 707 (707)           ; 0 (0)                     ; 0           ; 4            ; 0       ; 2         ; 0    ; 0            ; |RushTunnelFPGA|tunnel_renderer:u_tunnel|tunnel_core:u_core                                                                                                     ; tunnel_core       ; work         ;
+;          |lpm_mult:Mult0|                         ; 0 (0)               ; 0 (0)                     ; 0           ; 2            ; 0       ; 1         ; 0    ; 0            ; |RushTunnelFPGA|tunnel_renderer:u_tunnel|tunnel_core:u_core|lpm_mult:Mult0                                                                                      ; lpm_mult          ; work         ;
+;             |mult_oct:auto_generated|             ; 0 (0)               ; 0 (0)                     ; 0           ; 2            ; 0       ; 1         ; 0    ; 0            ; |RushTunnelFPGA|tunnel_renderer:u_tunnel|tunnel_core:u_core|lpm_mult:Mult0|mult_oct:auto_generated                                                              ; mult_oct          ; work         ;
+;          |lpm_mult:Mult1|                         ; 0 (0)               ; 0 (0)                     ; 0           ; 2            ; 0       ; 1         ; 0    ; 0            ; |RushTunnelFPGA|tunnel_renderer:u_tunnel|tunnel_core:u_core|lpm_mult:Mult1                                                                                      ; lpm_mult          ; work         ;
+;             |mult_oct:auto_generated|             ; 0 (0)               ; 0 (0)                     ; 0           ; 2            ; 0       ; 1         ; 0    ; 0            ; |RushTunnelFPGA|tunnel_renderer:u_tunnel|tunnel_core:u_core|lpm_mult:Mult1|mult_oct:auto_generated                                                              ; mult_oct          ; work         ;
+;    |vga_controller:u_vga|                         ; 48 (48)             ; 22 (22)                   ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RushTunnelFPGA|vga_controller:u_vga                                                                                                                            ; vga_controller    ; work         ;
++---------------------------------------------------+---------------------+---------------------------+-------------+--------------+---------+-----------+------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------+--------------+
+Note: For table entries with two numbers listed, the numbers in parentheses indicate the number of resources of the given type used by the specific entity alone. The numbers listed outside of parentheses indicate the total resources of the given type used by the specific entity and all of its sub-entities in the hierarchy.
+
+
++-----------------------------------------------------+
+; Analysis & Synthesis DSP Block Usage Summary        ;
++---------------------------------------+-------------+
+; Statistic                             ; Number Used ;
++---------------------------------------+-------------+
+; Simple Multipliers (9-bit)            ; 2           ;
+; Simple Multipliers (18-bit)           ; 6           ;
+; Embedded Multiplier Blocks            ; --          ;
+; Embedded Multiplier 9-bit elements    ; 14          ;
+; Signed Embedded Multipliers           ; 6           ;
+; Unsigned Embedded Multipliers         ; 2           ;
+; Mixed Sign Embedded Multipliers       ; 0           ;
+; Variable Sign Embedded Multipliers    ; 0           ;
+; Dedicated Input Shift Register Chains ; 0           ;
++---------------------------------------+-------------+
+Note: number of Embedded Multiplier Blocks used is only available after a successful fit.
+
+
+Encoding Type:  One-Hot
++------------------------------------------------------------------------+
+; State Machine - |RushTunnelFPGA|game_fsm:u_fsm|state                   ;
++-------------------+-------------------+-----------------+--------------+
+; Name              ; state.S_GAME_OVER ; state.S_PLAYING ; state.S_IDLE ;
++-------------------+-------------------+-----------------+--------------+
+; state.S_IDLE      ; 0                 ; 0               ; 0            ;
+; state.S_PLAYING   ; 0                 ; 1               ; 1            ;
+; state.S_GAME_OVER ; 1                 ; 0               ; 1            ;
++-------------------+-------------------+-----------------+--------------+
+
+
+Encoding Type:  One-Hot
++-----------------------------------------------------------------------------------------------------+
+; State Machine - |RushTunnelFPGA|snes_controller:u_snes|state                                        ;
++------------------+--------------+------------------+-----------------+---------------+--------------+
+; Name             ; state.S_DONE ; state.S_BIT_HIGH ; state.S_BIT_LOW ; state.S_LATCH ; state.S_WAIT ;
++------------------+--------------+------------------+-----------------+---------------+--------------+
+; state.S_WAIT     ; 0            ; 0                ; 0               ; 0             ; 0            ;
+; state.S_LATCH    ; 0            ; 0                ; 0               ; 1             ; 1            ;
+; state.S_BIT_LOW  ; 0            ; 0                ; 1               ; 0             ; 1            ;
+; state.S_BIT_HIGH ; 0            ; 1                ; 0               ; 0             ; 1            ;
+; state.S_DONE     ; 1            ; 0                ; 0               ; 0             ; 1            ;
++------------------+--------------+------------------+-----------------+---------------+--------------+
+
+
++-------------------------------------------------------------------------------------+
+; Registers Removed During Synthesis                                                  ;
++----------------------------------------+--------------------------------------------+
+; Register name                          ; Reason for Removal                         ;
++----------------------------------------+--------------------------------------------+
+; speed_cnt                              ; Stuck at GND due to stuck port data_in     ;
+; scroll[0]                              ; Merged with hue_cnt[0]                     ;
+; scroll[1]                              ; Merged with hue_cnt[1]                     ;
+; game_fsm:u_fsm|state.S_GAME_OVER       ; Stuck at GND due to stuck port data_in     ;
+; hue_cnt[2]                             ; Merged with scroll[2]                      ;
+; frame_cnt[0]                           ; Merged with vga_controller:u_vga|h_cnt[0]  ;
+; hue_cnt[3]                             ; Merged with scroll[3]                      ;
+; scroll[4]                              ; Merged with hue_cnt[4]                     ;
+; frame_cnt[1]                           ; Merged with vga_controller:u_vga|h_cnt[1]  ;
+; scroll[5]                              ; Merged with hue_cnt[5]                     ;
+; frame_cnt[2]                           ; Merged with vga_controller:u_vga|h_cnt[2]  ;
+; frame_cnt[3]                           ; Merged with vga_controller:u_vga|h_cnt[3]  ;
+; scroll[6]                              ; Merged with hue_cnt[6]                     ;
+; scroll[7]                              ; Merged with hue_cnt[7]                     ;
+; game_fsm:u_fsm|state.S_IDLE            ; Merged with game_fsm:u_fsm|state.S_PLAYING ;
+; Total Number of Removed Registers = 15 ;                                            ;
++----------------------------------------+--------------------------------------------+
+
+
++------------------------------------------------------+
+; General Register Statistics                          ;
++----------------------------------------------+-------+
+; Statistic                                    ; Value ;
++----------------------------------------------+-------+
+; Total registers                              ; 329   ;
+; Number of registers using Synchronous Clear  ; 88    ;
+; Number of registers using Synchronous Load   ; 5     ;
+; Number of registers using Asynchronous Clear ; 0     ;
+; Number of registers using Asynchronous Load  ; 0     ;
+; Number of registers using Clock Enable       ; 198   ;
+; Number of registers using Preset             ; 0     ;
++----------------------------------------------+-------+
+
+
++-----------------------------------------------------+
+; Inverted Register Statistics                        ;
++-------------------------------------------+---------+
+; Inverted Register                         ; Fan out ;
++-------------------------------------------+---------+
+; snes_controller:u_snes|gp_clk_r           ; 2       ;
+; stage_manager:u_stage|trans_cnt[5]        ; 9       ;
+; stage_manager:u_stage|num_faces_r[3]      ; 7       ;
+; obstacle_manager:u_obs|ring_depth_r[1][6] ; 2       ;
+; obstacle_manager:u_obs|ring_depth_r[1][3] ; 2       ;
+; obstacle_manager:u_obs|ring_depth_r[1][1] ; 2       ;
+; obstacle_manager:u_obs|ring_depth_r[1][0] ; 2       ;
+; obstacle_manager:u_obs|ring_depth_r[0][6] ; 2       ;
+; obstacle_manager:u_obs|ring_depth_r[0][3] ; 2       ;
+; obstacle_manager:u_obs|ring_depth_r[0][1] ; 2       ;
+; obstacle_manager:u_obs|ring_depth_r[0][0] ; 2       ;
+; obstacle_manager:u_obs|obs_depth_r[0][3]  ; 2       ;
+; obstacle_manager:u_obs|obs_depth_r[0][1]  ; 2       ;
+; obstacle_manager:u_obs|obs_depth_r[0][0]  ; 2       ;
+; obstacle_manager:u_obs|obs_depth_r[0][6]  ; 2       ;
+; obstacle_manager:u_obs|obs_depth_r[1][6]  ; 2       ;
+; obstacle_manager:u_obs|obs_depth_r[1][3]  ; 2       ;
+; obstacle_manager:u_obs|obs_depth_r[1][1]  ; 2       ;
+; obstacle_manager:u_obs|obs_depth_r[1][0]  ; 2       ;
+; obstacle_manager:u_obs|obs_depth_r[2][6]  ; 2       ;
+; obstacle_manager:u_obs|obs_depth_r[2][3]  ; 2       ;
+; obstacle_manager:u_obs|obs_depth_r[2][1]  ; 2       ;
+; obstacle_manager:u_obs|obs_depth_r[2][0]  ; 2       ;
+; obstacle_manager:u_obs|obs_depth_r[3][6]  ; 2       ;
+; obstacle_manager:u_obs|obs_depth_r[3][3]  ; 2       ;
+; obstacle_manager:u_obs|obs_depth_r[3][1]  ; 2       ;
+; obstacle_manager:u_obs|obs_depth_r[3][0]  ; 2       ;
+; stage_manager:u_stage|pending_faces[3]    ; 1       ;
+; obstacle_manager:u_obs|lfsr[7]            ; 1       ;
+; obstacle_manager:u_obs|lfsr[5]            ; 2       ;
+; obstacle_manager:u_obs|lfsr[4]            ; 2       ;
+; obstacle_manager:u_obs|lfsr[0]            ; 5       ;
+; ship_y_r[7]                               ; 1       ;
+; ship_y_r[6]                               ; 1       ;
+; ship_y_r[5]                               ; 1       ;
+; ship_y_r[4]                               ; 1       ;
+; ship_x_r[8]                               ; 1       ;
+; ship_x_r[7]                               ; 1       ;
+; ship_x_r[4]                               ; 1       ;
+; stage_manager:u_stage|lfsr_r[0]           ; 4       ;
+; stage_manager:u_stage|lfsr_r[4]           ; 2       ;
+; stage_manager:u_stage|lfsr_r[5]           ; 2       ;
+; stage_manager:u_stage|lfsr_r[7]           ; 1       ;
+; obstacle_manager:u_obs|lfsr[2]            ; 1       ;
+; stage_manager:u_stage|lfsr_r[2]           ; 1       ;
+; Total number of inverted registers = 45   ;         ;
++-------------------------------------------+---------+
+
+
++--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Multiplexer Restructuring Statistics (Restructuring Performed)                                                                                                                       ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+------------------------------------------------------------------------+
+; Multiplexer Inputs ; Bus Width ; Baseline Area ; Area if Restructured ; Saving if Restructured ; Registered ; Example Multiplexer Output                                             ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+------------------------------------------------------------------------+
+; 3:1                ; 3 bits    ; 6 LEs         ; 3 LEs                ; 3 LEs                  ; Yes        ; |RushTunnelFPGA|stage_manager:u_stage|num_faces_r[2]                   ;
+; 3:1                ; 4 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; Yes        ; |RushTunnelFPGA|obstacle_manager:u_obs|ring_depth_r[1][2]              ;
+; 3:1                ; 4 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; Yes        ; |RushTunnelFPGA|obstacle_manager:u_obs|obs_depth_r[1][7]               ;
+; 3:1                ; 4 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; Yes        ; |RushTunnelFPGA|obstacle_manager:u_obs|obs_depth_r[2][2]               ;
+; 3:1                ; 4 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; Yes        ; |RushTunnelFPGA|obstacle_manager:u_obs|obs_depth_r[3][2]               ;
+; 4:1                ; 9 bits    ; 18 LEs        ; 9 LEs                ; 9 LEs                  ; Yes        ; |RushTunnelFPGA|stage_manager:u_stage|demo_cnt[0]                      ;
+; 4:1                ; 5 bits    ; 10 LEs        ; 5 LEs                ; 5 LEs                  ; Yes        ; |RushTunnelFPGA|stage_manager:u_stage|trans_cnt[0]                     ;
+; 4:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |RushTunnelFPGA|obstacle_manager:u_obs|adv_cnt[0]                      ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; Yes        ; |RushTunnelFPGA|obstacle_manager:u_obs|ring_depth_r[0][4]              ;
+; 4:1                ; 8 bits    ; 16 LEs        ; 8 LEs                ; 8 LEs                  ; Yes        ; |RushTunnelFPGA|obstacle_manager:u_obs|ring_spawn_cnt[1]               ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; Yes        ; |RushTunnelFPGA|obstacle_manager:u_obs|obs_depth_r[0][7]               ;
+; 4:1                ; 8 bits    ; 16 LEs        ; 8 LEs                ; 8 LEs                  ; Yes        ; |RushTunnelFPGA|obstacle_manager:u_obs|spawn_cnt[2]                    ;
+; 4:1                ; 32 bits   ; 64 LEs        ; 32 LEs               ; 32 LEs                 ; Yes        ; |RushTunnelFPGA|game_fsm:u_fsm|ship_ang_r[4]                           ;
+; 5:1                ; 4 bits    ; 12 LEs        ; 4 LEs                ; 8 LEs                  ; Yes        ; |RushTunnelFPGA|snes_controller:u_snes|bit_cnt[1]                      ;
+; 8:1                ; 3 bits    ; 15 LEs        ; 12 LEs               ; 3 LEs                  ; Yes        ; |RushTunnelFPGA|tunnel_renderer:u_tunnel|colour_palette:u_pal|green[3] ;
+; 8:1                ; 9 bits    ; 45 LEs        ; 45 LEs               ; 0 LEs                  ; Yes        ; |RushTunnelFPGA|tunnel_renderer:u_tunnel|colour_palette:u_pal|red[0]   ;
+; 7:1                ; 20 bits   ; 80 LEs        ; 20 LEs               ; 60 LEs                 ; Yes        ; |RushTunnelFPGA|snes_controller:u_snes|timer[5]                        ;
+; 3:1                ; 4 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; Yes        ; |RushTunnelFPGA|obstacle_manager:u_obs|ring_depth_r[1][0]              ;
+; 3:1                ; 4 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; Yes        ; |RushTunnelFPGA|obstacle_manager:u_obs|obs_depth_r[1][6]               ;
+; 3:1                ; 4 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; Yes        ; |RushTunnelFPGA|obstacle_manager:u_obs|obs_depth_r[2][6]               ;
+; 3:1                ; 4 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; Yes        ; |RushTunnelFPGA|obstacle_manager:u_obs|obs_depth_r[3][6]               ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; Yes        ; |RushTunnelFPGA|obstacle_manager:u_obs|ring_depth_r[0][0]              ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; Yes        ; |RushTunnelFPGA|obstacle_manager:u_obs|obs_depth_r[0][6]               ;
+; 3:1                ; 11 bits   ; 22 LEs        ; 22 LEs               ; 0 LEs                  ; No         ; |RushTunnelFPGA|tunnel_renderer:u_tunnel|tunnel_core:u_core|d12        ;
+; 3:1                ; 11 bits   ; 22 LEs        ; 22 LEs               ; 0 LEs                  ; No         ; |RushTunnelFPGA|tunnel_renderer:u_tunnel|tunnel_core:u_core|d13        ;
+; 3:1                ; 11 bits   ; 22 LEs        ; 22 LEs               ; 0 LEs                  ; No         ; |RushTunnelFPGA|tunnel_renderer:u_tunnel|tunnel_core:u_core|d23        ;
+; 5:1                ; 5 bits    ; 15 LEs        ; 10 LEs               ; 5 LEs                  ; No         ; |RushTunnelFPGA|game_fsm:u_fsm|new_vel                                 ;
+; 5:1                ; 11 bits   ; 33 LEs        ; 33 LEs               ; 0 LEs                  ; No         ; |RushTunnelFPGA|game_fsm:u_fsm|new_vel                                 ;
+; 6:1                ; 2 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; No         ; |RushTunnelFPGA|game_fsm:u_fsm|state                                   ;
+; 7:1                ; 2 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; No         ; |RushTunnelFPGA|snes_controller:u_snes|Selector22                      ;
+; 8:1                ; 10 bits   ; 50 LEs        ; 40 LEs               ; 10 LEs                 ; No         ; |RushTunnelFPGA|tunnel_renderer:u_tunnel|tunnel_core:u_core|Mux9       ;
+; 8:1                ; 8 bits    ; 40 LEs        ; 32 LEs               ; 8 LEs                  ; No         ; |RushTunnelFPGA|tunnel_renderer:u_tunnel|tunnel_core:u_core|Mux16      ;
+; 9:1                ; 2 bits    ; 12 LEs        ; 6 LEs                ; 6 LEs                  ; No         ; |RushTunnelFPGA|snes_controller:u_snes|Selector26                      ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+------------------------------------------------------------------------+
+
+
++---------------------------------------------------------------------------------------------------------------+
+; Parameter Settings for Inferred Entity Instance: tunnel_renderer:u_tunnel|colour_palette:u_pal|lpm_mult:Mult3 ;
++------------------------------------------------+--------------+-----------------------------------------------+
+; Parameter Name                                 ; Value        ; Type                                          ;
++------------------------------------------------+--------------+-----------------------------------------------+
+; AUTO_CARRY_CHAINS                              ; ON           ; AUTO_CARRY                                    ;
+; IGNORE_CARRY_BUFFERS                           ; OFF          ; IGNORE_CARRY                                  ;
+; AUTO_CASCADE_CHAINS                            ; ON           ; AUTO_CASCADE                                  ;
+; IGNORE_CASCADE_BUFFERS                         ; OFF          ; IGNORE_CASCADE                                ;
+; LPM_WIDTHA                                     ; 4            ; Untyped                                       ;
+; LPM_WIDTHB                                     ; 4            ; Untyped                                       ;
+; LPM_WIDTHP                                     ; 8            ; Untyped                                       ;
+; LPM_WIDTHR                                     ; 8            ; Untyped                                       ;
+; LPM_WIDTHS                                     ; 1            ; Untyped                                       ;
+; LPM_REPRESENTATION                             ; UNSIGNED     ; Untyped                                       ;
+; LPM_PIPELINE                                   ; 0            ; Untyped                                       ;
+; LATENCY                                        ; 0            ; Untyped                                       ;
+; INPUT_A_IS_CONSTANT                            ; NO           ; Untyped                                       ;
+; INPUT_B_IS_CONSTANT                            ; NO           ; Untyped                                       ;
+; USE_EAB                                        ; OFF          ; Untyped                                       ;
+; MAXIMIZE_SPEED                                 ; 5            ; Untyped                                       ;
+; DEVICE_FAMILY                                  ; Cyclone IV E ; Untyped                                       ;
+; CARRY_CHAIN                                    ; MANUAL       ; Untyped                                       ;
+; APEX20K_TECHNOLOGY_MAPPER                      ; LUT          ; TECH_MAPPER_APEX20K                           ;
+; DEDICATED_MULTIPLIER_CIRCUITRY                 ; AUTO         ; Untyped                                       ;
+; DEDICATED_MULTIPLIER_MIN_INPUT_WIDTH_FOR_AUTO  ; 0            ; Untyped                                       ;
+; DEDICATED_MULTIPLIER_MIN_OUTPUT_WIDTH_FOR_AUTO ; 0            ; Untyped                                       ;
+; CBXI_PARAMETER                                 ; mult_j8t     ; Untyped                                       ;
+; INPUT_A_FIXED_VALUE                            ; Bx           ; Untyped                                       ;
+; INPUT_B_FIXED_VALUE                            ; Bx           ; Untyped                                       ;
+; USE_AHDL_IMPLEMENTATION                        ; OFF          ; Untyped                                       ;
++------------------------------------------------+--------------+-----------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++---------------------------------------------------------------------------------------------------------------+
+; Parameter Settings for Inferred Entity Instance: tunnel_renderer:u_tunnel|colour_palette:u_pal|lpm_mult:Mult4 ;
++------------------------------------------------+--------------+-----------------------------------------------+
+; Parameter Name                                 ; Value        ; Type                                          ;
++------------------------------------------------+--------------+-----------------------------------------------+
+; AUTO_CARRY_CHAINS                              ; ON           ; AUTO_CARRY                                    ;
+; IGNORE_CARRY_BUFFERS                           ; OFF          ; IGNORE_CARRY                                  ;
+; AUTO_CASCADE_CHAINS                            ; ON           ; AUTO_CASCADE                                  ;
+; IGNORE_CASCADE_BUFFERS                         ; OFF          ; IGNORE_CASCADE                                ;
+; LPM_WIDTHA                                     ; 4            ; Untyped                                       ;
+; LPM_WIDTHB                                     ; 4            ; Untyped                                       ;
+; LPM_WIDTHP                                     ; 8            ; Untyped                                       ;
+; LPM_WIDTHR                                     ; 8            ; Untyped                                       ;
+; LPM_WIDTHS                                     ; 1            ; Untyped                                       ;
+; LPM_REPRESENTATION                             ; UNSIGNED     ; Untyped                                       ;
+; LPM_PIPELINE                                   ; 0            ; Untyped                                       ;
+; LATENCY                                        ; 0            ; Untyped                                       ;
+; INPUT_A_IS_CONSTANT                            ; NO           ; Untyped                                       ;
+; INPUT_B_IS_CONSTANT                            ; NO           ; Untyped                                       ;
+; USE_EAB                                        ; OFF          ; Untyped                                       ;
+; MAXIMIZE_SPEED                                 ; 5            ; Untyped                                       ;
+; DEVICE_FAMILY                                  ; Cyclone IV E ; Untyped                                       ;
+; CARRY_CHAIN                                    ; MANUAL       ; Untyped                                       ;
+; APEX20K_TECHNOLOGY_MAPPER                      ; LUT          ; TECH_MAPPER_APEX20K                           ;
+; DEDICATED_MULTIPLIER_CIRCUITRY                 ; AUTO         ; Untyped                                       ;
+; DEDICATED_MULTIPLIER_MIN_INPUT_WIDTH_FOR_AUTO  ; 0            ; Untyped                                       ;
+; DEDICATED_MULTIPLIER_MIN_OUTPUT_WIDTH_FOR_AUTO ; 0            ; Untyped                                       ;
+; CBXI_PARAMETER                                 ; mult_j8t     ; Untyped                                       ;
+; INPUT_A_FIXED_VALUE                            ; Bx           ; Untyped                                       ;
+; INPUT_B_FIXED_VALUE                            ; Bx           ; Untyped                                       ;
+; USE_AHDL_IMPLEMENTATION                        ; OFF          ; Untyped                                       ;
++------------------------------------------------+--------------+-----------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++---------------------------------------------------------------------------------------------------------------+
+; Parameter Settings for Inferred Entity Instance: tunnel_renderer:u_tunnel|colour_palette:u_pal|lpm_mult:Mult5 ;
++------------------------------------------------+--------------+-----------------------------------------------+
+; Parameter Name                                 ; Value        ; Type                                          ;
++------------------------------------------------+--------------+-----------------------------------------------+
+; AUTO_CARRY_CHAINS                              ; ON           ; AUTO_CARRY                                    ;
+; IGNORE_CARRY_BUFFERS                           ; OFF          ; IGNORE_CARRY                                  ;
+; AUTO_CASCADE_CHAINS                            ; ON           ; AUTO_CASCADE                                  ;
+; IGNORE_CASCADE_BUFFERS                         ; OFF          ; IGNORE_CASCADE                                ;
+; LPM_WIDTHA                                     ; 4            ; Untyped                                       ;
+; LPM_WIDTHB                                     ; 4            ; Untyped                                       ;
+; LPM_WIDTHP                                     ; 8            ; Untyped                                       ;
+; LPM_WIDTHR                                     ; 8            ; Untyped                                       ;
+; LPM_WIDTHS                                     ; 1            ; Untyped                                       ;
+; LPM_REPRESENTATION                             ; UNSIGNED     ; Untyped                                       ;
+; LPM_PIPELINE                                   ; 0            ; Untyped                                       ;
+; LATENCY                                        ; 0            ; Untyped                                       ;
+; INPUT_A_IS_CONSTANT                            ; NO           ; Untyped                                       ;
+; INPUT_B_IS_CONSTANT                            ; NO           ; Untyped                                       ;
+; USE_EAB                                        ; OFF          ; Untyped                                       ;
+; MAXIMIZE_SPEED                                 ; 5            ; Untyped                                       ;
+; DEVICE_FAMILY                                  ; Cyclone IV E ; Untyped                                       ;
+; CARRY_CHAIN                                    ; MANUAL       ; Untyped                                       ;
+; APEX20K_TECHNOLOGY_MAPPER                      ; LUT          ; TECH_MAPPER_APEX20K                           ;
+; DEDICATED_MULTIPLIER_CIRCUITRY                 ; AUTO         ; Untyped                                       ;
+; DEDICATED_MULTIPLIER_MIN_INPUT_WIDTH_FOR_AUTO  ; 0            ; Untyped                                       ;
+; DEDICATED_MULTIPLIER_MIN_OUTPUT_WIDTH_FOR_AUTO ; 0            ; Untyped                                       ;
+; CBXI_PARAMETER                                 ; mult_j8t     ; Untyped                                       ;
+; INPUT_A_FIXED_VALUE                            ; Bx           ; Untyped                                       ;
+; INPUT_B_FIXED_VALUE                            ; Bx           ; Untyped                                       ;
+; USE_AHDL_IMPLEMENTATION                        ; OFF          ; Untyped                                       ;
++------------------------------------------------+--------------+-----------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++-------------------------------------------------------------------------------------------------------------+
+; Parameter Settings for Inferred Entity Instance: tunnel_renderer:u_tunnel|tunnel_core:u_core|lpm_mult:Mult1 ;
++------------------------------------------------+--------------+---------------------------------------------+
+; Parameter Name                                 ; Value        ; Type                                        ;
++------------------------------------------------+--------------+---------------------------------------------+
+; AUTO_CARRY_CHAINS                              ; ON           ; AUTO_CARRY                                  ;
+; IGNORE_CARRY_BUFFERS                           ; OFF          ; IGNORE_CARRY                                ;
+; AUTO_CASCADE_CHAINS                            ; ON           ; AUTO_CASCADE                                ;
+; IGNORE_CASCADE_BUFFERS                         ; OFF          ; IGNORE_CASCADE                              ;
+; LPM_WIDTHA                                     ; 10           ; Untyped                                     ;
+; LPM_WIDTHB                                     ; 10           ; Untyped                                     ;
+; LPM_WIDTHP                                     ; 20           ; Untyped                                     ;
+; LPM_WIDTHR                                     ; 20           ; Untyped                                     ;
+; LPM_WIDTHS                                     ; 1            ; Untyped                                     ;
+; LPM_REPRESENTATION                             ; UNSIGNED     ; Untyped                                     ;
+; LPM_PIPELINE                                   ; 0            ; Untyped                                     ;
+; LATENCY                                        ; 0            ; Untyped                                     ;
+; INPUT_A_IS_CONSTANT                            ; NO           ; Untyped                                     ;
+; INPUT_B_IS_CONSTANT                            ; NO           ; Untyped                                     ;
+; USE_EAB                                        ; OFF          ; Untyped                                     ;
+; MAXIMIZE_SPEED                                 ; 6            ; Untyped                                     ;
+; DEVICE_FAMILY                                  ; Cyclone IV E ; Untyped                                     ;
+; CARRY_CHAIN                                    ; MANUAL       ; Untyped                                     ;
+; APEX20K_TECHNOLOGY_MAPPER                      ; LUT          ; TECH_MAPPER_APEX20K                         ;
+; DEDICATED_MULTIPLIER_CIRCUITRY                 ; AUTO         ; Untyped                                     ;
+; DEDICATED_MULTIPLIER_MIN_INPUT_WIDTH_FOR_AUTO  ; 0            ; Untyped                                     ;
+; DEDICATED_MULTIPLIER_MIN_OUTPUT_WIDTH_FOR_AUTO ; 0            ; Untyped                                     ;
+; CBXI_PARAMETER                                 ; mult_oct     ; Untyped                                     ;
+; INPUT_A_FIXED_VALUE                            ; Bx           ; Untyped                                     ;
+; INPUT_B_FIXED_VALUE                            ; Bx           ; Untyped                                     ;
+; USE_AHDL_IMPLEMENTATION                        ; OFF          ; Untyped                                     ;
++------------------------------------------------+--------------+---------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++-------------------------------------------------------------------------------------------------------------+
+; Parameter Settings for Inferred Entity Instance: tunnel_renderer:u_tunnel|tunnel_core:u_core|lpm_mult:Mult0 ;
++------------------------------------------------+--------------+---------------------------------------------+
+; Parameter Name                                 ; Value        ; Type                                        ;
++------------------------------------------------+--------------+---------------------------------------------+
+; AUTO_CARRY_CHAINS                              ; ON           ; AUTO_CARRY                                  ;
+; IGNORE_CARRY_BUFFERS                           ; OFF          ; IGNORE_CARRY                                ;
+; AUTO_CASCADE_CHAINS                            ; ON           ; AUTO_CASCADE                                ;
+; IGNORE_CASCADE_BUFFERS                         ; OFF          ; IGNORE_CASCADE                              ;
+; LPM_WIDTHA                                     ; 10           ; Untyped                                     ;
+; LPM_WIDTHB                                     ; 10           ; Untyped                                     ;
+; LPM_WIDTHP                                     ; 20           ; Untyped                                     ;
+; LPM_WIDTHR                                     ; 20           ; Untyped                                     ;
+; LPM_WIDTHS                                     ; 1            ; Untyped                                     ;
+; LPM_REPRESENTATION                             ; UNSIGNED     ; Untyped                                     ;
+; LPM_PIPELINE                                   ; 0            ; Untyped                                     ;
+; LATENCY                                        ; 0            ; Untyped                                     ;
+; INPUT_A_IS_CONSTANT                            ; NO           ; Untyped                                     ;
+; INPUT_B_IS_CONSTANT                            ; NO           ; Untyped                                     ;
+; USE_EAB                                        ; OFF          ; Untyped                                     ;
+; MAXIMIZE_SPEED                                 ; 6            ; Untyped                                     ;
+; DEVICE_FAMILY                                  ; Cyclone IV E ; Untyped                                     ;
+; CARRY_CHAIN                                    ; MANUAL       ; Untyped                                     ;
+; APEX20K_TECHNOLOGY_MAPPER                      ; LUT          ; TECH_MAPPER_APEX20K                         ;
+; DEDICATED_MULTIPLIER_CIRCUITRY                 ; AUTO         ; Untyped                                     ;
+; DEDICATED_MULTIPLIER_MIN_INPUT_WIDTH_FOR_AUTO  ; 0            ; Untyped                                     ;
+; DEDICATED_MULTIPLIER_MIN_OUTPUT_WIDTH_FOR_AUTO ; 0            ; Untyped                                     ;
+; CBXI_PARAMETER                                 ; mult_oct     ; Untyped                                     ;
+; INPUT_A_FIXED_VALUE                            ; Bx           ; Untyped                                     ;
+; INPUT_B_FIXED_VALUE                            ; Bx           ; Untyped                                     ;
+; USE_AHDL_IMPLEMENTATION                        ; OFF          ; Untyped                                     ;
++------------------------------------------------+--------------+---------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++----------------------------------------------------------------------------------------------------------------+
+; Parameter Settings for Inferred Entity Instance: tunnel_renderer:u_tunnel|coord_transform:u_xfm|lpm_mult:Mult0 ;
++------------------------------------------------+--------------+------------------------------------------------+
+; Parameter Name                                 ; Value        ; Type                                           ;
++------------------------------------------------+--------------+------------------------------------------------+
+; AUTO_CARRY_CHAINS                              ; ON           ; AUTO_CARRY                                     ;
+; IGNORE_CARRY_BUFFERS                           ; OFF          ; IGNORE_CARRY                                   ;
+; AUTO_CASCADE_CHAINS                            ; ON           ; AUTO_CASCADE                                   ;
+; IGNORE_CASCADE_BUFFERS                         ; OFF          ; IGNORE_CASCADE                                 ;
+; LPM_WIDTHA                                     ; 11           ; Untyped                                        ;
+; LPM_WIDTHB                                     ; 9            ; Untyped                                        ;
+; LPM_WIDTHP                                     ; 20           ; Untyped                                        ;
+; LPM_WIDTHR                                     ; 20           ; Untyped                                        ;
+; LPM_WIDTHS                                     ; 1            ; Untyped                                        ;
+; LPM_REPRESENTATION                             ; SIGNED       ; Untyped                                        ;
+; LPM_PIPELINE                                   ; 0            ; Untyped                                        ;
+; LATENCY                                        ; 0            ; Untyped                                        ;
+; INPUT_A_IS_CONSTANT                            ; NO           ; Untyped                                        ;
+; INPUT_B_IS_CONSTANT                            ; NO           ; Untyped                                        ;
+; USE_EAB                                        ; OFF          ; Untyped                                        ;
+; MAXIMIZE_SPEED                                 ; 6            ; Untyped                                        ;
+; DEVICE_FAMILY                                  ; Cyclone IV E ; Untyped                                        ;
+; CARRY_CHAIN                                    ; MANUAL       ; Untyped                                        ;
+; APEX20K_TECHNOLOGY_MAPPER                      ; LUT          ; TECH_MAPPER_APEX20K                            ;
+; DEDICATED_MULTIPLIER_CIRCUITRY                 ; AUTO         ; Untyped                                        ;
+; DEDICATED_MULTIPLIER_MIN_INPUT_WIDTH_FOR_AUTO  ; 0            ; Untyped                                        ;
+; DEDICATED_MULTIPLIER_MIN_OUTPUT_WIDTH_FOR_AUTO ; 0            ; Untyped                                        ;
+; CBXI_PARAMETER                                 ; mult_e4t     ; Untyped                                        ;
+; INPUT_A_FIXED_VALUE                            ; Bx           ; Untyped                                        ;
+; INPUT_B_FIXED_VALUE                            ; Bx           ; Untyped                                        ;
+; USE_AHDL_IMPLEMENTATION                        ; OFF          ; Untyped                                        ;
++------------------------------------------------+--------------+------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++----------------------------------------------------------------------------------------------------------------+
+; Parameter Settings for Inferred Entity Instance: tunnel_renderer:u_tunnel|coord_transform:u_xfm|lpm_mult:Mult3 ;
++------------------------------------------------+--------------+------------------------------------------------+
+; Parameter Name                                 ; Value        ; Type                                           ;
++------------------------------------------------+--------------+------------------------------------------------+
+; AUTO_CARRY_CHAINS                              ; ON           ; AUTO_CARRY                                     ;
+; IGNORE_CARRY_BUFFERS                           ; OFF          ; IGNORE_CARRY                                   ;
+; AUTO_CASCADE_CHAINS                            ; ON           ; AUTO_CASCADE                                   ;
+; IGNORE_CASCADE_BUFFERS                         ; OFF          ; IGNORE_CASCADE                                 ;
+; LPM_WIDTHA                                     ; 11           ; Untyped                                        ;
+; LPM_WIDTHB                                     ; 9            ; Untyped                                        ;
+; LPM_WIDTHP                                     ; 20           ; Untyped                                        ;
+; LPM_WIDTHR                                     ; 20           ; Untyped                                        ;
+; LPM_WIDTHS                                     ; 1            ; Untyped                                        ;
+; LPM_REPRESENTATION                             ; SIGNED       ; Untyped                                        ;
+; LPM_PIPELINE                                   ; 0            ; Untyped                                        ;
+; LATENCY                                        ; 0            ; Untyped                                        ;
+; INPUT_A_IS_CONSTANT                            ; NO           ; Untyped                                        ;
+; INPUT_B_IS_CONSTANT                            ; NO           ; Untyped                                        ;
+; USE_EAB                                        ; OFF          ; Untyped                                        ;
+; MAXIMIZE_SPEED                                 ; 6            ; Untyped                                        ;
+; DEVICE_FAMILY                                  ; Cyclone IV E ; Untyped                                        ;
+; CARRY_CHAIN                                    ; MANUAL       ; Untyped                                        ;
+; APEX20K_TECHNOLOGY_MAPPER                      ; LUT          ; TECH_MAPPER_APEX20K                            ;
+; DEDICATED_MULTIPLIER_CIRCUITRY                 ; AUTO         ; Untyped                                        ;
+; DEDICATED_MULTIPLIER_MIN_INPUT_WIDTH_FOR_AUTO  ; 0            ; Untyped                                        ;
+; DEDICATED_MULTIPLIER_MIN_OUTPUT_WIDTH_FOR_AUTO ; 0            ; Untyped                                        ;
+; CBXI_PARAMETER                                 ; mult_e4t     ; Untyped                                        ;
+; INPUT_A_FIXED_VALUE                            ; Bx           ; Untyped                                        ;
+; INPUT_B_FIXED_VALUE                            ; Bx           ; Untyped                                        ;
+; USE_AHDL_IMPLEMENTATION                        ; OFF          ; Untyped                                        ;
++------------------------------------------------+--------------+------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++---------------------------------------------------------------------------------------------------------------+
+; Parameter Settings for Inferred Entity Instance: tunnel_renderer:u_tunnel|colour_palette:u_pal|lpm_mult:Mult1 ;
++------------------------------------------------+--------------+-----------------------------------------------+
+; Parameter Name                                 ; Value        ; Type                                          ;
++------------------------------------------------+--------------+-----------------------------------------------+
+; AUTO_CARRY_CHAINS                              ; ON           ; AUTO_CARRY                                    ;
+; IGNORE_CARRY_BUFFERS                           ; OFF          ; IGNORE_CARRY                                  ;
+; AUTO_CASCADE_CHAINS                            ; ON           ; AUTO_CASCADE                                  ;
+; IGNORE_CASCADE_BUFFERS                         ; OFF          ; IGNORE_CASCADE                                ;
+; LPM_WIDTHA                                     ; 5            ; Untyped                                       ;
+; LPM_WIDTHB                                     ; 5            ; Untyped                                       ;
+; LPM_WIDTHP                                     ; 10           ; Untyped                                       ;
+; LPM_WIDTHR                                     ; 10           ; Untyped                                       ;
+; LPM_WIDTHS                                     ; 1            ; Untyped                                       ;
+; LPM_REPRESENTATION                             ; SIGNED       ; Untyped                                       ;
+; LPM_PIPELINE                                   ; 0            ; Untyped                                       ;
+; LATENCY                                        ; 0            ; Untyped                                       ;
+; INPUT_A_IS_CONSTANT                            ; NO           ; Untyped                                       ;
+; INPUT_B_IS_CONSTANT                            ; NO           ; Untyped                                       ;
+; USE_EAB                                        ; OFF          ; Untyped                                       ;
+; MAXIMIZE_SPEED                                 ; 5            ; Untyped                                       ;
+; DEVICE_FAMILY                                  ; Cyclone IV E ; Untyped                                       ;
+; CARRY_CHAIN                                    ; MANUAL       ; Untyped                                       ;
+; APEX20K_TECHNOLOGY_MAPPER                      ; LUT          ; TECH_MAPPER_APEX20K                           ;
+; DEDICATED_MULTIPLIER_CIRCUITRY                 ; AUTO         ; Untyped                                       ;
+; DEDICATED_MULTIPLIER_MIN_INPUT_WIDTH_FOR_AUTO  ; 0            ; Untyped                                       ;
+; DEDICATED_MULTIPLIER_MIN_OUTPUT_WIDTH_FOR_AUTO ; 0            ; Untyped                                       ;
+; CBXI_PARAMETER                                 ; mult_r2t     ; Untyped                                       ;
+; INPUT_A_FIXED_VALUE                            ; Bx           ; Untyped                                       ;
+; INPUT_B_FIXED_VALUE                            ; Bx           ; Untyped                                       ;
+; USE_AHDL_IMPLEMENTATION                        ; OFF          ; Untyped                                       ;
++------------------------------------------------+--------------+-----------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++----------------------------------------------------------------------------------------------------------------+
+; Parameter Settings for Inferred Entity Instance: tunnel_renderer:u_tunnel|coord_transform:u_xfm|lpm_mult:Mult1 ;
++------------------------------------------------+--------------+------------------------------------------------+
+; Parameter Name                                 ; Value        ; Type                                           ;
++------------------------------------------------+--------------+------------------------------------------------+
+; AUTO_CARRY_CHAINS                              ; ON           ; AUTO_CARRY                                     ;
+; IGNORE_CARRY_BUFFERS                           ; OFF          ; IGNORE_CARRY                                   ;
+; AUTO_CASCADE_CHAINS                            ; ON           ; AUTO_CASCADE                                   ;
+; IGNORE_CASCADE_BUFFERS                         ; OFF          ; IGNORE_CASCADE                                 ;
+; LPM_WIDTHA                                     ; 11           ; Untyped                                        ;
+; LPM_WIDTHB                                     ; 9            ; Untyped                                        ;
+; LPM_WIDTHP                                     ; 20           ; Untyped                                        ;
+; LPM_WIDTHR                                     ; 20           ; Untyped                                        ;
+; LPM_WIDTHS                                     ; 1            ; Untyped                                        ;
+; LPM_REPRESENTATION                             ; SIGNED       ; Untyped                                        ;
+; LPM_PIPELINE                                   ; 0            ; Untyped                                        ;
+; LATENCY                                        ; 0            ; Untyped                                        ;
+; INPUT_A_IS_CONSTANT                            ; NO           ; Untyped                                        ;
+; INPUT_B_IS_CONSTANT                            ; NO           ; Untyped                                        ;
+; USE_EAB                                        ; OFF          ; Untyped                                        ;
+; MAXIMIZE_SPEED                                 ; 6            ; Untyped                                        ;
+; DEVICE_FAMILY                                  ; Cyclone IV E ; Untyped                                        ;
+; CARRY_CHAIN                                    ; MANUAL       ; Untyped                                        ;
+; APEX20K_TECHNOLOGY_MAPPER                      ; LUT          ; TECH_MAPPER_APEX20K                            ;
+; DEDICATED_MULTIPLIER_CIRCUITRY                 ; AUTO         ; Untyped                                        ;
+; DEDICATED_MULTIPLIER_MIN_INPUT_WIDTH_FOR_AUTO  ; 0            ; Untyped                                        ;
+; DEDICATED_MULTIPLIER_MIN_OUTPUT_WIDTH_FOR_AUTO ; 0            ; Untyped                                        ;
+; CBXI_PARAMETER                                 ; mult_e4t     ; Untyped                                        ;
+; INPUT_A_FIXED_VALUE                            ; Bx           ; Untyped                                        ;
+; INPUT_B_FIXED_VALUE                            ; Bx           ; Untyped                                        ;
+; USE_AHDL_IMPLEMENTATION                        ; OFF          ; Untyped                                        ;
++------------------------------------------------+--------------+------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++----------------------------------------------------------------------------------------------------------------+
+; Parameter Settings for Inferred Entity Instance: tunnel_renderer:u_tunnel|coord_transform:u_xfm|lpm_mult:Mult2 ;
++------------------------------------------------+--------------+------------------------------------------------+
+; Parameter Name                                 ; Value        ; Type                                           ;
++------------------------------------------------+--------------+------------------------------------------------+
+; AUTO_CARRY_CHAINS                              ; ON           ; AUTO_CARRY                                     ;
+; IGNORE_CARRY_BUFFERS                           ; OFF          ; IGNORE_CARRY                                   ;
+; AUTO_CASCADE_CHAINS                            ; ON           ; AUTO_CASCADE                                   ;
+; IGNORE_CASCADE_BUFFERS                         ; OFF          ; IGNORE_CASCADE                                 ;
+; LPM_WIDTHA                                     ; 11           ; Untyped                                        ;
+; LPM_WIDTHB                                     ; 9            ; Untyped                                        ;
+; LPM_WIDTHP                                     ; 20           ; Untyped                                        ;
+; LPM_WIDTHR                                     ; 20           ; Untyped                                        ;
+; LPM_WIDTHS                                     ; 1            ; Untyped                                        ;
+; LPM_REPRESENTATION                             ; SIGNED       ; Untyped                                        ;
+; LPM_PIPELINE                                   ; 0            ; Untyped                                        ;
+; LATENCY                                        ; 0            ; Untyped                                        ;
+; INPUT_A_IS_CONSTANT                            ; NO           ; Untyped                                        ;
+; INPUT_B_IS_CONSTANT                            ; NO           ; Untyped                                        ;
+; USE_EAB                                        ; OFF          ; Untyped                                        ;
+; MAXIMIZE_SPEED                                 ; 6            ; Untyped                                        ;
+; DEVICE_FAMILY                                  ; Cyclone IV E ; Untyped                                        ;
+; CARRY_CHAIN                                    ; MANUAL       ; Untyped                                        ;
+; APEX20K_TECHNOLOGY_MAPPER                      ; LUT          ; TECH_MAPPER_APEX20K                            ;
+; DEDICATED_MULTIPLIER_CIRCUITRY                 ; AUTO         ; Untyped                                        ;
+; DEDICATED_MULTIPLIER_MIN_INPUT_WIDTH_FOR_AUTO  ; 0            ; Untyped                                        ;
+; DEDICATED_MULTIPLIER_MIN_OUTPUT_WIDTH_FOR_AUTO ; 0            ; Untyped                                        ;
+; CBXI_PARAMETER                                 ; mult_e4t     ; Untyped                                        ;
+; INPUT_A_FIXED_VALUE                            ; Bx           ; Untyped                                        ;
+; INPUT_B_FIXED_VALUE                            ; Bx           ; Untyped                                        ;
+; USE_AHDL_IMPLEMENTATION                        ; OFF          ; Untyped                                        ;
++------------------------------------------------+--------------+------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++---------------------------------------------------------------------------------------------------------------+
+; Parameter Settings for Inferred Entity Instance: tunnel_renderer:u_tunnel|colour_palette:u_pal|lpm_mult:Mult0 ;
++------------------------------------------------+--------------+-----------------------------------------------+
+; Parameter Name                                 ; Value        ; Type                                          ;
++------------------------------------------------+--------------+-----------------------------------------------+
+; AUTO_CARRY_CHAINS                              ; ON           ; AUTO_CARRY                                    ;
+; IGNORE_CARRY_BUFFERS                           ; OFF          ; IGNORE_CARRY                                  ;
+; AUTO_CASCADE_CHAINS                            ; ON           ; AUTO_CASCADE                                  ;
+; IGNORE_CASCADE_BUFFERS                         ; OFF          ; IGNORE_CASCADE                                ;
+; LPM_WIDTHA                                     ; 5            ; Untyped                                       ;
+; LPM_WIDTHB                                     ; 5            ; Untyped                                       ;
+; LPM_WIDTHP                                     ; 10           ; Untyped                                       ;
+; LPM_WIDTHR                                     ; 10           ; Untyped                                       ;
+; LPM_WIDTHS                                     ; 1            ; Untyped                                       ;
+; LPM_REPRESENTATION                             ; SIGNED       ; Untyped                                       ;
+; LPM_PIPELINE                                   ; 0            ; Untyped                                       ;
+; LATENCY                                        ; 0            ; Untyped                                       ;
+; INPUT_A_IS_CONSTANT                            ; NO           ; Untyped                                       ;
+; INPUT_B_IS_CONSTANT                            ; NO           ; Untyped                                       ;
+; USE_EAB                                        ; OFF          ; Untyped                                       ;
+; MAXIMIZE_SPEED                                 ; 5            ; Untyped                                       ;
+; DEVICE_FAMILY                                  ; Cyclone IV E ; Untyped                                       ;
+; CARRY_CHAIN                                    ; MANUAL       ; Untyped                                       ;
+; APEX20K_TECHNOLOGY_MAPPER                      ; LUT          ; TECH_MAPPER_APEX20K                           ;
+; DEDICATED_MULTIPLIER_CIRCUITRY                 ; AUTO         ; Untyped                                       ;
+; DEDICATED_MULTIPLIER_MIN_INPUT_WIDTH_FOR_AUTO  ; 0            ; Untyped                                       ;
+; DEDICATED_MULTIPLIER_MIN_OUTPUT_WIDTH_FOR_AUTO ; 0            ; Untyped                                       ;
+; CBXI_PARAMETER                                 ; mult_r2t     ; Untyped                                       ;
+; INPUT_A_FIXED_VALUE                            ; Bx           ; Untyped                                       ;
+; INPUT_B_FIXED_VALUE                            ; Bx           ; Untyped                                       ;
+; USE_AHDL_IMPLEMENTATION                        ; OFF          ; Untyped                                       ;
++------------------------------------------------+--------------+-----------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++---------------------------------------------------------------------------------------------------------------+
+; Parameter Settings for Inferred Entity Instance: tunnel_renderer:u_tunnel|colour_palette:u_pal|lpm_mult:Mult2 ;
++------------------------------------------------+--------------+-----------------------------------------------+
+; Parameter Name                                 ; Value        ; Type                                          ;
++------------------------------------------------+--------------+-----------------------------------------------+
+; AUTO_CARRY_CHAINS                              ; ON           ; AUTO_CARRY                                    ;
+; IGNORE_CARRY_BUFFERS                           ; OFF          ; IGNORE_CARRY                                  ;
+; AUTO_CASCADE_CHAINS                            ; ON           ; AUTO_CASCADE                                  ;
+; IGNORE_CASCADE_BUFFERS                         ; OFF          ; IGNORE_CASCADE                                ;
+; LPM_WIDTHA                                     ; 3            ; Untyped                                       ;
+; LPM_WIDTHB                                     ; 5            ; Untyped                                       ;
+; LPM_WIDTHP                                     ; 8            ; Untyped                                       ;
+; LPM_WIDTHR                                     ; 8            ; Untyped                                       ;
+; LPM_WIDTHS                                     ; 1            ; Untyped                                       ;
+; LPM_REPRESENTATION                             ; SIGNED       ; Untyped                                       ;
+; LPM_PIPELINE                                   ; 0            ; Untyped                                       ;
+; LATENCY                                        ; 0            ; Untyped                                       ;
+; INPUT_A_IS_CONSTANT                            ; NO           ; Untyped                                       ;
+; INPUT_B_IS_CONSTANT                            ; NO           ; Untyped                                       ;
+; USE_EAB                                        ; OFF          ; Untyped                                       ;
+; MAXIMIZE_SPEED                                 ; 5            ; Untyped                                       ;
+; DEVICE_FAMILY                                  ; Cyclone IV E ; Untyped                                       ;
+; CARRY_CHAIN                                    ; MANUAL       ; Untyped                                       ;
+; APEX20K_TECHNOLOGY_MAPPER                      ; LUT          ; TECH_MAPPER_APEX20K                           ;
+; DEDICATED_MULTIPLIER_CIRCUITRY                 ; AUTO         ; Untyped                                       ;
+; DEDICATED_MULTIPLIER_MIN_INPUT_WIDTH_FOR_AUTO  ; 0            ; Untyped                                       ;
+; DEDICATED_MULTIPLIER_MIN_OUTPUT_WIDTH_FOR_AUTO ; 0            ; Untyped                                       ;
+; CBXI_PARAMETER                                 ; NOTHING      ; Untyped                                       ;
+; INPUT_A_FIXED_VALUE                            ; Bx           ; Untyped                                       ;
+; INPUT_B_FIXED_VALUE                            ; Bx           ; Untyped                                       ;
+; USE_AHDL_IMPLEMENTATION                        ; OFF          ; Untyped                                       ;
++------------------------------------------------+--------------+-----------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++-------------------------------------------------------------------------------------+
+; Parameter Settings for Inferred Entity Instance: lpm_mult:Mult1                     ;
++------------------------------------------------+--------------+---------------------+
+; Parameter Name                                 ; Value        ; Type                ;
++------------------------------------------------+--------------+---------------------+
+; AUTO_CARRY_CHAINS                              ; ON           ; AUTO_CARRY          ;
+; IGNORE_CARRY_BUFFERS                           ; OFF          ; IGNORE_CARRY        ;
+; AUTO_CASCADE_CHAINS                            ; ON           ; AUTO_CASCADE        ;
+; IGNORE_CASCADE_BUFFERS                         ; OFF          ; IGNORE_CASCADE      ;
+; LPM_WIDTHA                                     ; 9            ; Untyped             ;
+; LPM_WIDTHB                                     ; 10           ; Untyped             ;
+; LPM_WIDTHP                                     ; 19           ; Untyped             ;
+; LPM_WIDTHR                                     ; 19           ; Untyped             ;
+; LPM_WIDTHS                                     ; 1            ; Untyped             ;
+; LPM_REPRESENTATION                             ; SIGNED       ; Untyped             ;
+; LPM_PIPELINE                                   ; 0            ; Untyped             ;
+; LATENCY                                        ; 0            ; Untyped             ;
+; INPUT_A_IS_CONSTANT                            ; NO           ; Untyped             ;
+; INPUT_B_IS_CONSTANT                            ; YES          ; Untyped             ;
+; USE_EAB                                        ; OFF          ; Untyped             ;
+; MAXIMIZE_SPEED                                 ; 6            ; Untyped             ;
+; DEVICE_FAMILY                                  ; Cyclone IV E ; Untyped             ;
+; CARRY_CHAIN                                    ; MANUAL       ; Untyped             ;
+; APEX20K_TECHNOLOGY_MAPPER                      ; LUT          ; TECH_MAPPER_APEX20K ;
+; DEDICATED_MULTIPLIER_CIRCUITRY                 ; AUTO         ; Untyped             ;
+; DEDICATED_MULTIPLIER_MIN_INPUT_WIDTH_FOR_AUTO  ; 0            ; Untyped             ;
+; DEDICATED_MULTIPLIER_MIN_OUTPUT_WIDTH_FOR_AUTO ; 0            ; Untyped             ;
+; CBXI_PARAMETER                                 ; NOTHING      ; Untyped             ;
+; INPUT_A_FIXED_VALUE                            ; Bx           ; Untyped             ;
+; INPUT_B_FIXED_VALUE                            ; Bx           ; Untyped             ;
+; USE_AHDL_IMPLEMENTATION                        ; OFF          ; Untyped             ;
++------------------------------------------------+--------------+---------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++-------------------------------------------------------------------------------------+
+; Parameter Settings for Inferred Entity Instance: lpm_mult:Mult0                     ;
++------------------------------------------------+--------------+---------------------+
+; Parameter Name                                 ; Value        ; Type                ;
++------------------------------------------------+--------------+---------------------+
+; AUTO_CARRY_CHAINS                              ; ON           ; AUTO_CARRY          ;
+; IGNORE_CARRY_BUFFERS                           ; OFF          ; IGNORE_CARRY        ;
+; AUTO_CASCADE_CHAINS                            ; ON           ; AUTO_CASCADE        ;
+; IGNORE_CASCADE_BUFFERS                         ; OFF          ; IGNORE_CASCADE      ;
+; LPM_WIDTHA                                     ; 9            ; Untyped             ;
+; LPM_WIDTHB                                     ; 10           ; Untyped             ;
+; LPM_WIDTHP                                     ; 19           ; Untyped             ;
+; LPM_WIDTHR                                     ; 19           ; Untyped             ;
+; LPM_WIDTHS                                     ; 1            ; Untyped             ;
+; LPM_REPRESENTATION                             ; SIGNED       ; Untyped             ;
+; LPM_PIPELINE                                   ; 0            ; Untyped             ;
+; LATENCY                                        ; 0            ; Untyped             ;
+; INPUT_A_IS_CONSTANT                            ; NO           ; Untyped             ;
+; INPUT_B_IS_CONSTANT                            ; YES          ; Untyped             ;
+; USE_EAB                                        ; OFF          ; Untyped             ;
+; MAXIMIZE_SPEED                                 ; 6            ; Untyped             ;
+; DEVICE_FAMILY                                  ; Cyclone IV E ; Untyped             ;
+; CARRY_CHAIN                                    ; MANUAL       ; Untyped             ;
+; APEX20K_TECHNOLOGY_MAPPER                      ; LUT          ; TECH_MAPPER_APEX20K ;
+; DEDICATED_MULTIPLIER_CIRCUITRY                 ; AUTO         ; Untyped             ;
+; DEDICATED_MULTIPLIER_MIN_INPUT_WIDTH_FOR_AUTO  ; 0            ; Untyped             ;
+; DEDICATED_MULTIPLIER_MIN_OUTPUT_WIDTH_FOR_AUTO ; 0            ; Untyped             ;
+; CBXI_PARAMETER                                 ; NOTHING      ; Untyped             ;
+; INPUT_A_FIXED_VALUE                            ; Bx           ; Untyped             ;
+; INPUT_B_FIXED_VALUE                            ; Bx           ; Untyped             ;
+; USE_AHDL_IMPLEMENTATION                        ; OFF          ; Untyped             ;
++------------------------------------------------+--------------+---------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++-------------------------------------------------------------------------------------------------------+
+; lpm_mult Parameter Settings by Entity Instance                                                        ;
++---------------------------------------+---------------------------------------------------------------+
+; Name                                  ; Value                                                         ;
++---------------------------------------+---------------------------------------------------------------+
+; Number of entity instances            ; 14                                                            ;
+; Entity Instance                       ; tunnel_renderer:u_tunnel|colour_palette:u_pal|lpm_mult:Mult3  ;
+;     -- LPM_WIDTHA                     ; 4                                                             ;
+;     -- LPM_WIDTHB                     ; 4                                                             ;
+;     -- LPM_WIDTHP                     ; 8                                                             ;
+;     -- LPM_REPRESENTATION             ; UNSIGNED                                                      ;
+;     -- INPUT_A_IS_CONSTANT            ; NO                                                            ;
+;     -- INPUT_B_IS_CONSTANT            ; NO                                                            ;
+;     -- USE_EAB                        ; OFF                                                           ;
+;     -- DEDICATED_MULTIPLIER_CIRCUITRY ; AUTO                                                          ;
+;     -- INPUT_A_FIXED_VALUE            ; Bx                                                            ;
+;     -- INPUT_B_FIXED_VALUE            ; Bx                                                            ;
+; Entity Instance                       ; tunnel_renderer:u_tunnel|colour_palette:u_pal|lpm_mult:Mult4  ;
+;     -- LPM_WIDTHA                     ; 4                                                             ;
+;     -- LPM_WIDTHB                     ; 4                                                             ;
+;     -- LPM_WIDTHP                     ; 8                                                             ;
+;     -- LPM_REPRESENTATION             ; UNSIGNED                                                      ;
+;     -- INPUT_A_IS_CONSTANT            ; NO                                                            ;
+;     -- INPUT_B_IS_CONSTANT            ; NO                                                            ;
+;     -- USE_EAB                        ; OFF                                                           ;
+;     -- DEDICATED_MULTIPLIER_CIRCUITRY ; AUTO                                                          ;
+;     -- INPUT_A_FIXED_VALUE            ; Bx                                                            ;
+;     -- INPUT_B_FIXED_VALUE            ; Bx                                                            ;
+; Entity Instance                       ; tunnel_renderer:u_tunnel|colour_palette:u_pal|lpm_mult:Mult5  ;
+;     -- LPM_WIDTHA                     ; 4                                                             ;
+;     -- LPM_WIDTHB                     ; 4                                                             ;
+;     -- LPM_WIDTHP                     ; 8                                                             ;
+;     -- LPM_REPRESENTATION             ; UNSIGNED                                                      ;
+;     -- INPUT_A_IS_CONSTANT            ; NO                                                            ;
+;     -- INPUT_B_IS_CONSTANT            ; NO                                                            ;
+;     -- USE_EAB                        ; OFF                                                           ;
+;     -- DEDICATED_MULTIPLIER_CIRCUITRY ; AUTO                                                          ;
+;     -- INPUT_A_FIXED_VALUE            ; Bx                                                            ;
+;     -- INPUT_B_FIXED_VALUE            ; Bx                                                            ;
+; Entity Instance                       ; tunnel_renderer:u_tunnel|tunnel_core:u_core|lpm_mult:Mult1    ;
+;     -- LPM_WIDTHA                     ; 10                                                            ;
+;     -- LPM_WIDTHB                     ; 10                                                            ;
+;     -- LPM_WIDTHP                     ; 20                                                            ;
+;     -- LPM_REPRESENTATION             ; UNSIGNED                                                      ;
+;     -- INPUT_A_IS_CONSTANT            ; NO                                                            ;
+;     -- INPUT_B_IS_CONSTANT            ; NO                                                            ;
+;     -- USE_EAB                        ; OFF                                                           ;
+;     -- DEDICATED_MULTIPLIER_CIRCUITRY ; AUTO                                                          ;
+;     -- INPUT_A_FIXED_VALUE            ; Bx                                                            ;
+;     -- INPUT_B_FIXED_VALUE            ; Bx                                                            ;
+; Entity Instance                       ; tunnel_renderer:u_tunnel|tunnel_core:u_core|lpm_mult:Mult0    ;
+;     -- LPM_WIDTHA                     ; 10                                                            ;
+;     -- LPM_WIDTHB                     ; 10                                                            ;
+;     -- LPM_WIDTHP                     ; 20                                                            ;
+;     -- LPM_REPRESENTATION             ; UNSIGNED                                                      ;
+;     -- INPUT_A_IS_CONSTANT            ; NO                                                            ;
+;     -- INPUT_B_IS_CONSTANT            ; NO                                                            ;
+;     -- USE_EAB                        ; OFF                                                           ;
+;     -- DEDICATED_MULTIPLIER_CIRCUITRY ; AUTO                                                          ;
+;     -- INPUT_A_FIXED_VALUE            ; Bx                                                            ;
+;     -- INPUT_B_FIXED_VALUE            ; Bx                                                            ;
+; Entity Instance                       ; tunnel_renderer:u_tunnel|coord_transform:u_xfm|lpm_mult:Mult0 ;
+;     -- LPM_WIDTHA                     ; 11                                                            ;
+;     -- LPM_WIDTHB                     ; 9                                                             ;
+;     -- LPM_WIDTHP                     ; 20                                                            ;
+;     -- LPM_REPRESENTATION             ; SIGNED                                                        ;
+;     -- INPUT_A_IS_CONSTANT            ; NO                                                            ;
+;     -- INPUT_B_IS_CONSTANT            ; NO                                                            ;
+;     -- USE_EAB                        ; OFF                                                           ;
+;     -- DEDICATED_MULTIPLIER_CIRCUITRY ; AUTO                                                          ;
+;     -- INPUT_A_FIXED_VALUE            ; Bx                                                            ;
+;     -- INPUT_B_FIXED_VALUE            ; Bx                                                            ;
+; Entity Instance                       ; tunnel_renderer:u_tunnel|coord_transform:u_xfm|lpm_mult:Mult3 ;
+;     -- LPM_WIDTHA                     ; 11                                                            ;
+;     -- LPM_WIDTHB                     ; 9                                                             ;
+;     -- LPM_WIDTHP                     ; 20                                                            ;
+;     -- LPM_REPRESENTATION             ; SIGNED                                                        ;
+;     -- INPUT_A_IS_CONSTANT            ; NO                                                            ;
+;     -- INPUT_B_IS_CONSTANT            ; NO                                                            ;
+;     -- USE_EAB                        ; OFF                                                           ;
+;     -- DEDICATED_MULTIPLIER_CIRCUITRY ; AUTO                                                          ;
+;     -- INPUT_A_FIXED_VALUE            ; Bx                                                            ;
+;     -- INPUT_B_FIXED_VALUE            ; Bx                                                            ;
+; Entity Instance                       ; tunnel_renderer:u_tunnel|colour_palette:u_pal|lpm_mult:Mult1  ;
+;     -- LPM_WIDTHA                     ; 5                                                             ;
+;     -- LPM_WIDTHB                     ; 5                                                             ;
+;     -- LPM_WIDTHP                     ; 10                                                            ;
+;     -- LPM_REPRESENTATION             ; SIGNED                                                        ;
+;     -- INPUT_A_IS_CONSTANT            ; NO                                                            ;
+;     -- INPUT_B_IS_CONSTANT            ; NO                                                            ;
+;     -- USE_EAB                        ; OFF                                                           ;
+;     -- DEDICATED_MULTIPLIER_CIRCUITRY ; AUTO                                                          ;
+;     -- INPUT_A_FIXED_VALUE            ; Bx                                                            ;
+;     -- INPUT_B_FIXED_VALUE            ; Bx                                                            ;
+; Entity Instance                       ; tunnel_renderer:u_tunnel|coord_transform:u_xfm|lpm_mult:Mult1 ;
+;     -- LPM_WIDTHA                     ; 11                                                            ;
+;     -- LPM_WIDTHB                     ; 9                                                             ;
+;     -- LPM_WIDTHP                     ; 20                                                            ;
+;     -- LPM_REPRESENTATION             ; SIGNED                                                        ;
+;     -- INPUT_A_IS_CONSTANT            ; NO                                                            ;
+;     -- INPUT_B_IS_CONSTANT            ; NO                                                            ;
+;     -- USE_EAB                        ; OFF                                                           ;
+;     -- DEDICATED_MULTIPLIER_CIRCUITRY ; AUTO                                                          ;
+;     -- INPUT_A_FIXED_VALUE            ; Bx                                                            ;
+;     -- INPUT_B_FIXED_VALUE            ; Bx                                                            ;
+; Entity Instance                       ; tunnel_renderer:u_tunnel|coord_transform:u_xfm|lpm_mult:Mult2 ;
+;     -- LPM_WIDTHA                     ; 11                                                            ;
+;     -- LPM_WIDTHB                     ; 9                                                             ;
+;     -- LPM_WIDTHP                     ; 20                                                            ;
+;     -- LPM_REPRESENTATION             ; SIGNED                                                        ;
+;     -- INPUT_A_IS_CONSTANT            ; NO                                                            ;
+;     -- INPUT_B_IS_CONSTANT            ; NO                                                            ;
+;     -- USE_EAB                        ; OFF                                                           ;
+;     -- DEDICATED_MULTIPLIER_CIRCUITRY ; AUTO                                                          ;
+;     -- INPUT_A_FIXED_VALUE            ; Bx                                                            ;
+;     -- INPUT_B_FIXED_VALUE            ; Bx                                                            ;
+; Entity Instance                       ; tunnel_renderer:u_tunnel|colour_palette:u_pal|lpm_mult:Mult0  ;
+;     -- LPM_WIDTHA                     ; 5                                                             ;
+;     -- LPM_WIDTHB                     ; 5                                                             ;
+;     -- LPM_WIDTHP                     ; 10                                                            ;
+;     -- LPM_REPRESENTATION             ; SIGNED                                                        ;
+;     -- INPUT_A_IS_CONSTANT            ; NO                                                            ;
+;     -- INPUT_B_IS_CONSTANT            ; NO                                                            ;
+;     -- USE_EAB                        ; OFF                                                           ;
+;     -- DEDICATED_MULTIPLIER_CIRCUITRY ; AUTO                                                          ;
+;     -- INPUT_A_FIXED_VALUE            ; Bx                                                            ;
+;     -- INPUT_B_FIXED_VALUE            ; Bx                                                            ;
+; Entity Instance                       ; tunnel_renderer:u_tunnel|colour_palette:u_pal|lpm_mult:Mult2  ;
+;     -- LPM_WIDTHA                     ; 3                                                             ;
+;     -- LPM_WIDTHB                     ; 5                                                             ;
+;     -- LPM_WIDTHP                     ; 8                                                             ;
+;     -- LPM_REPRESENTATION             ; SIGNED                                                        ;
+;     -- INPUT_A_IS_CONSTANT            ; NO                                                            ;
+;     -- INPUT_B_IS_CONSTANT            ; NO                                                            ;
+;     -- USE_EAB                        ; OFF                                                           ;
+;     -- DEDICATED_MULTIPLIER_CIRCUITRY ; AUTO                                                          ;
+;     -- INPUT_A_FIXED_VALUE            ; Bx                                                            ;
+;     -- INPUT_B_FIXED_VALUE            ; Bx                                                            ;
+; Entity Instance                       ; lpm_mult:Mult1                                                ;
+;     -- LPM_WIDTHA                     ; 9                                                             ;
+;     -- LPM_WIDTHB                     ; 10                                                            ;
+;     -- LPM_WIDTHP                     ; 19                                                            ;
+;     -- LPM_REPRESENTATION             ; SIGNED                                                        ;
+;     -- INPUT_A_IS_CONSTANT            ; NO                                                            ;
+;     -- INPUT_B_IS_CONSTANT            ; YES                                                           ;
+;     -- USE_EAB                        ; OFF                                                           ;
+;     -- DEDICATED_MULTIPLIER_CIRCUITRY ; AUTO                                                          ;
+;     -- INPUT_A_FIXED_VALUE            ; Bx                                                            ;
+;     -- INPUT_B_FIXED_VALUE            ; Bx                                                            ;
+; Entity Instance                       ; lpm_mult:Mult0                                                ;
+;     -- LPM_WIDTHA                     ; 9                                                             ;
+;     -- LPM_WIDTHB                     ; 10                                                            ;
+;     -- LPM_WIDTHP                     ; 19                                                            ;
+;     -- LPM_REPRESENTATION             ; SIGNED                                                        ;
+;     -- INPUT_A_IS_CONSTANT            ; NO                                                            ;
+;     -- INPUT_B_IS_CONSTANT            ; YES                                                           ;
+;     -- USE_EAB                        ; OFF                                                           ;
+;     -- DEDICATED_MULTIPLIER_CIRCUITRY ; AUTO                                                          ;
+;     -- INPUT_A_FIXED_VALUE            ; Bx                                                            ;
+;     -- INPUT_B_FIXED_VALUE            ; Bx                                                            ;
++---------------------------------------+---------------------------------------------------------------+
+
+
++--------------------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "obstacle_manager:u_obs"                                                                       ;
++----------------+--------+----------+-------------------------------------------------------------------------------------+
+; Port           ; Type   ; Severity ; Details                                                                             ;
++----------------+--------+----------+-------------------------------------------------------------------------------------+
+; ring_collected ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
++----------------+--------+----------+-------------------------------------------------------------------------------------+
+
+
++-----------------------------------------------------------------------------+
+; Port Connectivity Checks: "tunnel_renderer:u_tunnel|tunnel_background:u_bg" ;
++-----------+-------+----------+----------------------------------------------+
+; Port      ; Type  ; Severity ; Details                                      ;
++-----------+-------+----------+----------------------------------------------+
+; bg_scroll ; Input ; Info     ; Stuck at GND                                 ;
++-----------+-------+----------+----------------------------------------------+
+
+
++---------------------------------------------------+
+; Port Connectivity Checks: "stage_manager:u_stage" ;
++--------------+-------+----------+-----------------+
+; Port         ; Type  ; Severity ; Details         ;
++--------------+-------+----------+-----------------+
+; zone_advance ; Input ; Info     ; Stuck at GND    ;
++--------------+-------+----------+-----------------+
+
+
++--------------------------------------------------+
+; Port Connectivity Checks: "vga_controller:u_vga" ;
++------+-------+----------+------------------------+
+; Port ; Type  ; Severity ; Details                ;
++------+-------+----------+------------------------+
+; rst  ; Input ; Info     ; Stuck at GND           ;
++------+-------+----------+------------------------+
+
+
++-----------------------------------------------------+
+; Post-Synthesis Netlist Statistics for Top Partition ;
++-----------------------+-----------------------------+
+; Type                  ; Count                       ;
++-----------------------+-----------------------------+
+; boundary_port         ; 18                          ;
+; cycloneiii_ff         ; 329                         ;
+;     ENA               ; 136                         ;
+;     ENA SCLR          ; 62                          ;
+;     SCLR              ; 21                          ;
+;     SCLR SLD          ; 5                           ;
+;     plain             ; 105                         ;
+; cycloneiii_lcell_comb ; 2305                        ;
+;     arith             ; 940                         ;
+;         1 data inputs ; 1                           ;
+;         2 data inputs ; 232                         ;
+;         3 data inputs ; 707                         ;
+;     normal            ; 1365                        ;
+;         0 data inputs ; 16                          ;
+;         1 data inputs ; 61                          ;
+;         2 data inputs ; 161                         ;
+;         3 data inputs ; 246                         ;
+;         4 data inputs ; 881                         ;
+; cycloneiii_mac_mult   ; 8                           ;
+; cycloneiii_mac_out    ; 8                           ;
+;                       ;                             ;
+; Max LUT depth         ; 21.50                       ;
+; Average LUT depth     ; 10.99                       ;
++-----------------------+-----------------------------+
+
+
++-------------------------------+
+; Elapsed Time Per Partition    ;
++----------------+--------------+
+; Partition Name ; Elapsed Time ;
++----------------+--------------+
+; Top            ; 00:00:07     ;
++----------------+--------------+
+
+
++-------------------------------+
+; Analysis & Synthesis Messages ;
++-------------------------------+
+Info: *******************************************************************
+Info: Running Quartus Prime Analysis & Synthesis
+    Info: Version 23.1std.1 Build 993 05/14/2024 SC Lite Edition
+    Info: Processing started: Thu Apr 23 14:15:20 2026
+Info: Command: quartus_map --read_settings_files=on --write_settings_files=off RushTunnelFPGA -c RushTunnelFPGA
+Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
+Info (20030): Parallel compilation is enabled and will use 6 of the 6 processors detected
+Info (12021): Found 2 design units, including 1 entities, in source file rushtunnelfpga.vhd
+    Info (12022): Found design unit 1: RushTunnelFPGA-rtl File: C:/Users/Thomas/Documents/Uliege/ICDesign/Project/RushTunnelFPGA.vhd Line: 38
+    Info (12023): Found entity 1: RushTunnelFPGA File: C:/Users/Thomas/Documents/Uliege/ICDesign/Project/RushTunnelFPGA.vhd Line: 25
+Info (12021): Found 2 design units, including 1 entities, in source file vga_controller.vhd
+    Info (12022): Found design unit 1: vga_controller-rtl File: C:/Users/Thomas/Documents/Uliege/ICDesign/Project/vga_controller.vhd Line: 22
+    Info (12023): Found entity 1: vga_controller File: C:/Users/Thomas/Documents/Uliege/ICDesign/Project/vga_controller.vhd Line: 10
+Info (12021): Found 2 design units, including 1 entities, in source file tunnel_renderer.vhd
+    Info (12022): Found design unit 1: tunnel_renderer-rtl File: C:/Users/Thomas/Documents/Uliege/ICDesign/Project/tunnel_renderer.vhd Line: 82
+    Info (12023): Found entity 1: tunnel_renderer File: C:/Users/Thomas/Documents/Uliege/ICDesign/Project/tunnel_renderer.vhd Line: 39
+Info (12021): Found 2 design units, including 1 entities, in source file snes_controller.vhd
+    Info (12022): Found design unit 1: snes_controller-rtl File: C:/Users/Thomas/Documents/Uliege/ICDesign/Project/snes_controller.vhd Line: 39
+    Info (12023): Found entity 1: snes_controller File: C:/Users/Thomas/Documents/Uliege/ICDesign/Project/snes_controller.vhd Line: 29
+Info (12021): Found 2 design units, including 1 entities, in source file game_fsm.vhd
+    Info (12022): Found design unit 1: game_fsm-rtl File: C:/Users/Thomas/Documents/Uliege/ICDesign/Project/game_fsm.vhd Line: 49
+    Info (12023): Found entity 1: game_fsm File: C:/Users/Thomas/Documents/Uliege/ICDesign/Project/game_fsm.vhd Line: 31
+Info (12021): Found 2 design units, including 1 entities, in source file obstacle_manager.vhd
+    Info (12022): Found design unit 1: obstacle_manager-rtl File: C:/Users/Thomas/Documents/Uliege/ICDesign/Project/obstacle_manager.vhd Line: 76
+    Info (12023): Found entity 1: obstacle_manager File: C:/Users/Thomas/Documents/Uliege/ICDesign/Project/obstacle_manager.vhd Line: 43
+Info (12021): Found 2 design units, including 1 entities, in source file trig_rom.vhd
+    Info (12022): Found design unit 1: trig_rom-rtl File: C:/Users/Thomas/Documents/Uliege/ICDesign/Project/trig_rom.vhd Line: 42
+    Info (12023): Found entity 1: trig_rom File: C:/Users/Thomas/Documents/Uliege/ICDesign/Project/trig_rom.vhd Line: 34
+Info (12021): Found 2 design units, including 1 entities, in source file tunnel_core.vhd
+    Info (12022): Found design unit 1: tunnel_core-rtl File: C:/Users/Thomas/Documents/Uliege/ICDesign/Project/tunnel_core.vhd Line: 67
+    Info (12023): Found entity 1: tunnel_core File: C:/Users/Thomas/Documents/Uliege/ICDesign/Project/tunnel_core.vhd Line: 50
+Info (12021): Found 2 design units, including 1 entities, in source file tunnel_background.vhd
+    Info (12022): Found design unit 1: tunnel_background-rtl File: C:/Users/Thomas/Documents/Uliege/ICDesign/Project/tunnel_background.vhd Line: 55
+    Info (12023): Found entity 1: tunnel_background File: C:/Users/Thomas/Documents/Uliege/ICDesign/Project/tunnel_background.vhd Line: 46
+Info (12021): Found 2 design units, including 1 entities, in source file colour_palette.vhd
+    Info (12022): Found design unit 1: colour_palette-rtl File: C:/Users/Thomas/Documents/Uliege/ICDesign/Project/colour_palette.vhd Line: 78
+    Info (12023): Found entity 1: colour_palette File: C:/Users/Thomas/Documents/Uliege/ICDesign/Project/colour_palette.vhd Line: 53
+Info (12021): Found 2 design units, including 1 entities, in source file coord_transform.vhd
+    Info (12022): Found design unit 1: coord_transform-rtl File: C:/Users/Thomas/Documents/Uliege/ICDesign/Project/coord_transform.vhd Line: 49
+    Info (12023): Found entity 1: coord_transform File: C:/Users/Thomas/Documents/Uliege/ICDesign/Project/coord_transform.vhd Line: 27
+Info (12021): Found 2 design units, including 1 entities, in source file stage_manager.vhd
+    Info (12022): Found design unit 1: stage_manager-rtl File: C:/Users/Thomas/Documents/Uliege/ICDesign/Project/stage_manager.vhd Line: 47
+    Info (12023): Found entity 1: stage_manager File: C:/Users/Thomas/Documents/Uliege/ICDesign/Project/stage_manager.vhd Line: 35
+Info (12127): Elaborating entity "RushTunnelFPGA" for the top level hierarchy
+Warning (10036): Verilog HDL or VHDL warning at RushTunnelFPGA.vhd(88): object "ring_collected_s" assigned a value but never read File: C:/Users/Thomas/Documents/Uliege/ICDesign/Project/RushTunnelFPGA.vhd Line: 88
+Info (12128): Elaborating entity "vga_controller" for hierarchy "vga_controller:u_vga" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Project/RushTunnelFPGA.vhd Line: 102
+Info (12128): Elaborating entity "trig_rom" for hierarchy "trig_rom:u_trig_tun" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Project/RushTunnelFPGA.vhd Line: 116
+Warning (10542): VHDL Variable Declaration warning at math_real_vhdl1993.vhd(3004): used initial value expression for variable "NEGATIVE" because variable was never assigned a value File: c:/intelfpga_lite/23.1std/quartus/libraries/vhdl/ieee/1993/math_real_vhdl1993.vhd Line: 3004
+Info (12128): Elaborating entity "stage_manager" for hierarchy "stage_manager:u_stage" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Project/RushTunnelFPGA.vhd Line: 157
+Info (12128): Elaborating entity "tunnel_renderer" for hierarchy "tunnel_renderer:u_tunnel" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Project/RushTunnelFPGA.vhd Line: 170
+Warning (10540): VHDL Signal Declaration warning at tunnel_renderer.vhd(106): used explicit default value for signal "bg_scroll_s" because signal was never assigned a value File: C:/Users/Thomas/Documents/Uliege/ICDesign/Project/tunnel_renderer.vhd Line: 106
+Info (12128): Elaborating entity "coord_transform" for hierarchy "tunnel_renderer:u_tunnel|coord_transform:u_xfm" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Project/tunnel_renderer.vhd Line: 125
+Info (12128): Elaborating entity "tunnel_core" for hierarchy "tunnel_renderer:u_tunnel|tunnel_core:u_core" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Project/tunnel_renderer.vhd Line: 144
+Info (12128): Elaborating entity "tunnel_background" for hierarchy "tunnel_renderer:u_tunnel|tunnel_background:u_bg" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Project/tunnel_renderer.vhd Line: 163
+Info (12128): Elaborating entity "colour_palette" for hierarchy "tunnel_renderer:u_tunnel|colour_palette:u_pal" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Project/tunnel_renderer.vhd Line: 221
+Info (12128): Elaborating entity "snes_controller" for hierarchy "snes_controller:u_snes" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Project/RushTunnelFPGA.vhd Line: 209
+Info (12128): Elaborating entity "game_fsm" for hierarchy "game_fsm:u_fsm" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Project/RushTunnelFPGA.vhd Line: 221
+Info (12128): Elaborating entity "obstacle_manager" for hierarchy "obstacle_manager:u_obs" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Project/RushTunnelFPGA.vhd Line: 238
+Warning (10036): Verilog HDL or VHDL warning at obstacle_manager.vhd(107): object "collision_r" assigned a value but never read File: C:/Users/Thomas/Documents/Uliege/ICDesign/Project/obstacle_manager.vhd Line: 107
+Info (278001): Inferred 14 megafunctions from design logic
+    Info (278003): Inferred multiplier megafunction ("lpm_mult") from the following logic: "tunnel_renderer:u_tunnel|colour_palette:u_pal|Mult3" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Project/colour_palette.vhd Line: 143
+    Info (278003): Inferred multiplier megafunction ("lpm_mult") from the following logic: "tunnel_renderer:u_tunnel|colour_palette:u_pal|Mult4" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Project/colour_palette.vhd Line: 144
+    Info (278003): Inferred multiplier megafunction ("lpm_mult") from the following logic: "tunnel_renderer:u_tunnel|colour_palette:u_pal|Mult5" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Project/colour_palette.vhd Line: 145
+    Info (278003): Inferred multiplier megafunction ("lpm_mult") from the following logic: "tunnel_renderer:u_tunnel|tunnel_core:u_core|Mult1" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Project/tunnel_core.vhd Line: 133
+    Info (278003): Inferred multiplier megafunction ("lpm_mult") from the following logic: "tunnel_renderer:u_tunnel|tunnel_core:u_core|Mult0" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Project/tunnel_core.vhd Line: 133
+    Info (278003): Inferred multiplier megafunction ("lpm_mult") from the following logic: "tunnel_renderer:u_tunnel|coord_transform:u_xfm|Mult0" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Project/coord_transform.vhd Line: 81
+    Info (278003): Inferred multiplier megafunction ("lpm_mult") from the following logic: "tunnel_renderer:u_tunnel|coord_transform:u_xfm|Mult3" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Project/coord_transform.vhd Line: 84
+    Info (278003): Inferred multiplier megafunction ("lpm_mult") from the following logic: "tunnel_renderer:u_tunnel|colour_palette:u_pal|Mult1" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Project/colour_palette.vhd Line: 136
+    Info (278003): Inferred multiplier megafunction ("lpm_mult") from the following logic: "tunnel_renderer:u_tunnel|coord_transform:u_xfm|Mult1" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Project/coord_transform.vhd Line: 82
+    Info (278003): Inferred multiplier megafunction ("lpm_mult") from the following logic: "tunnel_renderer:u_tunnel|coord_transform:u_xfm|Mult2" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Project/coord_transform.vhd Line: 83
+    Info (278003): Inferred multiplier megafunction ("lpm_mult") from the following logic: "tunnel_renderer:u_tunnel|colour_palette:u_pal|Mult0" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Project/colour_palette.vhd Line: 135
+    Info (278003): Inferred multiplier megafunction ("lpm_mult") from the following logic: "tunnel_renderer:u_tunnel|colour_palette:u_pal|Mult2" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Project/colour_palette.vhd Line: 137
+    Info (278003): Inferred multiplier megafunction ("lpm_mult") from the following logic: "Mult1" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Project/RushTunnelFPGA.vhd Line: 143
+    Info (278003): Inferred multiplier megafunction ("lpm_mult") from the following logic: "Mult0" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Project/RushTunnelFPGA.vhd Line: 142
+Info (12130): Elaborated megafunction instantiation "tunnel_renderer:u_tunnel|colour_palette:u_pal|lpm_mult:Mult3" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Project/colour_palette.vhd Line: 143
+Info (12133): Instantiated megafunction "tunnel_renderer:u_tunnel|colour_palette:u_pal|lpm_mult:Mult3" with the following parameter: File: C:/Users/Thomas/Documents/Uliege/ICDesign/Project/colour_palette.vhd Line: 143
+    Info (12134): Parameter "LPM_WIDTHA" = "4"
+    Info (12134): Parameter "LPM_WIDTHB" = "4"
+    Info (12134): Parameter "LPM_WIDTHP" = "8"
+    Info (12134): Parameter "LPM_WIDTHR" = "8"
+    Info (12134): Parameter "LPM_WIDTHS" = "1"
+    Info (12134): Parameter "LPM_REPRESENTATION" = "UNSIGNED"
+    Info (12134): Parameter "INPUT_A_IS_CONSTANT" = "NO"
+    Info (12134): Parameter "INPUT_B_IS_CONSTANT" = "NO"
+    Info (12134): Parameter "MAXIMIZE_SPEED" = "5"
+Info (12021): Found 1 design units, including 1 entities, in source file db/mult_j8t.tdf
+    Info (12023): Found entity 1: mult_j8t File: C:/Users/Thomas/Documents/Uliege/ICDesign/Project/db/mult_j8t.tdf Line: 29
+Info (12130): Elaborated megafunction instantiation "tunnel_renderer:u_tunnel|tunnel_core:u_core|lpm_mult:Mult1" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Project/tunnel_core.vhd Line: 133
+Info (12133): Instantiated megafunction "tunnel_renderer:u_tunnel|tunnel_core:u_core|lpm_mult:Mult1" with the following parameter: File: C:/Users/Thomas/Documents/Uliege/ICDesign/Project/tunnel_core.vhd Line: 133
+    Info (12134): Parameter "LPM_WIDTHA" = "10"
+    Info (12134): Parameter "LPM_WIDTHB" = "10"
+    Info (12134): Parameter "LPM_WIDTHP" = "20"
+    Info (12134): Parameter "LPM_WIDTHR" = "20"
+    Info (12134): Parameter "LPM_WIDTHS" = "1"
+    Info (12134): Parameter "LPM_REPRESENTATION" = "UNSIGNED"
+    Info (12134): Parameter "INPUT_A_IS_CONSTANT" = "NO"
+    Info (12134): Parameter "INPUT_B_IS_CONSTANT" = "NO"
+    Info (12134): Parameter "MAXIMIZE_SPEED" = "6"
+Info (12021): Found 1 design units, including 1 entities, in source file db/mult_oct.tdf
+    Info (12023): Found entity 1: mult_oct File: C:/Users/Thomas/Documents/Uliege/ICDesign/Project/db/mult_oct.tdf Line: 29
+Info (12130): Elaborated megafunction instantiation "tunnel_renderer:u_tunnel|coord_transform:u_xfm|lpm_mult:Mult0" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Project/coord_transform.vhd Line: 81
+Info (12133): Instantiated megafunction "tunnel_renderer:u_tunnel|coord_transform:u_xfm|lpm_mult:Mult0" with the following parameter: File: C:/Users/Thomas/Documents/Uliege/ICDesign/Project/coord_transform.vhd Line: 81
+    Info (12134): Parameter "LPM_WIDTHA" = "11"
+    Info (12134): Parameter "LPM_WIDTHB" = "9"
+    Info (12134): Parameter "LPM_WIDTHP" = "20"
+    Info (12134): Parameter "LPM_WIDTHR" = "20"
+    Info (12134): Parameter "LPM_WIDTHS" = "1"
+    Info (12134): Parameter "LPM_REPRESENTATION" = "SIGNED"
+    Info (12134): Parameter "INPUT_A_IS_CONSTANT" = "NO"
+    Info (12134): Parameter "INPUT_B_IS_CONSTANT" = "NO"
+    Info (12134): Parameter "MAXIMIZE_SPEED" = "6"
+Info (12021): Found 1 design units, including 1 entities, in source file db/mult_e4t.tdf
+    Info (12023): Found entity 1: mult_e4t File: C:/Users/Thomas/Documents/Uliege/ICDesign/Project/db/mult_e4t.tdf Line: 29
+Info (12130): Elaborated megafunction instantiation "tunnel_renderer:u_tunnel|colour_palette:u_pal|lpm_mult:Mult1" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Project/colour_palette.vhd Line: 136
+Info (12133): Instantiated megafunction "tunnel_renderer:u_tunnel|colour_palette:u_pal|lpm_mult:Mult1" with the following parameter: File: C:/Users/Thomas/Documents/Uliege/ICDesign/Project/colour_palette.vhd Line: 136
+    Info (12134): Parameter "LPM_WIDTHA" = "5"
+    Info (12134): Parameter "LPM_WIDTHB" = "5"
+    Info (12134): Parameter "LPM_WIDTHP" = "10"
+    Info (12134): Parameter "LPM_WIDTHR" = "10"
+    Info (12134): Parameter "LPM_WIDTHS" = "1"
+    Info (12134): Parameter "LPM_REPRESENTATION" = "SIGNED"
+    Info (12134): Parameter "INPUT_A_IS_CONSTANT" = "NO"
+    Info (12134): Parameter "INPUT_B_IS_CONSTANT" = "NO"
+    Info (12134): Parameter "MAXIMIZE_SPEED" = "5"
+Info (12021): Found 1 design units, including 1 entities, in source file db/mult_r2t.tdf
+    Info (12023): Found entity 1: mult_r2t File: C:/Users/Thomas/Documents/Uliege/ICDesign/Project/db/mult_r2t.tdf Line: 29
+Info (12130): Elaborated megafunction instantiation "tunnel_renderer:u_tunnel|colour_palette:u_pal|lpm_mult:Mult0" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Project/colour_palette.vhd Line: 135
+Info (12133): Instantiated megafunction "tunnel_renderer:u_tunnel|colour_palette:u_pal|lpm_mult:Mult0" with the following parameter: File: C:/Users/Thomas/Documents/Uliege/ICDesign/Project/colour_palette.vhd Line: 135
+    Info (12134): Parameter "LPM_WIDTHA" = "5"
+    Info (12134): Parameter "LPM_WIDTHB" = "5"
+    Info (12134): Parameter "LPM_WIDTHP" = "10"
+    Info (12134): Parameter "LPM_WIDTHR" = "10"
+    Info (12134): Parameter "LPM_WIDTHS" = "1"
+    Info (12134): Parameter "LPM_REPRESENTATION" = "SIGNED"
+    Info (12134): Parameter "INPUT_A_IS_CONSTANT" = "NO"
+    Info (12134): Parameter "INPUT_B_IS_CONSTANT" = "NO"
+    Info (12134): Parameter "MAXIMIZE_SPEED" = "5"
+Info (12130): Elaborated megafunction instantiation "tunnel_renderer:u_tunnel|colour_palette:u_pal|lpm_mult:Mult2" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Project/colour_palette.vhd Line: 137
+Info (12133): Instantiated megafunction "tunnel_renderer:u_tunnel|colour_palette:u_pal|lpm_mult:Mult2" with the following parameter: File: C:/Users/Thomas/Documents/Uliege/ICDesign/Project/colour_palette.vhd Line: 137
+    Info (12134): Parameter "LPM_WIDTHA" = "3"
+    Info (12134): Parameter "LPM_WIDTHB" = "5"
+    Info (12134): Parameter "LPM_WIDTHP" = "8"
+    Info (12134): Parameter "LPM_WIDTHR" = "8"
+    Info (12134): Parameter "LPM_WIDTHS" = "1"
+    Info (12134): Parameter "LPM_REPRESENTATION" = "SIGNED"
+    Info (12134): Parameter "INPUT_A_IS_CONSTANT" = "NO"
+    Info (12134): Parameter "INPUT_B_IS_CONSTANT" = "NO"
+    Info (12134): Parameter "MAXIMIZE_SPEED" = "5"
+Info (12131): Elaborated megafunction instantiation "tunnel_renderer:u_tunnel|colour_palette:u_pal|lpm_mult:Mult2|multcore:mult_core", which is child of megafunction instantiation "tunnel_renderer:u_tunnel|colour_palette:u_pal|lpm_mult:Mult2" File: c:/intelfpga_lite/23.1std/quartus/libraries/megafunctions/lpm_mult.tdf Line: 324
+Info (12131): Elaborated megafunction instantiation "tunnel_renderer:u_tunnel|colour_palette:u_pal|lpm_mult:Mult2|multcore:mult_core|mul_lfrg:mul_lfrg_first_mod", which is child of megafunction instantiation "tunnel_renderer:u_tunnel|colour_palette:u_pal|lpm_mult:Mult2" File: c:/intelfpga_lite/23.1std/quartus/libraries/megafunctions/multcore.tdf Line: 299
+Info (12131): Elaborated megafunction instantiation "tunnel_renderer:u_tunnel|colour_palette:u_pal|lpm_mult:Mult2|multcore:mult_core|mul_lfrg:mul_lfrg_last_mod", which is child of megafunction instantiation "tunnel_renderer:u_tunnel|colour_palette:u_pal|lpm_mult:Mult2" File: c:/intelfpga_lite/23.1std/quartus/libraries/megafunctions/multcore.tdf Line: 311
+Info (12131): Elaborated megafunction instantiation "tunnel_renderer:u_tunnel|colour_palette:u_pal|lpm_mult:Mult2|multcore:mult_core|mpar_add:padder", which is child of megafunction instantiation "tunnel_renderer:u_tunnel|colour_palette:u_pal|lpm_mult:Mult2" File: c:/intelfpga_lite/23.1std/quartus/libraries/megafunctions/multcore.tdf Line: 408
+Info (12131): Elaborated megafunction instantiation "tunnel_renderer:u_tunnel|colour_palette:u_pal|lpm_mult:Mult2|multcore:mult_core|mpar_add:padder|lpm_add_sub:booth_adder_right", which is child of megafunction instantiation "tunnel_renderer:u_tunnel|colour_palette:u_pal|lpm_mult:Mult2" File: c:/intelfpga_lite/23.1std/quartus/libraries/megafunctions/mpar_add.tdf Line: 110
+Info (12021): Found 1 design units, including 1 entities, in source file db/add_sub_2of.tdf
+    Info (12023): Found entity 1: add_sub_2of File: C:/Users/Thomas/Documents/Uliege/ICDesign/Project/db/add_sub_2of.tdf Line: 23
+Info (12131): Elaborated megafunction instantiation "tunnel_renderer:u_tunnel|colour_palette:u_pal|lpm_mult:Mult2|multcore:mult_core|mpar_add:padder|lpm_add_sub:adder[0]", which is child of megafunction instantiation "tunnel_renderer:u_tunnel|colour_palette:u_pal|lpm_mult:Mult2" File: c:/intelfpga_lite/23.1std/quartus/libraries/megafunctions/mpar_add.tdf Line: 115
+Info (12021): Found 1 design units, including 1 entities, in source file db/add_sub_k4h.tdf
+    Info (12023): Found entity 1: add_sub_k4h File: C:/Users/Thomas/Documents/Uliege/ICDesign/Project/db/add_sub_k4h.tdf Line: 23
+Info (12131): Elaborated megafunction instantiation "tunnel_renderer:u_tunnel|colour_palette:u_pal|lpm_mult:Mult2|multcore:mult_core|mul_lfrg:$00031", which is child of megafunction instantiation "tunnel_renderer:u_tunnel|colour_palette:u_pal|lpm_mult:Mult2" File: c:/intelfpga_lite/23.1std/quartus/libraries/megafunctions/multcore.tdf Line: 959
+Info (12131): Elaborated megafunction instantiation "tunnel_renderer:u_tunnel|colour_palette:u_pal|lpm_mult:Mult2|multcore:mult_core|mul_lfrg:$00033", which is child of megafunction instantiation "tunnel_renderer:u_tunnel|colour_palette:u_pal|lpm_mult:Mult2" File: c:/intelfpga_lite/23.1std/quartus/libraries/megafunctions/multcore.tdf Line: 971
+Info (12131): Elaborated megafunction instantiation "tunnel_renderer:u_tunnel|colour_palette:u_pal|lpm_mult:Mult2|multcore:mult_core|mul_lfrg:$00035", which is child of megafunction instantiation "tunnel_renderer:u_tunnel|colour_palette:u_pal|lpm_mult:Mult2" File: c:/intelfpga_lite/23.1std/quartus/libraries/megafunctions/multcore.tdf Line: 1015
+Info (12131): Elaborated megafunction instantiation "tunnel_renderer:u_tunnel|colour_palette:u_pal|lpm_mult:Mult2|multcore:mult_core|mul_lfrg:$00037", which is child of megafunction instantiation "tunnel_renderer:u_tunnel|colour_palette:u_pal|lpm_mult:Mult2" File: c:/intelfpga_lite/23.1std/quartus/libraries/megafunctions/multcore.tdf Line: 1026
+Info (12131): Elaborated megafunction instantiation "tunnel_renderer:u_tunnel|colour_palette:u_pal|lpm_mult:Mult2|altshift:external_latency_ffs", which is child of megafunction instantiation "tunnel_renderer:u_tunnel|colour_palette:u_pal|lpm_mult:Mult2" File: c:/intelfpga_lite/23.1std/quartus/libraries/megafunctions/lpm_mult.tdf Line: 352
+Info (12130): Elaborated megafunction instantiation "lpm_mult:Mult1" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Project/RushTunnelFPGA.vhd Line: 143
+Info (12133): Instantiated megafunction "lpm_mult:Mult1" with the following parameter: File: C:/Users/Thomas/Documents/Uliege/ICDesign/Project/RushTunnelFPGA.vhd Line: 143
+    Info (12134): Parameter "LPM_WIDTHA" = "9"
+    Info (12134): Parameter "LPM_WIDTHB" = "10"
+    Info (12134): Parameter "LPM_WIDTHP" = "19"
+    Info (12134): Parameter "LPM_WIDTHR" = "19"
+    Info (12134): Parameter "LPM_WIDTHS" = "1"
+    Info (12134): Parameter "LPM_REPRESENTATION" = "SIGNED"
+    Info (12134): Parameter "INPUT_A_IS_CONSTANT" = "NO"
+    Info (12134): Parameter "INPUT_B_IS_CONSTANT" = "YES"
+    Info (12134): Parameter "MAXIMIZE_SPEED" = "6"
+Info (12131): Elaborated megafunction instantiation "lpm_mult:Mult1|multcore:mult_core", which is child of megafunction instantiation "lpm_mult:Mult1" File: c:/intelfpga_lite/23.1std/quartus/libraries/megafunctions/lpm_mult.tdf Line: 309
+Info (12131): Elaborated megafunction instantiation "lpm_mult:Mult1|multcore:mult_core|mpar_add:padder", which is child of megafunction instantiation "lpm_mult:Mult1" File: c:/intelfpga_lite/23.1std/quartus/libraries/megafunctions/multcore.tdf Line: 229
+Info (12131): Elaborated megafunction instantiation "lpm_mult:Mult1|multcore:mult_core|mpar_add:padder|lpm_add_sub:adder[0]", which is child of megafunction instantiation "lpm_mult:Mult1" File: c:/intelfpga_lite/23.1std/quartus/libraries/megafunctions/mpar_add.tdf Line: 115
+Info (12021): Found 1 design units, including 1 entities, in source file db/add_sub_k9h.tdf
+    Info (12023): Found entity 1: add_sub_k9h File: C:/Users/Thomas/Documents/Uliege/ICDesign/Project/db/add_sub_k9h.tdf Line: 23
+Info (12131): Elaborated megafunction instantiation "lpm_mult:Mult1|multcore:mult_core|mpar_add:padder|mpar_add:sub_par_add", which is child of megafunction instantiation "lpm_mult:Mult1" File: c:/intelfpga_lite/23.1std/quartus/libraries/megafunctions/mpar_add.tdf Line: 138
+Info (12131): Elaborated megafunction instantiation "lpm_mult:Mult1|multcore:mult_core|mpar_add:padder|mpar_add:sub_par_add|lpm_add_sub:adder[0]", which is child of megafunction instantiation "lpm_mult:Mult1" File: c:/intelfpga_lite/23.1std/quartus/libraries/megafunctions/mpar_add.tdf Line: 115
+Info (12021): Found 1 design units, including 1 entities, in source file db/add_sub_ikh.tdf
+    Info (12023): Found entity 1: add_sub_ikh File: C:/Users/Thomas/Documents/Uliege/ICDesign/Project/db/add_sub_ikh.tdf Line: 23
+Info (12131): Elaborated megafunction instantiation "lpm_mult:Mult1|altshift:external_latency_ffs", which is child of megafunction instantiation "lpm_mult:Mult1" File: c:/intelfpga_lite/23.1std/quartus/libraries/megafunctions/lpm_mult.tdf Line: 352
+Warning (14284): Synthesized away the following node(s):
+    Warning (14285): Synthesized away the following LCELL buffer node(s):
+        Warning (14320): Synthesized away node "tunnel_renderer:u_tunnel|colour_palette:u_pal|lpm_mult:Mult5|mult_j8t:auto_generated|le5a[4]" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Project/db/mult_j8t.tdf Line: 43
+        Warning (14320): Synthesized away node "tunnel_renderer:u_tunnel|colour_palette:u_pal|lpm_mult:Mult4|mult_j8t:auto_generated|le5a[4]" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Project/db/mult_j8t.tdf Line: 43
+        Warning (14320): Synthesized away node "tunnel_renderer:u_tunnel|colour_palette:u_pal|lpm_mult:Mult3|mult_j8t:auto_generated|le5a[4]" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Project/db/mult_j8t.tdf Line: 43
+Info (13014): Ignored 132 buffer(s)
+    Info (13016): Ignored 12 CARRY_SUM buffer(s)
+    Info (13019): Ignored 120 SOFT buffer(s)
+Info (286030): Timing-Driven Synthesis is running
+Info (16010): Generating hard_block partition "hard_block:auto_generated_inst"
+    Info (16011): Adding 0 node(s), including 0 DDIO, 0 PLL, 0 transceiver and 0 LCELL
+Info (21057): Implemented 2349 device resources after synthesis - the final resource count might be different
+    Info (21058): Implemented 2 input pins
+    Info (21059): Implemented 16 output pins
+    Info (21061): Implemented 2317 logic cells
+    Info (21062): Implemented 14 DSP elements
+Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 10 warnings
+    Info: Peak virtual memory: 4904 megabytes
+    Info: Processing ended: Thu Apr 23 14:15:49 2026
+    Info: Elapsed time: 00:00:29
+    Info: Total CPU time (on all processors): 00:00:30
+
+
