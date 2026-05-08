@@ -1,0 +1,202 @@
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
+
+-- ================================================================
+-- crt_effects.vhd  (v2)
+-- ================================================================
+-- CRT overlay effects inserted between tunnel_renderer and the VGA
+-- output pins.
+--
+-- Effects applied in order (single clocked process):
+--
+--   1. CHROMATIC ABERRATION
+--      R unchanged, G appears +1 px right, B appears +2 px right.
+--      Creates the colour fringe of old CRT/VHS footage.
+--
+--   2. GRID OVERLAY  (replaces the old per-row scanline dimming)
+--      A crosshatch of lines drawn every GRID_STEP pixels (h + v).
+--      At each grid pixel the output is a 50/50 blend of the tunnel
+--      colour and a hue-cycling accent colour driven by hue_cnt.
+--      The accent colour rotates through 8 hues at ~1 s each,
+--      giving the "lines that change colour" look from Operius.
+--
+--   3. VIGNETTE (Manhattan distance from screen centre 400, 300)
+--      0 … VIG_FULL  → 100 %  full bright
+--      VIG_FULL+1 … VIG_HALF  →  ~75 %
+--      VIG_HALF+1 … VIG_DARK  →   50 %
+--      > VIG_DARK              →   25 %
+--
+--   4. FILM GRAIN
+--      8-bit maximal LFSR toggles LSB of each channel independently.
+--      ≈ ±7 % noise — subtle but visible.
+--
+-- Pipeline depth : 1 register stage (output latched at end of process).
+-- Resource usage : ~50 FFs, 0 BRAM, <1 % of EP4CE22 LUTs.
+-- ================================================================
+
+entity crt_effects is
+    port (
+        clk_50    : in  std_logic;
+        -- Pixel colour from tunnel_renderer (2-clock pipeline behind VGA)
+        red_in    : in  std_logic_vector(3 downto 0);
+        green_in  : in  std_logic_vector(3 downto 0);
+        blue_in   : in  std_logic_vector(3 downto 0);
+        -- VGA scan position (from vga_controller, undelayed)
+        hpos      : in  std_logic_vector(9 downto 0);
+        vpos      : in  std_logic_vector(9 downto 0);
+        -- Frame-rate hue cycle (unsigned(9:0), increments once per frame)
+        hue_cnt   : in  std_logic_vector(9 downto 0);
+        -- Post-processed output (1 clock after inputs)
+        red_out   : out std_logic_vector(3 downto 0);
+        green_out : out std_logic_vector(3 downto 0);
+        blue_out  : out std_logic_vector(3 downto 0)
+    );
+end crt_effects;
+
+architecture rtl of crt_effects is
+
+    -- ── Grid ──────────────────────────────────────────────────────────
+    -- One line drawn for every GRID_STEP pixels on both axes.
+    -- GRID_STEP = 8 → 75 h-lines + 100 v-lines across 800×600.
+    -- Change to 12 or 16 for a sparser look.
+    constant GRID_STEP_LOG2 : integer := 3;   -- 2^3 = 8 pixels between lines
+
+    -- ── Vignette thresholds (Manhattan distance from 400, 300) ────────
+    constant VIG_FULL : integer := 300;   -- inner zone: full brightness
+    constant VIG_HALF : integer := 450;   -- middle zone: 75 %
+    constant VIG_DARK : integer := 550;   -- outer zone: 50 % / 25 % beyond
+
+    -- ── Chromatic-aberration shift registers ──────────────────────────
+    signal g_pipe   : std_logic_vector(3 downto 0) := (others => '0');
+    signal b_pipe_1 : std_logic_vector(3 downto 0) := (others => '0');
+    signal b_pipe_2 : std_logic_vector(3 downto 0) := (others => '0');
+
+    -- ── hpos/vpos delay (align with 2-stage renderer pipeline) ────────
+    signal hpos_d1, hpos_d2 : unsigned(9 downto 0) := (others => '0');
+    signal vpos_d1, vpos_d2 : unsigned(9 downto 0) := (others => '0');
+
+    -- ── Film-grain LFSR (taps 8,6,5,4 — period 255) ──────────────────
+    signal noise_lfsr : std_logic_vector(7 downto 0) := "10011010";
+
+begin
+
+    process(clk_50)
+        variable r_v, g_v, b_v          : std_logic_vector(3 downto 0);
+        variable hdist, vdist           : unsigned(9 downto 0);
+        variable dist                   : unsigned(10 downto 0);
+        variable r5, g5, b5             : unsigned(4 downto 0);
+        -- Grid overlay
+        variable on_grid                : boolean;
+        variable lr, lg, lb             : std_logic_vector(3 downto 0);
+        variable hue_idx                : integer range 0 to 7;
+    begin
+        if rising_edge(clk_50) then
+
+            -- ── 1. Advance LFSR ──────────────────────────────────────
+            noise_lfsr <= noise_lfsr(6 downto 0) &
+                          (noise_lfsr(7) xor noise_lfsr(5) xor
+                           noise_lfsr(4) xor noise_lfsr(3));
+
+            -- ── 2. Delay hpos/vpos to match renderer pipeline ─────────
+            hpos_d1 <= unsigned(hpos);   hpos_d2 <= hpos_d1;
+            vpos_d1 <= unsigned(vpos);   vpos_d2 <= vpos_d1;
+
+            -- ── 3. Chromatic-aberration shift registers ────────────────
+            g_pipe   <= green_in;
+            b_pipe_1 <= blue_in;
+            b_pipe_2 <= b_pipe_1;
+
+            -- ── 4. Select colour channels ──────────────────────────────
+            r_v := red_in;    -- R: current pixel (no extra delay)
+            g_v := g_pipe;    -- G: 1 clock old  → appears 1 px rightward
+            b_v := b_pipe_2;  -- B: 2 clocks old → appears 2 px rightward
+
+            -- ── 5. Grid overlay ────────────────────────────────────────
+            -- A line exists wherever the low GRID_STEP_LOG2 bits of
+            -- either coordinate are all zero.
+            on_grid :=
+                (vpos_d2(GRID_STEP_LOG2 - 1 downto 0) = (GRID_STEP_LOG2 - 1 downto 0 => '0')) or
+                (hpos_d2(GRID_STEP_LOG2 - 1 downto 0) = (GRID_STEP_LOG2 - 1 downto 0 => '0'));
+
+            -- Hue cycles through 8 colours.
+            -- hue_cnt bits [8:6] change every 64 frames ≈ 0.9 s at 72 Hz.
+            hue_idx := to_integer(unsigned(hue_cnt(8 downto 6)));
+            case hue_idx is
+                when 0 => lr := "1111"; lg := "0010"; lb := "0010"; -- red
+                when 1 => lr := "1111"; lg := "1000"; lb := "0000"; -- orange
+                when 2 => lr := "1111"; lg := "1111"; lb := "0000"; -- yellow
+                when 3 => lr := "0010"; lg := "1111"; lb := "0010"; -- green
+                when 4 => lr := "0000"; lg := "1111"; lb := "1111"; -- cyan
+                when 5 => lr := "0010"; lg := "0010"; lb := "1111"; -- blue
+                when 6 => lr := "1000"; lg := "0000"; lb := "1111"; -- purple
+                when others =>
+                           lr := "1111"; lg := "0000"; lb := "1000"; -- pink
+            end case;
+
+            if on_grid then
+                -- 75/25 blend: (tunnel - tunnel/4) + line/4
+                -- On black background this gives only 25% of the line hue —
+                -- a subtle tint rather than a bright flash.
+                -- Max: (15-3)+3 = 15 → no 4-bit overflow possible.
+                r5 := resize(unsigned(r_v), 5) -
+                      resize(unsigned(r_v(3 downto 2)), 5);   -- 3/4 tunnel
+                g5 := resize(unsigned(g_v), 5) -
+                      resize(unsigned(g_v(3 downto 2)), 5);
+                b5 := resize(unsigned(b_v), 5) -
+                      resize(unsigned(b_v(3 downto 2)), 5);
+                r_v := std_logic_vector(r5(3 downto 0) +
+                      unsigned("00" & lr(3 downto 2)));        -- + 1/4 line
+                g_v := std_logic_vector(g5(3 downto 0) +
+                      unsigned("00" & lg(3 downto 2)));
+                b_v := std_logic_vector(b5(3 downto 0) +
+                      unsigned("00" & lb(3 downto 2)));
+            end if;
+
+            -- ── 6. Vignette ────────────────────────────────────────────
+            if hpos_d2 >= 400 then
+                hdist := hpos_d2 - 400;
+            else
+                hdist := to_unsigned(400, 10) - hpos_d2;
+            end if;
+            if vpos_d2 >= 300 then
+                vdist := vpos_d2 - 300;
+            else
+                vdist := to_unsigned(300, 10) - vpos_d2;
+            end if;
+            dist := resize(hdist, 11) + resize(vdist, 11);
+
+            if to_integer(dist) > VIG_DARK then
+                r_v := "00" & r_v(3 downto 2);  -- 25 %
+                g_v := "00" & g_v(3 downto 2);
+                b_v := "00" & b_v(3 downto 2);
+            elsif to_integer(dist) > VIG_HALF then
+                r_v := '0' & r_v(3 downto 1);   -- 50 %
+                g_v := '0' & g_v(3 downto 1);
+                b_v := '0' & b_v(3 downto 1);
+            elsif to_integer(dist) > VIG_FULL then
+                r5 := resize(unsigned(r_v), 5) - -- ~75 %: v - v/4
+                      resize(unsigned(r_v(3 downto 2)), 5);
+                g5 := resize(unsigned(g_v), 5) -
+                      resize(unsigned(g_v(3 downto 2)), 5);
+                b5 := resize(unsigned(b_v), 5) -
+                      resize(unsigned(b_v(3 downto 2)), 5);
+                r_v := std_logic_vector(r5(3 downto 0));
+                g_v := std_logic_vector(g5(3 downto 0));
+                b_v := std_logic_vector(b5(3 downto 0));
+            end if;
+
+            -- ── 7. Film grain ─────────────────────────────────────────
+            r_v(0) := r_v(0) xor noise_lfsr(1);
+            g_v(0) := g_v(0) xor noise_lfsr(3);
+            b_v(0) := b_v(0) xor noise_lfsr(5);
+
+            -- ── 8. Register outputs ───────────────────────────────────
+            red_out   <= r_v;
+            green_out <= g_v;
+            blue_out  <= b_v;
+
+        end if;
+    end process;
+
+end rtl;

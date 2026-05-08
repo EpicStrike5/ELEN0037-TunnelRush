@@ -57,18 +57,25 @@ set_global_assignment -name EDA_GENERATE_FUNCTIONAL_NETLIST OFF -section_id eda_
 set_global_assignment -name EDA_GENERATE_FUNCTIONAL_NETLIST OFF -section_id eda_board_design_boundary_scan
 
 # ---- Source files ----
+# Packages first (must be compiled before the entities that use them)
+set_global_assignment -name VHDL_FILE game_over_font.vhd
+set_global_assignment -name VHDL_FILE press_start_font.vhd
+set_global_assignment -name VHDL_FILE title_font.vhd
+# Entities
 set_global_assignment -name VHDL_FILE RushTunnelFPGA.vhd
 set_global_assignment -name VHDL_FILE vga_controller.vhd
-set_global_assignment -name VHDL_FILE tunnel_renderer.vhd
-set_global_assignment -name VHDL_FILE snes_controller.vhd
-set_global_assignment -name VHDL_FILE game_fsm.vhd
+set_global_assignment -name VHDL_FILE tunnel.vhd
+set_global_assignment -name VHDL_FILE spaceship.vhd
 set_global_assignment -name VHDL_FILE obstacle_manager.vhd
+set_global_assignment -name VHDL_FILE snes_controller.vhd
 set_global_assignment -name VHDL_FILE trig_rom.vhd
-set_global_assignment -name VHDL_FILE tunnel_core.vhd
-set_global_assignment -name VHDL_FILE tunnel_background.vhd
-set_global_assignment -name VHDL_FILE colour_palette.vhd
-set_global_assignment -name VHDL_FILE coord_transform.vhd
-set_global_assignment -name VHDL_FILE stage_manager.vhd
+set_global_assignment -name VHDL_FILE crt_effects.vhd
+set_global_assignment -name VHDL_FILE start_screen.vhd
+set_global_assignment -name VHDL_FILE screen_overlay.vhd
+# Consolidated into tunnel.vhd (no longer needed):
+#   tunnel_renderer.vhd  tunnel_core.vhd  tunnel_background.vhd
+#   colour_palette.vhd   coord_transform.vhd  stage_manager.vhd
+# Renamed: game_fsm.vhd -> spaceship.vhd
 
 # ---- Clock ----
 set_location_assignment PIN_R8 -to CLK_50
@@ -83,7 +90,7 @@ set_location_assignment PIN_T12 -to RED[3]
 set_location_assignment PIN_T11 -to GREEN[0]
 set_location_assignment PIN_R11 -to GREEN[1]
 set_location_assignment PIN_R10 -to GREEN[2]
-set_location_assignment PIN_P9  -to GREEN[3]
+set_location_assignment PIN_P9 -to GREEN[3]
 
 # ---- VGA Blue ----
 set_location_assignment PIN_N11 -to BLUE[0]

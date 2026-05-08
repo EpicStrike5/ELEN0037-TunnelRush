@@ -5,39 +5,40 @@ use ieee.numeric_std.all;
 -- ================================================================
 -- obstacle_manager.vhd
 -- ================================================================
--- Manages up to 4 simultaneous obstacles AND up to 2 scoring rings.
+-- Manages 8 obstacle slots + 1 scoring coin per wave.
 --
--- ── OBSTACLES ────────────────────────────────────────────────────
--- GAP ANGLE SYSTEM:
---   gap_angle is a 16-bit value (0-65535 = 0-360°) in the TUNNEL
---   frame.  Derived from the top 3 bits of the LFSR so centres fall
---   exactly on one of the 8 octagonal face centres (every 45°).
---   gap_angle = lfsr[2:0] * 8192  (lfsr top-3 << 13)
+-- ── WAVE SPAWN SYSTEM ────────────────────────────────────────────
+-- Each spawn event creates one "wave" of 2..7 simultaneous obstacles
+-- all at the same depth (OBS_SPAWN_DEPTH).  A "hole" face is chosen
+-- at random — that face is always left open as the safe passage.
+-- One coin is placed on the FIRST free (non-obstacle, non-hole) face
+-- in the iteration order starting from player_face+1.
+-- Special case n_obs=7: no free non-hole face exists; coin is placed
+-- on the hole face — the player must collect it to survive anyway.
 --
--- COLLISION CHECK (at OBS_COLLIDE_DEPTH, per frame_tick):
---   diff = signed(ship_rel_angle - gap_angle)   [16-bit wrapping]
---   safe  when |diff| <= HALF_GAP  (ship is in the open sector)
---   hit   when |diff| >  HALF_GAP  → collision='1' for one cycle
+--   hole_face : random 0..7  (LFSR bits 2:0, tick 1)
+--   n_obs     : random 2..7  (LFSR bits 2:0, tick 2 → mapped 0-5 → 2-7)
 --
--- HALF_GAP = 4096  (22.5° → one octagonal face-width of safety)
+-- ── COIN COLLECTION ──────────────────────────────────────────────
+-- Same depth/timing as the obstacles.  At OBS_COLLIDE_DEPTH the coin
+-- checks whether |ship_rel_angle − coin_face_angle| ≤ HALF_GAP.
+-- If yes, ring_collected pulses for one clock.
 --
--- VISUAL:
---   obs*_gap_sector = obs*_gap_angle[15:13]  (top 3 bits → 0..7)
---   Passed to tunnel_renderer to suppress the ring in that wedge.
+-- ── COLLISION CHECK ──────────────────────────────────────────────
+-- At OBS_COLLIDE_DEPTH (per frame_tick):
+--   diff = signed(ship_rel_angle - obs_face_angle)   [16-bit wrapping]
+--   hit  when |diff| ≤ HALF_GAP (ship IS on the blocked face)
+--   HALF_GAP = 4096  (22.5° — one octagon face half-width)
 --
--- ── SCORING RINGS ────────────────────────────────────────────────
--- Full rings (no gap) that the ship always collects on contact.
--- They spawn at OBS_SPAWN_DEPTH and advance at the same rate as
--- obstacles (do_advance flag).  Separate spawn timer fires every
--- RING_SPAWN_INTERVAL frames.
---
--- COLLECTION CHECK (at OBS_COLLIDE_DEPTH, per frame_tick):
---   Ring deactivates and ring_collected pulses '1' for one cycle.
---   game_fsm counts these pulses toward the zone-unlock threshold.
---
--- VISUAL:
---   ring*_depth and ring*_active are passed to tunnel_renderer,
---   which renders them with a full gold band (no gap suppression).
+-- ── SPEED PROGRESSION ────────────────────────────────────────────
+--   difficulty 0  : adv_div=6, spawn every 360 frames  (5.0 s @ 72 Hz)
+--   difficulty 3  : adv_div=5, spawn every 300 frames  (4.2 s)
+--   difficulty 6  : adv_div=4, spawn every 240 frames  (3.3 s)
+--   difficulty 9  : adv_div=3, spawn every 180 frames  (2.5 s)
+--   difficulty 12 : adv_div=2, spawn every 120 frames  (1.7 s)
+--   difficulty 15+: adv_div=1, spawn every  72 frames  (1.0 s, MIN_SPAWN cap)
+--   travel_time at each level: 318/265/212/159/106/65 frames
+--   (difficulty port is 5-bit, range 0-20; ship speed is fixed in spaceship.vhd)
 -- ================================================================
 
 entity obstacle_manager is
@@ -47,10 +48,9 @@ entity obstacle_manager is
         game_active     : in  std_logic;
         reset_game      : in  std_logic;
         ship_rel_angle  : in  std_logic_vector(15 downto 0);
-        difficulty      : in  std_logic_vector(3 downto 0);
-        num_faces       : in  std_logic_vector(3 downto 0);   -- 3..8, for gap scaling
-        -- Obstacle outputs (4 slots)
-        -- face_sector = which tunnel face the block sits ON (0-7 octant)
+        difficulty      : in  std_logic_vector(4 downto 0);
+        num_faces       : in  std_logic_vector(3 downto 0);
+        -- Obstacle outputs (8 slots)
         obs0_depth       : out std_logic_vector(7 downto 0);
         obs0_face_sector : out std_logic_vector(2 downto 0);
         obs0_active      : out std_logic;
@@ -63,154 +63,148 @@ entity obstacle_manager is
         obs3_depth       : out std_logic_vector(7 downto 0);
         obs3_face_sector : out std_logic_vector(2 downto 0);
         obs3_active      : out std_logic;
-        collision        : out std_logic;   -- DISABLED (always '0') for visual testing
-        -- Scoring ring outputs (2 slots, no gap)
-        ring0_depth     : out std_logic_vector(7 downto 0);
-        ring0_active    : out std_logic;
-        ring1_depth     : out std_logic_vector(7 downto 0);
-        ring1_active    : out std_logic;
-        ring_collected  : out std_logic   -- 1-cycle pulse per ring collected
+        obs4_depth       : out std_logic_vector(7 downto 0);
+        obs4_face_sector : out std_logic_vector(2 downto 0);
+        obs4_active      : out std_logic;
+        obs5_depth       : out std_logic_vector(7 downto 0);
+        obs5_face_sector : out std_logic_vector(2 downto 0);
+        obs5_active      : out std_logic;
+        obs6_depth       : out std_logic_vector(7 downto 0);
+        obs6_face_sector : out std_logic_vector(2 downto 0);
+        obs6_active      : out std_logic;
+        obs7_depth       : out std_logic_vector(7 downto 0);
+        obs7_face_sector : out std_logic_vector(2 downto 0);
+        obs7_active      : out std_logic;
+        collision        : out std_logic;
+        -- Scoring coin (ring0 repurposed; ring1 disabled)
+        ring0_depth       : out std_logic_vector(7 downto 0);
+        ring0_active      : out std_logic;
+        ring0_face_sector : out std_logic_vector(2 downto 0);
+        ring1_depth       : out std_logic_vector(7 downto 0);
+        ring1_active      : out std_logic;
+        ring_collected    : out std_logic
     );
 end obstacle_manager;
 
 architecture rtl of obstacle_manager is
 
-    constant OBS_SPAWN_DEPTH    : integer := 75;
-    constant OBS_COLLIDE_DEPTH  : integer := 128;
-    constant BASE_SPAWN         : integer := 180;
-    constant MIN_SPAWN          : integer := 20;
-    constant RING_SPAWN_INTERVAL: integer := 180;   -- frames between scoring ring spawns
-    -- HALF_GAP is now per-N (see process below); no longer a single constant
+    constant OBS_SPAWN_DEPTH   : integer := 75;
+    -- Raised to 140 so obstacles travel past the ship orbit (depth_band ~129-132)
+    -- before deactivating.  Collision is now pixel-based (from tunnel.vhd).
+    constant OBS_COLLIDE_DEPTH : integer := 140;
+    constant BASE_SPAWN        : integer := 360;
+    constant MIN_SPAWN         : integer := 72;   -- 1 second at 72 Hz = max speed
 
-    -- ---- Obstacle state ----
-    type depth_arr_t is array (0 to 3) of unsigned(7 downto 0);
-    type gap_arr_t   is array (0 to 3) of unsigned(15 downto 0);
-    type act_arr_t   is array (0 to 3) of std_logic;
+    -- ---- 8-slot obstacle state ----
+    type depth_arr_t is array (0 to 7) of unsigned(7 downto 0);
+    type fsec_arr_t  is array (0 to 7) of std_logic_vector(2 downto 0);
+    type act_arr_t   is array (0 to 7) of std_logic;
 
     signal obs_depth_r  : depth_arr_t := (others => to_unsigned(OBS_SPAWN_DEPTH, 8));
-    signal obs_face_r   : gap_arr_t   := (others => (others => '0'));
+    signal obs_fsec_r   : fsec_arr_t  := (others => "000");
     signal obs_active_r : act_arr_t   := (others => '0');
 
-    -- ---- Scoring ring state ----
-    type ring_depth_arr_t is array (0 to 1) of unsigned(7 downto 0);
-    type ring_act_arr_t   is array (0 to 1) of std_logic;
-
-    signal ring_depth_r  : ring_depth_arr_t := (others => to_unsigned(OBS_SPAWN_DEPTH, 8));
-    signal ring_active_r : ring_act_arr_t   := (others => '0');
-    signal ring_spawn_cnt : integer range 0 to RING_SPAWN_INTERVAL - 1 := 0;
-    signal ring_coll_r   : std_logic := '0';
+    -- ---- Scoring coin state ----
+    signal coin_depth_r  : unsigned(7 downto 0)        := to_unsigned(OBS_SPAWN_DEPTH, 8);
+    signal coin_fsec_r   : std_logic_vector(2 downto 0) := "000";
+    signal coin_active_r : std_logic                    := '0';
+    signal ring_coll_r   : std_logic                    := '0';
 
     -- ---- Shared timing / LFSR ----
-    signal spawn_cnt : integer range 0 to BASE_SPAWN - 1 := 0;
-    signal adv_cnt   : integer range 0 to 3 := 0;
-    signal lfsr      : std_logic_vector(7 downto 0) := "10110101";
+    signal spawn_cnt   : integer range 0 to BASE_SPAWN - 1 := 0;
+    signal adv_cnt     : integer range 0 to 5              := 0;
+    signal lfsr        : std_logic_vector(7 downto 0)      := "10110101";
     signal collision_r : std_logic := '0';
 
-    -- Combinational helpers
     signal spawn_interval : integer range MIN_SPAWN to BASE_SPAWN;
-    signal adv_div        : integer range 1 to 4;
-    -- Per-polygon half-gap: 65536 / (2*N)  = half a face width in 16-bit angle units
-    --   N=3 → 10923 (60°)   N=4 → 8192 (45°)   N=5 → 6554 (36°)
-    --   N=6 → 5461 (30°)    N=7 → 4681 (≈25.7°) N=8 → 4096 (22.5°)
-    signal half_gap_s     : integer range 4096 to 10923;
+    signal adv_div        : integer range 1 to 6;
 
 begin
 
-    -- ----------------------------------------------------------------
-    -- Output assignments
-    -- ----------------------------------------------------------------
-    obs0_depth       <= std_logic_vector(obs_depth_r(0));
-    obs0_face_sector <= std_logic_vector(obs_face_r(0)(15 downto 13));
-    obs0_active      <= obs_active_r(0);
-    obs1_depth       <= std_logic_vector(obs_depth_r(1));
-    obs1_face_sector <= std_logic_vector(obs_face_r(1)(15 downto 13));
-    obs1_active      <= obs_active_r(1);
-    obs2_depth       <= std_logic_vector(obs_depth_r(2));
-    obs2_face_sector <= std_logic_vector(obs_face_r(2)(15 downto 13));
-    obs2_active      <= obs_active_r(2);
-    obs3_depth       <= std_logic_vector(obs_depth_r(3));
-    obs3_face_sector <= std_logic_vector(obs_face_r(3)(15 downto 13));
-    obs3_active      <= obs_active_r(3);
-    collision        <= '0';   -- disabled for visual testing; re-enable later
+    -- ---- Output assignments ------------------------------------------------
+    obs0_depth <= std_logic_vector(obs_depth_r(0));
+    obs0_face_sector <= obs_fsec_r(0);  obs0_active <= obs_active_r(0);
+    obs1_depth <= std_logic_vector(obs_depth_r(1));
+    obs1_face_sector <= obs_fsec_r(1);  obs1_active <= obs_active_r(1);
+    obs2_depth <= std_logic_vector(obs_depth_r(2));
+    obs2_face_sector <= obs_fsec_r(2);  obs2_active <= obs_active_r(2);
+    obs3_depth <= std_logic_vector(obs_depth_r(3));
+    obs3_face_sector <= obs_fsec_r(3);  obs3_active <= obs_active_r(3);
+    obs4_depth <= std_logic_vector(obs_depth_r(4));
+    obs4_face_sector <= obs_fsec_r(4);  obs4_active <= obs_active_r(4);
+    obs5_depth <= std_logic_vector(obs_depth_r(5));
+    obs5_face_sector <= obs_fsec_r(5);  obs5_active <= obs_active_r(5);
+    obs6_depth <= std_logic_vector(obs_depth_r(6));
+    obs6_face_sector <= obs_fsec_r(6);  obs6_active <= obs_active_r(6);
+    obs7_depth <= std_logic_vector(obs_depth_r(7));
+    obs7_face_sector <= obs_fsec_r(7);  obs7_active <= obs_active_r(7);
+    collision  <= collision_r;
 
-    ring0_depth  <= std_logic_vector(ring_depth_r(0));
-    ring0_active <= ring_active_r(0);
-    ring1_depth  <= std_logic_vector(ring_depth_r(1));
-    ring1_active <= ring_active_r(1);
-    ring_collected <= ring_coll_r;
+    -- Scoring coin outputs
+    ring0_depth       <= std_logic_vector(coin_depth_r);
+    ring0_active      <= coin_active_r;
+    ring0_face_sector <= coin_fsec_r;
+    ring_collected    <= ring_coll_r;
+    -- ring1 disabled
+    ring1_depth <= (others => '0');  ring1_active <= '0';
 
-    -- ----------------------------------------------------------------
-    -- Spawn interval: BASE_SPAWN - difficulty*8, floored at MIN_SPAWN
-    -- ----------------------------------------------------------------
+    -- ---- Spawn interval ----
     process(difficulty)
         variable d, raw : integer;
     begin
         d   := to_integer(unsigned(difficulty));
-        raw := BASE_SPAWN - d * 8;
+        raw := BASE_SPAWN - d * 20;
         if raw < MIN_SPAWN then spawn_interval <= MIN_SPAWN;
         else                     spawn_interval <= raw;
         end if;
     end process;
 
-    -- ----------------------------------------------------------------
-    -- Advance divisor: 4 at difficulty 0, down to 1 at difficulty 12+
-    -- ----------------------------------------------------------------
+    -- ---- Advance divisor ----
     process(difficulty)
-        variable d, raw : integer;
+        variable d : integer;
     begin
-        d   := to_integer(unsigned(difficulty));
-        raw := 4 - d / 4;
-        if raw < 1 then adv_div <= 1;
-        else             adv_div <= raw;
+        d := to_integer(unsigned(difficulty));
+        if    d >= 15 then adv_div <= 1;
+        elsif d >= 12 then adv_div <= 2;
+        elsif d >= 9  then adv_div <= 3;
+        elsif d >= 6  then adv_div <= 4;
+        elsif d >= 3  then adv_div <= 5;
+        else               adv_div <= 6;
         end if;
     end process;
 
-    -- ----------------------------------------------------------------
-    -- Half-gap size: scales with polygon face width (65536 / 2N)
-    -- ----------------------------------------------------------------
-    process(num_faces)
-    begin
-        case to_integer(unsigned(num_faces)) is
-            when 3      => half_gap_s <= 10923;  -- 60°  : half of 120° triangle face
-            when 4      => half_gap_s <= 8192;   -- 45°  : half of  90° square face
-            when 5      => half_gap_s <= 6554;   -- 36°  : half of  72° pentagon face
-            when 6      => half_gap_s <= 5461;   -- 30°  : half of  60° hexagon face
-            when 7      => half_gap_s <= 4681;   -- ~25.7°: half of ~51° heptagon face
-            when others => half_gap_s <= 4096;   -- 22.5°: half of  45° octagon face (N=8)
-        end case;
-    end process;
-
-    -- ----------------------------------------------------------------
-    -- Main update process
-    -- ----------------------------------------------------------------
+    -- ---- Main update process ------------------------------------------------
     process(clk_50)
-        variable next_lfsr   : std_logic_vector(7 downto 0);
-        variable gap_sec     : unsigned(2 downto 0);
-        variable gap_angle   : unsigned(15 downto 0);
-        variable diff        : signed(15 downto 0);
-        variable found_obs   : boolean;
-        variable found_ring  : boolean;
-        variable do_advance  : boolean;
-        variable do_spawn    : boolean;
-        variable do_rspawn   : boolean;
+        variable next_lfsr     : std_logic_vector(7 downto 0);
+        variable hole_face_v   : unsigned(2 downto 0);
+        variable player_face_v : unsigned(2 downto 0);
+        variable n_obs_v       : integer range 0 to 7;
+        variable do_advance    : boolean;
+        variable do_spawn      : boolean;
+        variable filled_v      : integer range 0 to 7;
+        variable face_i        : integer range 0 to 15;
+        variable coin_face_v   : integer range 0 to 7;
+        variable coin_placed_v : boolean;
     begin
         if rising_edge(clk_50) then
-            collision_r  <= '0';
-            ring_coll_r  <= '0';
+            collision_r <= '0';
+            ring_coll_r <= '0';
 
-            -- LFSR ticks every clock (obstacle gap randomisation)
-            next_lfsr := lfsr(6 downto 0) & (lfsr(7) xor lfsr(5) xor lfsr(4) xor lfsr(3));
+            -- LFSR advances every clock for best randomness
+            next_lfsr := lfsr(6 downto 0) &
+                         (lfsr(7) xor lfsr(5) xor lfsr(4) xor lfsr(3));
+            lfsr <= next_lfsr;
 
             if reset_game = '1' then
-                obs_active_r  <= (others => '0');
-                ring_active_r <= (others => '0');
-                spawn_cnt     <= 0;
-                adv_cnt       <= 0;
-                ring_spawn_cnt <= 0;
+                obs_active_r <= (others => '0');
+                obs_fsec_r   <= (others => "000");
+                coin_active_r <= '0';
+                spawn_cnt    <= 0;
+                adv_cnt      <= 0;
 
-            elsif frame_tick = '1' then
+            elsif frame_tick = '1' and game_active = '1' then
 
-                -- ── Advance timer ─────────────────────────────────
+                -- ── Advance timer ──────────────────────────────────────
                 do_advance := false;
                 if adv_cnt = adv_div - 1 then
                     adv_cnt    <= 0;
@@ -219,7 +213,7 @@ begin
                     adv_cnt <= adv_cnt + 1;
                 end if;
 
-                -- ── Obstacle spawn timer ───────────────────────────
+                -- ── Spawn timer ────────────────────────────────────────
                 do_spawn := false;
                 if spawn_cnt = spawn_interval - 1 then
                     spawn_cnt <= 0;
@@ -228,23 +222,11 @@ begin
                     spawn_cnt <= spawn_cnt + 1;
                 end if;
 
-                -- ── Scoring ring spawn timer ───────────────────────
-                do_rspawn := false;
-                if ring_spawn_cnt = RING_SPAWN_INTERVAL - 1 then
-                    ring_spawn_cnt <= 0;
-                    do_rspawn      := true;
-                else
-                    ring_spawn_cnt <= ring_spawn_cnt + 1;
-                end if;
-
-                -- ── Advance obstacles; collision check at depth ────
-                for i in 0 to 3 loop
+                -- ── Advance obstacles; deactivate when past ship orbit ─
+                -- Collision is now pixel-based in tunnel.vhd.
+                for i in 0 to 7 loop
                     if obs_active_r(i) = '1' then
                         if obs_depth_r(i) >= OBS_COLLIDE_DEPTH then
-                            diff := signed(unsigned(ship_rel_angle) - obs_face_r(i));
-                            if diff > half_gap_s or diff < -half_gap_s then
-                                collision_r <= '1';
-                            end if;
                             obs_active_r(i) <= '0';
                         elsif do_advance then
                             obs_depth_r(i) <= obs_depth_r(i) + 1;
@@ -252,51 +234,84 @@ begin
                     end if;
                 end loop;
 
-                -- ── Advance scoring rings; collect at depth ────────
-                for i in 0 to 1 loop
-                    if ring_active_r(i) = '1' then
-                        if ring_depth_r(i) >= OBS_COLLIDE_DEPTH then
-                            -- Always collected (full ring, no gap to miss)
-                            ring_coll_r      <= '1';
-                            ring_active_r(i) <= '0';
-                        elsif do_advance then
-                            ring_depth_r(i) <= ring_depth_r(i) + 1;
-                        end if;
+                -- ── Advance coin; deactivate when past ship orbit ──────
+                if coin_active_r = '1' then
+                    if coin_depth_r >= OBS_COLLIDE_DEPTH then
+                        coin_active_r <= '0';
+                    elsif do_advance then
+                        coin_depth_r <= coin_depth_r + 1;
                     end if;
-                end loop;
+                end if;
 
-                -- ── Spawn obstacle into first free slot ───────────
+                -- ── Spawn a new wave ───────────────────────────────────
                 if do_spawn then
-                    lfsr <= next_lfsr;
-                    gap_sec   := unsigned(next_lfsr(2 downto 0));
-                    -- face_angle: one of 8 octant centres (0°,45°,…,315°)
-                    -- top 3 bits select sector; the block sits ON this face
-                    gap_angle := gap_sec & "0000000000000";   -- face_sec × 8192
-                    found_obs := false;
-                    for i in 0 to 3 loop
-                        if obs_active_r(i) = '0' and not found_obs then
-                            obs_active_r(i) <= '1';
-                            obs_depth_r(i)  <= to_unsigned(OBS_SPAWN_DEPTH, 8);
-                            obs_face_r(i)   <= gap_angle;
-                            found_obs       := true;
+                    player_face_v := unsigned(ship_rel_angle(15 downto 13));
+
+                    hole_face_v := unsigned(lfsr(2 downto 0));
+                    if hole_face_v = player_face_v then
+                        hole_face_v := player_face_v + 1;
+                    end if;
+
+                    case to_integer(unsigned(next_lfsr(2 downto 0))) is
+                        when 0      => n_obs_v := 2;
+                        when 1      => n_obs_v := 3;
+                        when 2      => n_obs_v := 4;
+                        when 3      => n_obs_v := 5;
+                        when 4      => n_obs_v := 6;
+                        when 5      => n_obs_v := 7;
+                        when 6      => n_obs_v := 2;
+                        when others => n_obs_v := 3;
+                    end case;
+
+                    -- Clear all 8 obstacle slots
+                    for s in 0 to 7 loop
+                        obs_active_r(s) <= '0';
+                    end loop;
+
+                    -- Fill obstacle slots and find coin face in one pass.
+                    -- Iterate from player_face_v (always blocked first),
+                    -- then each subsequent face in order.
+                    -- The first non-hole face AFTER n_obs_v obstacles have been
+                    -- placed becomes the coin face.
+                    filled_v      := 0;
+                    coin_placed_v := false;
+                    coin_face_v   := 0;
+
+                    for i in 0 to 7 loop
+                        face_i := to_integer(player_face_v) + i;
+                        if face_i >= 8 then face_i := face_i - 8; end if;
+
+                        if face_i /= to_integer(hole_face_v) then
+                            if filled_v < n_obs_v then
+                                -- Place obstacle
+                                obs_active_r(filled_v) <= '1';
+                                obs_depth_r(filled_v)  <= to_unsigned(OBS_SPAWN_DEPTH, 8);
+                                obs_fsec_r(filled_v)   <= std_logic_vector(to_unsigned(face_i, 3));
+                                filled_v := filled_v + 1;
+                            elsif not coin_placed_v then
+                                -- First free non-hole face → coin
+                                coin_face_v   := face_i;
+                                coin_placed_v := true;
+                            end if;
                         end if;
                     end loop;
-                end if;
 
-                -- ── Spawn scoring ring into first free slot ────────
-                if do_rspawn then
-                    found_ring := false;
-                    for i in 0 to 1 loop
-                        if ring_active_r(i) = '0' and not found_ring then
-                            ring_active_r(i) <= '1';
-                            ring_depth_r(i)  <= to_unsigned(OBS_SPAWN_DEPTH, 8);
-                            found_ring       := true;
-                        end if;
-                    end loop;
-                end if;
+                    -- Spawn the coin.
+                    -- If coin_placed_v is false (n_obs=7, only hole is free),
+                    -- put the coin in the hole — player must collect to survive.
+                    coin_active_r <= '1';
+                    coin_depth_r  <= to_unsigned(OBS_SPAWN_DEPTH, 8);
+                    if coin_placed_v then
+                        coin_fsec_r <= std_logic_vector(to_unsigned(coin_face_v, 3));
+                    else
+                        -- n_obs = 7: coin lives in the hole face
+                        coin_fsec_r <= std_logic_vector(hole_face_v);
+                    end if;
 
-            end if;
-        end if;
+                end if;  -- do_spawn
+
+            end if;  -- frame_tick
+        end if;  -- rising_edge
     end process;
 
 end rtl;

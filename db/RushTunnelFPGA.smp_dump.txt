@@ -1,5 +1,5 @@
 
-State Machine - |RushTunnelFPGA|game_fsm:u_fsm|state
+State Machine - |RushTunnelFPGA|spaceship:u_ship|state
 Name state.S_GAME_OVER state.S_PLAYING state.S_IDLE 
 state.S_IDLE 0 0 0 
 state.S_PLAYING 0 1 1 
