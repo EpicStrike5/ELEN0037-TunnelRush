@@ -1,0 +1,31 @@
+# ── Quartus build artefacts ──────────────────────────────────────────────────
+
+# Internal compiler databases
+db/
+incremental_db/
+greybox_tmp/
+
+# Compiled output (bitstreams, programming files, reports)
+output_files/
+
+# Generated simulation netlists
+simulation/
+
+# ── Quartus generated files ───────────────────────────────────────────────────
+
+*.bak           # automatic source backups
+*.qws           # workspace window layout (personal)
+*.cdf           # chain/programmer setup (board-specific)
+*.rpt           # timing / fitter reports
+*.summary
+*.smsg          # suppressed messages
+*.pin           # pin report
+*.done
+*.jdi           # JTAG debug info
+*.stp           # SignalTap II capture setup
+*.sld           # SignalTap II debug file
+*.qdb           # Quartus database snapshot
+*.rcf           # resource constraint file
+*.xml           # generated XML reports
+*.csv           # generated CSV reports
+*.txt           # generated text logs (Quartus writes these, not our sources)
