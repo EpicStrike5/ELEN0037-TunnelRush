@@ -1,5 +1,5 @@
 Analysis & Synthesis report for RushTunnelFPGA
-Fri May  8 15:33:19 2026
+Sun May 10 14:20:07 2026
 Quartus Prime Version 23.1std.1 Build 993 05/14/2024 SC Lite Edition
 
 
@@ -92,15 +92,15 @@ https://fpgasoftware.intel.com/eula.
 +-------------------------------------------------------------------------------------+
 ; Analysis & Synthesis Summary                                                        ;
 +------------------------------------+------------------------------------------------+
-; Analysis & Synthesis Status        ; Successful - Fri May  8 15:33:19 2026          ;
+; Analysis & Synthesis Status        ; Successful - Sun May 10 14:20:07 2026          ;
 ; Quartus Prime Version              ; 23.1std.1 Build 993 05/14/2024 SC Lite Edition ;
 ; Revision Name                      ; RushTunnelFPGA                                 ;
 ; Top-level Entity Name              ; RushTunnelFPGA                                 ;
 ; Family                             ; Cyclone IV E                                   ;
-; Total logic elements               ; 7,574                                          ;
-;     Total combinational functions  ; 7,300                                          ;
-;     Dedicated logic registers      ; 913                                            ;
-; Total registers                    ; 913                                            ;
+; Total logic elements               ; 7,559                                          ;
+;     Total combinational functions  ; 7,285                                          ;
+;     Dedicated logic registers      ; 908                                            ;
+; Total registers                    ; 908                                            ;
 ; Total pins                         ; 18                                             ;
 ; Total virtual pins                 ; 0                                              ;
 ; Total memory bits                  ; 30,000                                         ;
@@ -117,6 +117,7 @@ https://fpgasoftware.intel.com/eula.
 ; Device                                                           ; EP4CE22F17C6       ;                    ;
 ; Top-level entity name                                            ; RushTunnelFPGA     ; RushTunnelFPGA     ;
 ; Family name                                                      ; Cyclone IV E       ; Cyclone V          ;
+; Maximum processors allowed for parallel compilation              ; 6                  ;                    ;
 ; Use smart compilation                                            ; Off                ; Off                ;
 ; Enable parallel Assembler and Timing Analyzer during compilation ; On                 ; On                 ;
 ; Enable compact report table                                      ; Off                ; Off                ;
@@ -315,20 +316,20 @@ https://fpgasoftware.intel.com/eula.
 +---------------------------------------------+--------------+
 ; Resource                                    ; Usage        ;
 +---------------------------------------------+--------------+
-; Estimated Total logic elements              ; 7,574        ;
+; Estimated Total logic elements              ; 7,559        ;
 ;                                             ;              ;
-; Total combinational functions               ; 7300         ;
+; Total combinational functions               ; 7285         ;
 ; Logic element usage by number of LUT inputs ;              ;
-;     -- 4 input functions                    ; 2417         ;
-;     -- 3 input functions                    ; 2762         ;
-;     -- <=2 input functions                  ; 2121         ;
+;     -- 4 input functions                    ; 2412         ;
+;     -- 3 input functions                    ; 2769         ;
+;     -- <=2 input functions                  ; 2104         ;
 ;                                             ;              ;
 ; Logic elements by mode                      ;              ;
-;     -- normal mode                          ; 4344         ;
-;     -- arithmetic mode                      ; 2956         ;
+;     -- normal mode                          ; 4337         ;
+;     -- arithmetic mode                      ; 2948         ;
 ;                                             ;              ;
-; Total registers                             ; 913          ;
-;     -- Dedicated logic registers            ; 913          ;
+; Total registers                             ; 908          ;
+;     -- Dedicated logic registers            ; 908          ;
 ;     -- I/O registers                        ; 0            ;
 ;                                             ;              ;
 ; I/O pins                                    ; 18           ;
@@ -337,8 +338,8 @@ https://fpgasoftware.intel.com/eula.
 ; Embedded Multiplier 9-bit elements          ; 22           ;
 ;                                             ;              ;
 ; Maximum fan-out node                        ; CLK_50~input ;
-; Maximum fan-out                             ; 925          ;
-; Total fan-out                               ; 24469        ;
+; Maximum fan-out                             ; 920          ;
+; Total fan-out                               ; 24422        ;
 ; Average fan-out                             ; 2.95         ;
 +---------------------------------------------+--------------+
 
@@ -348,7 +349,7 @@ https://fpgasoftware.intel.com/eula.
 +---------------------------------------------------+---------------------+---------------------------+-------------+--------------+---------+-----------+------+--------------+--------------------------------------------------------------------------------------------------------------------------------------------------------+------------------+--------------+
 ; Compilation Hierarchy Node                        ; Combinational ALUTs ; Dedicated Logic Registers ; Memory Bits ; DSP Elements ; DSP 9x9 ; DSP 18x18 ; Pins ; Virtual Pins ; Full Hierarchy Name                                                                                                                                    ; Entity Name      ; Library Name ;
 +---------------------------------------------------+---------------------+---------------------------+-------------+--------------+---------+-----------+------+--------------+--------------------------------------------------------------------------------------------------------------------------------------------------------+------------------+--------------+
-; |RushTunnelFPGA                                   ; 7300 (94)           ; 913 (60)                  ; 30000       ; 22           ; 2       ; 10        ; 18   ; 0            ; |RushTunnelFPGA                                                                                                                                        ; RushTunnelFPGA   ; work         ;
+; |RushTunnelFPGA                                   ; 7285 (94)           ; 908 (60)                  ; 30000       ; 22           ; 2       ; 10        ; 18   ; 0            ; |RushTunnelFPGA                                                                                                                                        ; RushTunnelFPGA   ; work         ;
 ;    |crt_effects:u_crt|                            ; 55 (55)             ; 12 (12)                   ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RushTunnelFPGA|crt_effects:u_crt                                                                                                                      ; crt_effects      ; work         ;
 ;    |lpm_mult:Mult0|                               ; 45 (0)              ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RushTunnelFPGA|lpm_mult:Mult0                                                                                                                         ; lpm_mult         ; work         ;
 ;       |multcore:mult_core|                        ; 45 (20)             ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RushTunnelFPGA|lpm_mult:Mult0|multcore:mult_core                                                                                                      ; multcore         ; work         ;
@@ -366,8 +367,8 @@ https://fpgasoftware.intel.com/eula.
 ;             |mpar_add:sub_par_add|                ; 11 (0)              ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RushTunnelFPGA|lpm_mult:Mult1|multcore:mult_core|mpar_add:padder|mpar_add:sub_par_add                                                                 ; mpar_add         ; work         ;
 ;                |lpm_add_sub:adder[0]|             ; 11 (0)              ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RushTunnelFPGA|lpm_mult:Mult1|multcore:mult_core|mpar_add:padder|mpar_add:sub_par_add|lpm_add_sub:adder[0]                                            ; lpm_add_sub      ; work         ;
 ;                   |add_sub_ikh:auto_generated|    ; 11 (11)             ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RushTunnelFPGA|lpm_mult:Mult1|multcore:mult_core|mpar_add:padder|mpar_add:sub_par_add|lpm_add_sub:adder[0]|add_sub_ikh:auto_generated                 ; add_sub_ikh      ; work         ;
-;    |obstacle_manager:u_obs|                       ; 498 (498)           ; 128 (128)                 ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RushTunnelFPGA|obstacle_manager:u_obs                                                                                                                 ; obstacle_manager ; work         ;
-;    |screen_overlay:u_overlay|                     ; 3526 (1371)         ; 107 (107)                 ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RushTunnelFPGA|screen_overlay:u_overlay                                                                                                               ; screen_overlay   ; work         ;
+;    |obstacle_manager:u_obs|                       ; 500 (500)           ; 129 (129)                 ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RushTunnelFPGA|obstacle_manager:u_obs                                                                                                                 ; obstacle_manager ; work         ;
+;    |screen_overlay:u_overlay|                     ; 3522 (1371)         ; 107 (107)                 ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RushTunnelFPGA|screen_overlay:u_overlay                                                                                                               ; screen_overlay   ; work         ;
 ;       |lpm_divide:Div0|                           ; 88 (0)              ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RushTunnelFPGA|screen_overlay:u_overlay|lpm_divide:Div0                                                                                               ; lpm_divide       ; work         ;
 ;          |lpm_divide_k0p:auto_generated|          ; 88 (0)              ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RushTunnelFPGA|screen_overlay:u_overlay|lpm_divide:Div0|lpm_divide_k0p:auto_generated                                                                 ; lpm_divide_k0p   ; work         ;
 ;             |abs_divider_fbg:divider|             ; 88 (8)              ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RushTunnelFPGA|screen_overlay:u_overlay|lpm_divide:Div0|lpm_divide_k0p:auto_generated|abs_divider_fbg:divider                                         ; abs_divider_fbg  ; work         ;
@@ -390,11 +391,11 @@ https://fpgasoftware.intel.com/eula.
 ;             |abs_divider_ibg:divider|             ; 119 (6)             ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RushTunnelFPGA|screen_overlay:u_overlay|lpm_divide:Div4|lpm_divide_n0p:auto_generated|abs_divider_ibg:divider                                         ; abs_divider_ibg  ; work         ;
 ;                |alt_u_div_v6f:divider|            ; 99 (99)             ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RushTunnelFPGA|screen_overlay:u_overlay|lpm_divide:Div4|lpm_divide_n0p:auto_generated|abs_divider_ibg:divider|alt_u_div_v6f:divider                   ; alt_u_div_v6f    ; work         ;
 ;                |lpm_abs_g0a:my_abs_num|           ; 14 (14)             ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RushTunnelFPGA|screen_overlay:u_overlay|lpm_divide:Div4|lpm_divide_n0p:auto_generated|abs_divider_ibg:divider|lpm_abs_g0a:my_abs_num                  ; lpm_abs_g0a      ; work         ;
-;       |lpm_divide:Div5|                           ; 139 (0)             ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RushTunnelFPGA|screen_overlay:u_overlay|lpm_divide:Div5                                                                                               ; lpm_divide       ; work         ;
-;          |lpm_divide_m0p:auto_generated|          ; 139 (0)             ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RushTunnelFPGA|screen_overlay:u_overlay|lpm_divide:Div5|lpm_divide_m0p:auto_generated                                                                 ; lpm_divide_m0p   ; work         ;
-;             |abs_divider_hbg:divider|             ; 139 (22)            ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RushTunnelFPGA|screen_overlay:u_overlay|lpm_divide:Div5|lpm_divide_m0p:auto_generated|abs_divider_hbg:divider                                         ; abs_divider_hbg  ; work         ;
+;       |lpm_divide:Div5|                           ; 141 (0)             ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RushTunnelFPGA|screen_overlay:u_overlay|lpm_divide:Div5                                                                                               ; lpm_divide       ; work         ;
+;          |lpm_divide_m0p:auto_generated|          ; 141 (0)             ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RushTunnelFPGA|screen_overlay:u_overlay|lpm_divide:Div5|lpm_divide_m0p:auto_generated                                                                 ; lpm_divide_m0p   ; work         ;
+;             |abs_divider_hbg:divider|             ; 141 (22)            ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RushTunnelFPGA|screen_overlay:u_overlay|lpm_divide:Div5|lpm_divide_m0p:auto_generated|abs_divider_hbg:divider                                         ; abs_divider_hbg  ; work         ;
 ;                |alt_u_div_07f:divider|            ; 106 (106)           ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RushTunnelFPGA|screen_overlay:u_overlay|lpm_divide:Div5|lpm_divide_m0p:auto_generated|abs_divider_hbg:divider|alt_u_div_07f:divider                   ; alt_u_div_07f    ; work         ;
-;                |lpm_abs_g0a:my_abs_num|           ; 11 (11)             ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RushTunnelFPGA|screen_overlay:u_overlay|lpm_divide:Div5|lpm_divide_m0p:auto_generated|abs_divider_hbg:divider|lpm_abs_g0a:my_abs_num                  ; lpm_abs_g0a      ; work         ;
+;                |lpm_abs_g0a:my_abs_num|           ; 13 (13)             ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RushTunnelFPGA|screen_overlay:u_overlay|lpm_divide:Div5|lpm_divide_m0p:auto_generated|abs_divider_hbg:divider|lpm_abs_g0a:my_abs_num                  ; lpm_abs_g0a      ; work         ;
 ;       |lpm_divide:Div6|                           ; 107 (0)             ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RushTunnelFPGA|screen_overlay:u_overlay|lpm_divide:Div6                                                                                               ; lpm_divide       ; work         ;
 ;          |lpm_divide_m0p:auto_generated|          ; 107 (0)             ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RushTunnelFPGA|screen_overlay:u_overlay|lpm_divide:Div6|lpm_divide_m0p:auto_generated                                                                 ; lpm_divide_m0p   ; work         ;
 ;             |abs_divider_hbg:divider|             ; 107 (0)             ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RushTunnelFPGA|screen_overlay:u_overlay|lpm_divide:Div6|lpm_divide_m0p:auto_generated|abs_divider_hbg:divider                                         ; abs_divider_hbg  ; work         ;
@@ -423,11 +424,11 @@ https://fpgasoftware.intel.com/eula.
 ;             |abs_divider_0dg:divider|             ; 233 (7)             ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RushTunnelFPGA|screen_overlay:u_overlay|lpm_divide:Mod2|lpm_divide_8qo:auto_generated|abs_divider_0dg:divider                                         ; abs_divider_0dg  ; work         ;
 ;                |alt_u_div_u9f:divider|            ; 208 (208)           ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RushTunnelFPGA|screen_overlay:u_overlay|lpm_divide:Mod2|lpm_divide_8qo:auto_generated|abs_divider_0dg:divider|alt_u_div_u9f:divider                   ; alt_u_div_u9f    ; work         ;
 ;                |lpm_abs_g0a:my_abs_num|           ; 18 (18)             ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RushTunnelFPGA|screen_overlay:u_overlay|lpm_divide:Mod2|lpm_divide_8qo:auto_generated|abs_divider_0dg:divider|lpm_abs_g0a:my_abs_num                  ; lpm_abs_g0a      ; work         ;
-;       |lpm_divide:Mod3|                           ; 223 (0)             ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RushTunnelFPGA|screen_overlay:u_overlay|lpm_divide:Mod3                                                                                               ; lpm_divide       ; work         ;
-;          |lpm_divide_8qo:auto_generated|          ; 223 (0)             ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RushTunnelFPGA|screen_overlay:u_overlay|lpm_divide:Mod3|lpm_divide_8qo:auto_generated                                                                 ; lpm_divide_8qo   ; work         ;
-;             |abs_divider_0dg:divider|             ; 223 (6)             ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RushTunnelFPGA|screen_overlay:u_overlay|lpm_divide:Mod3|lpm_divide_8qo:auto_generated|abs_divider_0dg:divider                                         ; abs_divider_0dg  ; work         ;
+;       |lpm_divide:Mod3|                           ; 217 (0)             ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RushTunnelFPGA|screen_overlay:u_overlay|lpm_divide:Mod3                                                                                               ; lpm_divide       ; work         ;
+;          |lpm_divide_8qo:auto_generated|          ; 217 (0)             ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RushTunnelFPGA|screen_overlay:u_overlay|lpm_divide:Mod3|lpm_divide_8qo:auto_generated                                                                 ; lpm_divide_8qo   ; work         ;
+;             |abs_divider_0dg:divider|             ; 217 (6)             ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RushTunnelFPGA|screen_overlay:u_overlay|lpm_divide:Mod3|lpm_divide_8qo:auto_generated|abs_divider_0dg:divider                                         ; abs_divider_0dg  ; work         ;
 ;                |alt_u_div_u9f:divider|            ; 197 (197)           ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RushTunnelFPGA|screen_overlay:u_overlay|lpm_divide:Mod3|lpm_divide_8qo:auto_generated|abs_divider_0dg:divider|alt_u_div_u9f:divider                   ; alt_u_div_u9f    ; work         ;
-;                |lpm_abs_g0a:my_abs_num|           ; 20 (20)             ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RushTunnelFPGA|screen_overlay:u_overlay|lpm_divide:Mod3|lpm_divide_8qo:auto_generated|abs_divider_0dg:divider|lpm_abs_g0a:my_abs_num                  ; lpm_abs_g0a      ; work         ;
+;                |lpm_abs_g0a:my_abs_num|           ; 14 (14)             ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RushTunnelFPGA|screen_overlay:u_overlay|lpm_divide:Mod3|lpm_divide_8qo:auto_generated|abs_divider_0dg:divider|lpm_abs_g0a:my_abs_num                  ; lpm_abs_g0a      ; work         ;
 ;       |lpm_divide:Mod4|                           ; 248 (0)             ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RushTunnelFPGA|screen_overlay:u_overlay|lpm_divide:Mod4                                                                                               ; lpm_divide       ; work         ;
 ;          |lpm_divide_8qo:auto_generated|          ; 248 (0)             ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RushTunnelFPGA|screen_overlay:u_overlay|lpm_divide:Mod4|lpm_divide_8qo:auto_generated                                                                 ; lpm_divide_8qo   ; work         ;
 ;             |abs_divider_0dg:divider|             ; 248 (24)            ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RushTunnelFPGA|screen_overlay:u_overlay|lpm_divide:Mod4|lpm_divide_8qo:auto_generated|abs_divider_0dg:divider                                         ; abs_divider_0dg  ; work         ;
@@ -438,11 +439,11 @@ https://fpgasoftware.intel.com/eula.
 ;       |lpm_mult:Mult1|                            ; 6 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RushTunnelFPGA|screen_overlay:u_overlay|lpm_mult:Mult1                                                                                                ; lpm_mult         ; work         ;
 ;          |multcore:mult_core|                     ; 6 (6)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RushTunnelFPGA|screen_overlay:u_overlay|lpm_mult:Mult1|multcore:mult_core                                                                             ; multcore         ; work         ;
 ;    |snes_controller:u_snes|                       ; 63 (63)             ; 37 (37)                   ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RushTunnelFPGA|snes_controller:u_snes                                                                                                                 ; snes_controller  ; work         ;
-;    |spaceship:u_ship|                             ; 292 (292)           ; 67 (67)                   ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RushTunnelFPGA|spaceship:u_ship                                                                                                                       ; spaceship        ; work         ;
-;    |start_screen:u_start|                         ; 689 (689)           ; 323 (323)                 ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RushTunnelFPGA|start_screen:u_start                                                                                                                   ; start_screen     ; work         ;
+;    |spaceship:u_ship|                             ; 285 (285)           ; 61 (61)                   ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RushTunnelFPGA|spaceship:u_ship                                                                                                                       ; spaceship        ; work         ;
+;    |start_screen:u_start|                         ; 687 (687)           ; 323 (323)                 ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RushTunnelFPGA|start_screen:u_start                                                                                                                   ; start_screen     ; work         ;
 ;    |trig_rom:u_trig_ship|                         ; 284 (284)           ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RushTunnelFPGA|trig_rom:u_trig_ship                                                                                                                   ; trig_rom         ; work         ;
 ;    |trig_rom:u_trig_tun|                          ; 279 (279)           ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RushTunnelFPGA|trig_rom:u_trig_tun                                                                                                                    ; trig_rom         ; work         ;
-;    |tunnel:u_tunnel|                              ; 1382 (1254)         ; 157 (157)                 ; 30000       ; 22           ; 2       ; 10        ; 0    ; 0            ; |RushTunnelFPGA|tunnel:u_tunnel                                                                                                                        ; tunnel           ; work         ;
+;    |tunnel:u_tunnel|                              ; 1378 (1250)         ; 157 (157)                 ; 30000       ; 22           ; 2       ; 10        ; 0    ; 0            ; |RushTunnelFPGA|tunnel:u_tunnel                                                                                                                        ; tunnel           ; work         ;
 ;       |altsyncram:ROM_ship|                       ; 0 (0)               ; 0 (0)                     ; 30000       ; 0            ; 0       ; 0         ; 0    ; 0            ; |RushTunnelFPGA|tunnel:u_tunnel|altsyncram:ROM_ship                                                                                                    ; altsyncram       ; work         ;
 ;          |altsyncram_27p3:auto_generated|         ; 0 (0)               ; 0 (0)                     ; 30000       ; 0            ; 0       ; 0         ; 0    ; 0            ; |RushTunnelFPGA|tunnel:u_tunnel|altsyncram:ROM_ship|altsyncram_27p3:auto_generated                                                                     ; altsyncram_27p3  ; work         ;
 ;       |lpm_mult:Mult0|                            ; 0 (0)               ; 0 (0)                     ; 0           ; 2            ; 0       ; 1         ; 0    ; 0            ; |RushTunnelFPGA|tunnel:u_tunnel|lpm_mult:Mult0                                                                                                         ; lpm_mult         ; work         ;
@@ -680,12 +681,12 @@ Encoding Type:  One-Hot
 +----------------------------------------------+-------+
 ; Statistic                                    ; Value ;
 +----------------------------------------------+-------+
-; Total registers                              ; 913   ;
-; Number of registers using Synchronous Clear  ; 78    ;
+; Total registers                              ; 908   ;
+; Number of registers using Synchronous Clear  ; 79    ;
 ; Number of registers using Synchronous Load   ; 34    ;
 ; Number of registers using Asynchronous Clear ; 0     ;
 ; Number of registers using Asynchronous Load  ; 0     ;
-; Number of registers using Clock Enable       ; 519   ;
+; Number of registers using Clock Enable       ; 513   ;
 ; Number of registers using Preset             ; 0     ;
 +----------------------------------------------+-------+
 
@@ -805,97 +806,99 @@ Encoding Type:  One-Hot
 +--------------------+-----------+---------------+----------------------+------------------------+------------+----------------------------------------------------------+
 ; Multiplexer Inputs ; Bus Width ; Baseline Area ; Area if Restructured ; Saving if Restructured ; Registered ; Example Multiplexer Output                               ;
 +--------------------+-----------+---------------+----------------------+------------------------+------------+----------------------------------------------------------+
-; 3:1                ; 3 bits    ; 6 LEs         ; 3 LEs                ; 3 LEs                  ; Yes        ; |RushTunnelFPGA|start_screen:u_start|next_col[1]         ;
-; 3:1                ; 4 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; Yes        ; |RushTunnelFPGA|obstacle_manager:u_obs|coin_depth_r[4]   ;
-; 3:1                ; 16 bits   ; 32 LEs        ; 16 LEs               ; 16 LEs                 ; Yes        ; |RushTunnelFPGA|spaceship:u_ship|ship_rel_ang_r[15]      ;
+; 3:1                ; 3 bits    ; 6 LEs         ; 3 LEs                ; 3 LEs                  ; Yes        ; |RushTunnelFPGA|start_screen:u_start|next_col[2]         ;
+; 3:1                ; 4 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; Yes        ; |RushTunnelFPGA|obstacle_manager:u_obs|coin_depth_r[7]   ;
+; 3:1                ; 16 bits   ; 32 LEs        ; 16 LEs               ; 16 LEs                 ; Yes        ; |RushTunnelFPGA|spaceship:u_ship|ship_rel_ang_r[6]       ;
 ; 4:1                ; 4 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; Yes        ; |RushTunnelFPGA|score_ones[3]                            ;
-; 4:1                ; 4 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; Yes        ; |RushTunnelFPGA|score_tens[3]                            ;
-; 4:1                ; 9 bits    ; 18 LEs        ; 9 LEs                ; 9 LEs                  ; Yes        ; |RushTunnelFPGA|obstacle_manager:u_obs|spawn_cnt[0]      ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; Yes        ; |RushTunnelFPGA|score_tens[2]                            ;
+; 4:1                ; 9 bits    ; 18 LEs        ; 9 LEs                ; 9 LEs                  ; Yes        ; |RushTunnelFPGA|obstacle_manager:u_obs|spawn_cnt[8]      ;
 ; 4:1                ; 3 bits    ; 6 LEs         ; 3 LEs                ; 3 LEs                  ; Yes        ; |RushTunnelFPGA|obstacle_manager:u_obs|adv_cnt[0]        ;
-; 4:1                ; 3 bits    ; 6 LEs         ; 6 LEs                ; 0 LEs                  ; Yes        ; |RushTunnelFPGA|start_screen:u_start|s_px[0][6]          ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; Yes        ; |RushTunnelFPGA|tunnel:u_tunnel|blue[0]                  ;
+; 4:1                ; 3 bits    ; 6 LEs         ; 6 LEs                ; 0 LEs                  ; Yes        ; |RushTunnelFPGA|start_screen:u_start|s_px[0][5]          ;
 ; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; Yes        ; |RushTunnelFPGA|start_screen:u_start|s_py[0][9]          ;
-; 4:1                ; 3 bits    ; 6 LEs         ; 6 LEs                ; 0 LEs                  ; Yes        ; |RushTunnelFPGA|start_screen:u_start|s_px[1][9]          ;
+; 4:1                ; 3 bits    ; 6 LEs         ; 6 LEs                ; 0 LEs                  ; Yes        ; |RushTunnelFPGA|start_screen:u_start|s_px[1][5]          ;
 ; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; Yes        ; |RushTunnelFPGA|start_screen:u_start|s_py[1][6]          ;
 ; 4:1                ; 3 bits    ; 6 LEs         ; 6 LEs                ; 0 LEs                  ; Yes        ; |RushTunnelFPGA|start_screen:u_start|s_px[2][9]          ;
 ; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; Yes        ; |RushTunnelFPGA|start_screen:u_start|s_py[2][7]          ;
 ; 4:1                ; 3 bits    ; 6 LEs         ; 6 LEs                ; 0 LEs                  ; Yes        ; |RushTunnelFPGA|start_screen:u_start|s_px[3][9]          ;
 ; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; Yes        ; |RushTunnelFPGA|start_screen:u_start|s_py[3][7]          ;
-; 4:1                ; 3 bits    ; 6 LEs         ; 6 LEs                ; 0 LEs                  ; Yes        ; |RushTunnelFPGA|start_screen:u_start|s_px[4][9]          ;
-; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; Yes        ; |RushTunnelFPGA|start_screen:u_start|s_py[4][4]          ;
+; 4:1                ; 3 bits    ; 6 LEs         ; 6 LEs                ; 0 LEs                  ; Yes        ; |RushTunnelFPGA|start_screen:u_start|s_px[4][5]          ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; Yes        ; |RushTunnelFPGA|start_screen:u_start|s_py[4][6]          ;
 ; 4:1                ; 3 bits    ; 6 LEs         ; 6 LEs                ; 0 LEs                  ; Yes        ; |RushTunnelFPGA|start_screen:u_start|s_px[5][5]          ;
-; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; Yes        ; |RushTunnelFPGA|start_screen:u_start|s_py[5][4]          ;
-; 4:1                ; 7 bits    ; 14 LEs        ; 14 LEs               ; 0 LEs                  ; Yes        ; |RushTunnelFPGA|start_screen:u_start|s_half[0][5]        ;
-; 4:1                ; 3 bits    ; 6 LEs         ; 6 LEs                ; 0 LEs                  ; Yes        ; |RushTunnelFPGA|screen_overlay:u_overlay|go_bx_r[9]      ;
-; 4:1                ; 7 bits    ; 14 LEs        ; 14 LEs               ; 0 LEs                  ; Yes        ; |RushTunnelFPGA|screen_overlay:u_overlay|go_by_r[7]      ;
-; 4:1                ; 7 bits    ; 14 LEs        ; 14 LEs               ; 0 LEs                  ; Yes        ; |RushTunnelFPGA|start_screen:u_start|s_half[1][3]        ;
-; 4:1                ; 7 bits    ; 14 LEs        ; 14 LEs               ; 0 LEs                  ; Yes        ; |RushTunnelFPGA|start_screen:u_start|s_half[2][1]        ;
-; 4:1                ; 7 bits    ; 14 LEs        ; 14 LEs               ; 0 LEs                  ; Yes        ; |RushTunnelFPGA|start_screen:u_start|s_half[3][4]        ;
-; 4:1                ; 7 bits    ; 14 LEs        ; 14 LEs               ; 0 LEs                  ; Yes        ; |RushTunnelFPGA|start_screen:u_start|s_half[4][1]        ;
-; 4:1                ; 7 bits    ; 14 LEs        ; 14 LEs               ; 0 LEs                  ; Yes        ; |RushTunnelFPGA|start_screen:u_start|s_half[5][4]        ;
-; 5:1                ; 3 bits    ; 9 LEs         ; 6 LEs                ; 3 LEs                  ; Yes        ; |RushTunnelFPGA|screen_overlay:u_overlay|blue_out[1]     ;
-; 5:1                ; 3 bits    ; 9 LEs         ; 9 LEs                ; 0 LEs                  ; Yes        ; |RushTunnelFPGA|screen_overlay:u_overlay|red_out[3]      ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; Yes        ; |RushTunnelFPGA|start_screen:u_start|s_py[5][7]          ;
+; 4:1                ; 7 bits    ; 14 LEs        ; 14 LEs               ; 0 LEs                  ; Yes        ; |RushTunnelFPGA|start_screen:u_start|s_half[0][7]        ;
+; 4:1                ; 3 bits    ; 6 LEs         ; 6 LEs                ; 0 LEs                  ; Yes        ; |RushTunnelFPGA|screen_overlay:u_overlay|go_bx_r[4]      ;
+; 4:1                ; 7 bits    ; 14 LEs        ; 14 LEs               ; 0 LEs                  ; Yes        ; |RushTunnelFPGA|screen_overlay:u_overlay|go_by_r[9]      ;
+; 4:1                ; 7 bits    ; 14 LEs        ; 14 LEs               ; 0 LEs                  ; Yes        ; |RushTunnelFPGA|start_screen:u_start|s_half[1][2]        ;
+; 4:1                ; 7 bits    ; 14 LEs        ; 14 LEs               ; 0 LEs                  ; Yes        ; |RushTunnelFPGA|start_screen:u_start|s_half[2][6]        ;
+; 4:1                ; 7 bits    ; 14 LEs        ; 14 LEs               ; 0 LEs                  ; Yes        ; |RushTunnelFPGA|start_screen:u_start|s_half[3][5]        ;
+; 4:1                ; 7 bits    ; 14 LEs        ; 14 LEs               ; 0 LEs                  ; Yes        ; |RushTunnelFPGA|start_screen:u_start|s_half[4][5]        ;
+; 4:1                ; 7 bits    ; 14 LEs        ; 14 LEs               ; 0 LEs                  ; Yes        ; |RushTunnelFPGA|start_screen:u_start|s_half[5][1]        ;
+; 5:1                ; 3 bits    ; 9 LEs         ; 6 LEs                ; 3 LEs                  ; Yes        ; |RushTunnelFPGA|screen_overlay:u_overlay|blue_out[0]     ;
+; 5:1                ; 3 bits    ; 9 LEs         ; 9 LEs                ; 0 LEs                  ; Yes        ; |RushTunnelFPGA|screen_overlay:u_overlay|red_out[1]      ;
 ; 9:1                ; 5 bits    ; 30 LEs        ; 30 LEs               ; 0 LEs                  ; Yes        ; |RushTunnelFPGA|crt_effects:u_crt|red_out[0]             ;
-; 5:1                ; 4 bits    ; 12 LEs        ; 8 LEs                ; 4 LEs                  ; Yes        ; |RushTunnelFPGA|start_screen:u_start|s_px[0][1]          ;
-; 5:1                ; 2 bits    ; 6 LEs         ; 4 LEs                ; 2 LEs                  ; Yes        ; |RushTunnelFPGA|start_screen:u_start|s_py[0][0]          ;
-; 5:1                ; 4 bits    ; 12 LEs        ; 8 LEs                ; 4 LEs                  ; Yes        ; |RushTunnelFPGA|start_screen:u_start|s_px[1][0]          ;
+; 5:1                ; 4 bits    ; 12 LEs        ; 8 LEs                ; 4 LEs                  ; Yes        ; |RushTunnelFPGA|start_screen:u_start|s_px[0][0]          ;
+; 5:1                ; 2 bits    ; 6 LEs         ; 4 LEs                ; 2 LEs                  ; Yes        ; |RushTunnelFPGA|start_screen:u_start|s_py[0][1]          ;
+; 5:1                ; 4 bits    ; 12 LEs        ; 8 LEs                ; 4 LEs                  ; Yes        ; |RushTunnelFPGA|start_screen:u_start|s_px[1][3]          ;
 ; 5:1                ; 2 bits    ; 6 LEs         ; 4 LEs                ; 2 LEs                  ; Yes        ; |RushTunnelFPGA|start_screen:u_start|s_py[1][1]          ;
-; 5:1                ; 4 bits    ; 12 LEs        ; 8 LEs                ; 4 LEs                  ; Yes        ; |RushTunnelFPGA|start_screen:u_start|s_px[2][0]          ;
-; 5:1                ; 2 bits    ; 6 LEs         ; 4 LEs                ; 2 LEs                  ; Yes        ; |RushTunnelFPGA|start_screen:u_start|s_py[2][0]          ;
-; 5:1                ; 4 bits    ; 12 LEs        ; 8 LEs                ; 4 LEs                  ; Yes        ; |RushTunnelFPGA|start_screen:u_start|s_px[3][1]          ;
+; 5:1                ; 4 bits    ; 12 LEs        ; 8 LEs                ; 4 LEs                  ; Yes        ; |RushTunnelFPGA|start_screen:u_start|s_px[2][2]          ;
+; 5:1                ; 2 bits    ; 6 LEs         ; 4 LEs                ; 2 LEs                  ; Yes        ; |RushTunnelFPGA|start_screen:u_start|s_py[2][1]          ;
+; 5:1                ; 4 bits    ; 12 LEs        ; 8 LEs                ; 4 LEs                  ; Yes        ; |RushTunnelFPGA|start_screen:u_start|s_px[3][0]          ;
 ; 5:1                ; 2 bits    ; 6 LEs         ; 4 LEs                ; 2 LEs                  ; Yes        ; |RushTunnelFPGA|start_screen:u_start|s_py[3][0]          ;
-; 5:1                ; 4 bits    ; 12 LEs        ; 8 LEs                ; 4 LEs                  ; Yes        ; |RushTunnelFPGA|start_screen:u_start|s_px[4][0]          ;
-; 5:1                ; 2 bits    ; 6 LEs         ; 4 LEs                ; 2 LEs                  ; Yes        ; |RushTunnelFPGA|start_screen:u_start|s_py[4][1]          ;
-; 5:1                ; 4 bits    ; 12 LEs        ; 8 LEs                ; 4 LEs                  ; Yes        ; |RushTunnelFPGA|start_screen:u_start|s_px[5][2]          ;
-; 5:1                ; 2 bits    ; 6 LEs         ; 4 LEs                ; 2 LEs                  ; Yes        ; |RushTunnelFPGA|start_screen:u_start|s_py[5][0]          ;
-; 5:1                ; 2 bits    ; 6 LEs         ; 4 LEs                ; 2 LEs                  ; Yes        ; |RushTunnelFPGA|spaceship:u_ship|difficulty_r[3]         ;
-; 5:1                ; 4 bits    ; 12 LEs        ; 4 LEs                ; 8 LEs                  ; Yes        ; |RushTunnelFPGA|snes_controller:u_snes|bit_cnt[1]        ;
-; 7:1                ; 4 bits    ; 16 LEs        ; 4 LEs                ; 12 LEs                 ; Yes        ; |RushTunnelFPGA|obstacle_manager:u_obs|obs_depth_r[4][5] ;
-; 7:1                ; 4 bits    ; 16 LEs        ; 4 LEs                ; 12 LEs                 ; Yes        ; |RushTunnelFPGA|obstacle_manager:u_obs|obs_depth_r[5][7] ;
-; 7:1                ; 4 bits    ; 16 LEs        ; 4 LEs                ; 12 LEs                 ; Yes        ; |RushTunnelFPGA|obstacle_manager:u_obs|obs_depth_r[6][4] ;
-; 7:1                ; 4 bits    ; 16 LEs        ; 4 LEs                ; 12 LEs                 ; Yes        ; |RushTunnelFPGA|obstacle_manager:u_obs|obs_depth_r[7][2] ;
+; 5:1                ; 4 bits    ; 12 LEs        ; 8 LEs                ; 4 LEs                  ; Yes        ; |RushTunnelFPGA|start_screen:u_start|s_px[4][1]          ;
+; 5:1                ; 2 bits    ; 6 LEs         ; 4 LEs                ; 2 LEs                  ; Yes        ; |RushTunnelFPGA|start_screen:u_start|s_py[4][0]          ;
+; 5:1                ; 4 bits    ; 12 LEs        ; 8 LEs                ; 4 LEs                  ; Yes        ; |RushTunnelFPGA|start_screen:u_start|s_px[5][3]          ;
+; 5:1                ; 2 bits    ; 6 LEs         ; 4 LEs                ; 2 LEs                  ; Yes        ; |RushTunnelFPGA|start_screen:u_start|s_py[5][1]          ;
+; 5:1                ; 2 bits    ; 6 LEs         ; 6 LEs                ; 0 LEs                  ; Yes        ; |RushTunnelFPGA|tunnel:u_tunnel|green[0]                 ;
+; 5:1                ; 2 bits    ; 6 LEs         ; 4 LEs                ; 2 LEs                  ; Yes        ; |RushTunnelFPGA|spaceship:u_ship|difficulty_r[1]         ;
+; 5:1                ; 4 bits    ; 12 LEs        ; 4 LEs                ; 8 LEs                  ; Yes        ; |RushTunnelFPGA|snes_controller:u_snes|bit_cnt[3]        ;
+; 7:1                ; 4 bits    ; 16 LEs        ; 4 LEs                ; 12 LEs                 ; Yes        ; |RushTunnelFPGA|obstacle_manager:u_obs|obs_depth_r[4][2] ;
+; 7:1                ; 4 bits    ; 16 LEs        ; 4 LEs                ; 12 LEs                 ; Yes        ; |RushTunnelFPGA|obstacle_manager:u_obs|obs_depth_r[5][5] ;
+; 7:1                ; 4 bits    ; 16 LEs        ; 4 LEs                ; 12 LEs                 ; Yes        ; |RushTunnelFPGA|obstacle_manager:u_obs|obs_depth_r[6][7] ;
+; 7:1                ; 4 bits    ; 16 LEs        ; 4 LEs                ; 12 LEs                 ; Yes        ; |RushTunnelFPGA|obstacle_manager:u_obs|obs_depth_r[7][4] ;
+; 7:1                ; 2 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; Yes        ; |RushTunnelFPGA|tunnel:u_tunnel|green[2]                 ;
 ; 7:1                ; 20 bits   ; 80 LEs        ; 20 LEs               ; 60 LEs                 ; Yes        ; |RushTunnelFPGA|snes_controller:u_snes|timer[9]          ;
-; 8:1                ; 4 bits    ; 20 LEs        ; 4 LEs                ; 16 LEs                 ; Yes        ; |RushTunnelFPGA|obstacle_manager:u_obs|obs_depth_r[2][2] ;
+; 8:1                ; 4 bits    ; 20 LEs        ; 4 LEs                ; 16 LEs                 ; Yes        ; |RushTunnelFPGA|obstacle_manager:u_obs|obs_depth_r[2][5] ;
 ; 8:1                ; 4 bits    ; 20 LEs        ; 4 LEs                ; 16 LEs                 ; Yes        ; |RushTunnelFPGA|obstacle_manager:u_obs|obs_depth_r[3][7] ;
-; 9:1                ; 3 bits    ; 18 LEs        ; 18 LEs               ; 0 LEs                  ; Yes        ; |RushTunnelFPGA|tunnel:u_tunnel|red[0]                   ;
-; 10:1               ; 4 bits    ; 24 LEs        ; 4 LEs                ; 20 LEs                 ; Yes        ; |RushTunnelFPGA|obstacle_manager:u_obs|obs_depth_r[0][4] ;
-; 14:1               ; 2 bits    ; 18 LEs        ; 12 LEs               ; 6 LEs                  ; Yes        ; |RushTunnelFPGA|screen_overlay:u_overlay|green_out[1]    ;
-; 44:1               ; 3 bits    ; 87 LEs        ; 87 LEs               ; 0 LEs                  ; Yes        ; |RushTunnelFPGA|screen_overlay:u_overlay|red_out[0]      ;
-; 3:1                ; 4 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; Yes        ; |RushTunnelFPGA|score_hundreds[3]                        ;
+; 8:1                ; 3 bits    ; 15 LEs        ; 15 LEs               ; 0 LEs                  ; Yes        ; |RushTunnelFPGA|tunnel:u_tunnel|red[0]                   ;
+; 10:1               ; 4 bits    ; 24 LEs        ; 4 LEs                ; 20 LEs                 ; Yes        ; |RushTunnelFPGA|obstacle_manager:u_obs|obs_depth_r[0][5] ;
+; 14:1               ; 2 bits    ; 18 LEs        ; 12 LEs               ; 6 LEs                  ; Yes        ; |RushTunnelFPGA|screen_overlay:u_overlay|green_out[0]    ;
+; 44:1               ; 3 bits    ; 87 LEs        ; 87 LEs               ; 0 LEs                  ; Yes        ; |RushTunnelFPGA|screen_overlay:u_overlay|green_out[3]    ;
+; 3:1                ; 4 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; Yes        ; |RushTunnelFPGA|score_hundreds[2]                        ;
 ; 3:1                ; 4 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; Yes        ; |RushTunnelFPGA|obstacle_manager:u_obs|coin_depth_r[0]   ;
 ; 4:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; Yes        ; |RushTunnelFPGA|start_screen:u_start|s_px[0][7]          ;
-; 4:1                ; 3 bits    ; 6 LEs         ; 6 LEs                ; 0 LEs                  ; Yes        ; |RushTunnelFPGA|start_screen:u_start|s_py[0][8]          ;
-; 4:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; Yes        ; |RushTunnelFPGA|start_screen:u_start|s_px[1][8]          ;
+; 4:1                ; 3 bits    ; 6 LEs         ; 6 LEs                ; 0 LEs                  ; Yes        ; |RushTunnelFPGA|start_screen:u_start|s_py[0][3]          ;
+; 4:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; Yes        ; |RushTunnelFPGA|start_screen:u_start|s_px[1][7]          ;
 ; 4:1                ; 3 bits    ; 6 LEs         ; 6 LEs                ; 0 LEs                  ; Yes        ; |RushTunnelFPGA|start_screen:u_start|s_py[1][5]          ;
-; 4:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; Yes        ; |RushTunnelFPGA|start_screen:u_start|s_px[2][7]          ;
-; 4:1                ; 3 bits    ; 6 LEs         ; 6 LEs                ; 0 LEs                  ; Yes        ; |RushTunnelFPGA|start_screen:u_start|s_py[2][8]          ;
+; 4:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; Yes        ; |RushTunnelFPGA|start_screen:u_start|s_px[2][8]          ;
+; 4:1                ; 3 bits    ; 6 LEs         ; 6 LEs                ; 0 LEs                  ; Yes        ; |RushTunnelFPGA|start_screen:u_start|s_py[2][3]          ;
 ; 4:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; Yes        ; |RushTunnelFPGA|start_screen:u_start|s_px[3][7]          ;
-; 4:1                ; 3 bits    ; 6 LEs         ; 6 LEs                ; 0 LEs                  ; Yes        ; |RushTunnelFPGA|start_screen:u_start|s_py[3][3]          ;
+; 4:1                ; 3 bits    ; 6 LEs         ; 6 LEs                ; 0 LEs                  ; Yes        ; |RushTunnelFPGA|start_screen:u_start|s_py[3][5]          ;
 ; 4:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; Yes        ; |RushTunnelFPGA|start_screen:u_start|s_px[4][8]          ;
 ; 4:1                ; 3 bits    ; 6 LEs         ; 6 LEs                ; 0 LEs                  ; Yes        ; |RushTunnelFPGA|start_screen:u_start|s_py[4][5]          ;
 ; 4:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; Yes        ; |RushTunnelFPGA|start_screen:u_start|s_px[5][8]          ;
-; 4:1                ; 3 bits    ; 6 LEs         ; 6 LEs                ; 0 LEs                  ; Yes        ; |RushTunnelFPGA|start_screen:u_start|s_py[5][5]          ;
-; 4:1                ; 6 bits    ; 12 LEs        ; 12 LEs               ; 0 LEs                  ; Yes        ; |RushTunnelFPGA|screen_overlay:u_overlay|go_bx_r[7]      ;
-; 4:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; Yes        ; |RushTunnelFPGA|screen_overlay:u_overlay|go_by_r[8]      ;
+; 4:1                ; 3 bits    ; 6 LEs         ; 6 LEs                ; 0 LEs                  ; Yes        ; |RushTunnelFPGA|start_screen:u_start|s_py[5][8]          ;
+; 4:1                ; 6 bits    ; 12 LEs        ; 12 LEs               ; 0 LEs                  ; Yes        ; |RushTunnelFPGA|screen_overlay:u_overlay|go_bx_r[5]      ;
+; 4:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; Yes        ; |RushTunnelFPGA|screen_overlay:u_overlay|go_by_r[2]      ;
 ; 7:1                ; 4 bits    ; 16 LEs        ; 4 LEs                ; 12 LEs                 ; Yes        ; |RushTunnelFPGA|obstacle_manager:u_obs|obs_depth_r[4][0] ;
-; 7:1                ; 4 bits    ; 16 LEs        ; 4 LEs                ; 12 LEs                 ; Yes        ; |RushTunnelFPGA|obstacle_manager:u_obs|obs_depth_r[5][6] ;
+; 7:1                ; 4 bits    ; 16 LEs        ; 4 LEs                ; 12 LEs                 ; Yes        ; |RushTunnelFPGA|obstacle_manager:u_obs|obs_depth_r[5][3] ;
 ; 7:1                ; 4 bits    ; 16 LEs        ; 4 LEs                ; 12 LEs                 ; Yes        ; |RushTunnelFPGA|obstacle_manager:u_obs|obs_depth_r[6][6] ;
-; 7:1                ; 4 bits    ; 16 LEs        ; 4 LEs                ; 12 LEs                 ; Yes        ; |RushTunnelFPGA|obstacle_manager:u_obs|obs_depth_r[7][6] ;
-; 8:1                ; 4 bits    ; 20 LEs        ; 4 LEs                ; 16 LEs                 ; Yes        ; |RushTunnelFPGA|obstacle_manager:u_obs|obs_depth_r[2][3] ;
+; 7:1                ; 4 bits    ; 16 LEs        ; 4 LEs                ; 12 LEs                 ; Yes        ; |RushTunnelFPGA|obstacle_manager:u_obs|obs_depth_r[7][1] ;
+; 8:1                ; 4 bits    ; 20 LEs        ; 4 LEs                ; 16 LEs                 ; Yes        ; |RushTunnelFPGA|obstacle_manager:u_obs|obs_depth_r[2][0] ;
 ; 8:1                ; 4 bits    ; 20 LEs        ; 4 LEs                ; 16 LEs                 ; Yes        ; |RushTunnelFPGA|obstacle_manager:u_obs|obs_depth_r[3][6] ;
 ; 10:1               ; 4 bits    ; 24 LEs        ; 4 LEs                ; 20 LEs                 ; Yes        ; |RushTunnelFPGA|obstacle_manager:u_obs|obs_depth_r[0][6] ;
-; 3:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |RushTunnelFPGA|tunnel:u_tunnel|out_b                    ;
+; 3:1                ; 3 bits    ; 6 LEs         ; 6 LEs                ; 0 LEs                  ; No         ; |RushTunnelFPGA|spaceship:u_ship|wave_cnt                ;
 ; 3:1                ; 4 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; No         ; |RushTunnelFPGA|start_screen:u_start|tx11                ;
+; 3:1                ; 3 bits    ; 6 LEs         ; 6 LEs                ; 0 LEs                  ; No         ; |RushTunnelFPGA|spaceship:u_ship|max_vel_v               ;
 ; 3:1                ; 3 bits    ; 6 LEs         ; 6 LEs                ; 0 LEs                  ; No         ; |RushTunnelFPGA|screen_overlay:u_overlay|sc_digit        ;
 ; 3:1                ; 3 bits    ; 6 LEs         ; 6 LEs                ; 0 LEs                  ; No         ; |RushTunnelFPGA|screen_overlay:u_overlay|sc_digit        ;
-; 4:1                ; 6 bits    ; 12 LEs        ; 12 LEs               ; 0 LEs                  ; No         ; |RushTunnelFPGA|obstacle_manager:u_obs|adv_div[0]        ;
-; 4:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |RushTunnelFPGA|tunnel:u_tunnel|out_g                    ;
-; 5:1                ; 2 bits    ; 6 LEs         ; 6 LEs                ; 0 LEs                  ; No         ; |RushTunnelFPGA|obstacle_manager:u_obs|adv_div[1]        ;
+; 5:1                ; 6 bits    ; 18 LEs        ; 18 LEs               ; 0 LEs                  ; No         ; |RushTunnelFPGA|spaceship:u_ship|accel_v                 ;
 ; 6:1                ; 6 bits    ; 24 LEs        ; 18 LEs               ; 6 LEs                  ; No         ; |RushTunnelFPGA|spaceship:u_ship|new_vel                 ;
 ; 6:1                ; 8 bits    ; 32 LEs        ; 24 LEs               ; 8 LEs                  ; No         ; |RushTunnelFPGA|spaceship:u_ship|new_vel                 ;
-; 6:1                ; 2 bits    ; 8 LEs         ; 6 LEs                ; 2 LEs                  ; No         ; |RushTunnelFPGA|tunnel:u_tunnel|out_g                    ;
+; 6:1                ; 2 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |RushTunnelFPGA|obstacle_manager:u_obs|adv_div[1]        ;
 ; 4:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |RushTunnelFPGA|spaceship:u_ship|state                   ;
-; 7:1                ; 2 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; No         ; |RushTunnelFPGA|snes_controller:u_snes|Selector22        ;
-; 9:1                ; 2 bits    ; 12 LEs        ; 6 LEs                ; 6 LEs                  ; No         ; |RushTunnelFPGA|snes_controller:u_snes|Selector26        ;
+; 7:1                ; 2 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; No         ; |RushTunnelFPGA|snes_controller:u_snes|Selector23        ;
+; 9:1                ; 2 bits    ; 12 LEs        ; 6 LEs                ; 6 LEs                  ; No         ; |RushTunnelFPGA|snes_controller:u_snes|Selector24        ;
 +--------------------+-----------+---------------+----------------------+------------------------+------------+----------------------------------------------------------+
 
 
@@ -2313,30 +2316,30 @@ Note: In order to hide this table in the UI and the text report file, please set
 ; Type                  ; Count                       ;
 +-----------------------+-----------------------------+
 ; boundary_port         ; 18                          ;
-; cycloneiii_ff         ; 913                         ;
-;     ENA               ; 457                         ;
+; cycloneiii_ff         ; 908                         ;
+;     ENA               ; 451                         ;
 ;     ENA SCLR          ; 30                          ;
 ;     ENA SLD           ; 32                          ;
-;     SCLR              ; 46                          ;
+;     SCLR              ; 47                          ;
 ;     SCLR SLD          ; 2                           ;
 ;     plain             ; 346                         ;
-; cycloneiii_lcell_comb ; 7301                        ;
-;     arith             ; 2956                        ;
+; cycloneiii_lcell_comb ; 7286                        ;
+;     arith             ; 2948                        ;
 ;         1 data inputs ; 27                          ;
-;         2 data inputs ; 776                         ;
-;         3 data inputs ; 2153                        ;
-;     normal            ; 4345                        ;
+;         2 data inputs ; 750                         ;
+;         3 data inputs ; 2171                        ;
+;     normal            ; 4338                        ;
 ;         0 data inputs ; 223                         ;
-;         1 data inputs ; 139                         ;
-;         2 data inputs ; 957                         ;
-;         3 data inputs ; 609                         ;
-;         4 data inputs ; 2417                        ;
+;         1 data inputs ; 138                         ;
+;         2 data inputs ; 967                         ;
+;         3 data inputs ; 598                         ;
+;         4 data inputs ; 2412                        ;
 ; cycloneiii_mac_mult   ; 12                          ;
 ; cycloneiii_mac_out    ; 12                          ;
 ; cycloneiii_ram_block  ; 12                          ;
 ;                       ;                             ;
 ; Max LUT depth         ; 74.80                       ;
-; Average LUT depth     ; 24.98                       ;
+; Average LUT depth     ; 24.95                       ;
 +-----------------------+-----------------------------+
 
 
@@ -2345,7 +2348,7 @@ Note: In order to hide this table in the UI and the text report file, please set
 +----------------+--------------+
 ; Partition Name ; Elapsed Time ;
 +----------------+--------------+
-; Top            ; 00:00:23     ;
+; Top            ; 00:00:22     ;
 +----------------+--------------+
 
 
@@ -2355,59 +2358,54 @@ Note: In order to hide this table in the UI and the text report file, please set
 Info: *******************************************************************
 Info: Running Quartus Prime Analysis & Synthesis
     Info: Version 23.1std.1 Build 993 05/14/2024 SC Lite Edition
-    Info: Processing started: Fri May  8 15:32:47 2026
+    Info: Processing started: Sun May 10 14:19:36 2026
 Info: Command: quartus_map --read_settings_files=on --write_settings_files=off RushTunnelFPGA -c RushTunnelFPGA
-Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
-Info (20030): Parallel compilation is enabled and will use 6 of the 6 processors detected
+Info (20032): Parallel compilation is enabled and will use up to 6 processors
 Info (12021): Found 1 design units, including 0 entities, in source file game_over_font.vhd
     Info (12022): Found design unit 1: game_over_font File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/game_over_font.vhd Line: 13
 Info (12021): Found 1 design units, including 0 entities, in source file press_start_font.vhd
-    Info (12022): Found design unit 1: press_start_font File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/press_start_font.vhd Line: 14
+    Info (12022): Found design unit 1: press_start_font File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/press_start_font.vhd Line: 13
 Info (12021): Found 1 design units, including 0 entities, in source file title_font.vhd
-    Info (12022): Found design unit 1: title_font File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/title_font.vhd Line: 14
+    Info (12022): Found design unit 1: title_font File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/title_font.vhd Line: 13
 Info (12021): Found 2 design units, including 1 entities, in source file rushtunnelfpga.vhd
-    Info (12022): Found design unit 1: RushTunnelFPGA-rtl File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/RushTunnelFPGA.vhd Line: 40
-    Info (12023): Found entity 1: RushTunnelFPGA File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/RushTunnelFPGA.vhd Line: 27
+    Info (12022): Found design unit 1: RushTunnelFPGA-rtl File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/RushTunnelFPGA.vhd Line: 39
+    Info (12023): Found entity 1: RushTunnelFPGA File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/RushTunnelFPGA.vhd Line: 26
 Info (12021): Found 2 design units, including 1 entities, in source file vga_controller.vhd
-    Info (12022): Found design unit 1: vga_controller-rtl File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/vga_controller.vhd Line: 22
-    Info (12023): Found entity 1: vga_controller File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/vga_controller.vhd Line: 10
+    Info (12022): Found design unit 1: vga_controller-rtl File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/vga_controller.vhd Line: 27
+    Info (12023): Found entity 1: vga_controller File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/vga_controller.vhd Line: 15
 Info (12021): Found 2 design units, including 1 entities, in source file tunnel.vhd
-    Info (12022): Found design unit 1: tunnel-rtl File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/tunnel.vhd Line: 94
-    Info (12023): Found entity 1: tunnel File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/tunnel.vhd Line: 33
+    Info (12022): Found design unit 1: tunnel-rtl File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/tunnel.vhd Line: 81
+    Info (12023): Found entity 1: tunnel File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/tunnel.vhd Line: 31
 Info (12021): Found 2 design units, including 1 entities, in source file spaceship.vhd
-    Info (12022): Found design unit 1: spaceship-rtl File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/spaceship.vhd Line: 66
-    Info (12023): Found entity 1: spaceship File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/spaceship.vhd Line: 48
+    Info (12022): Found design unit 1: spaceship-rtl File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/spaceship.vhd Line: 41
+    Info (12023): Found entity 1: spaceship File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/spaceship.vhd Line: 25
 Info (12021): Found 2 design units, including 1 entities, in source file obstacle_manager.vhd
-    Info (12022): Found design unit 1: obstacle_manager-rtl File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/obstacle_manager.vhd Line: 89
-    Info (12023): Found entity 1: obstacle_manager File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/obstacle_manager.vhd Line: 44
+    Info (12022): Found design unit 1: obstacle_manager-rtl File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/obstacle_manager.vhd Line: 71
+    Info (12023): Found entity 1: obstacle_manager File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/obstacle_manager.vhd Line: 27
 Info (12021): Found 2 design units, including 1 entities, in source file snes_controller.vhd
-    Info (12022): Found design unit 1: snes_controller-rtl File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/snes_controller.vhd Line: 39
-    Info (12023): Found entity 1: snes_controller File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/snes_controller.vhd Line: 29
+    Info (12022): Found design unit 1: snes_controller-rtl File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/snes_controller.vhd Line: 30
+    Info (12023): Found entity 1: snes_controller File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/snes_controller.vhd Line: 20
 Info (12021): Found 2 design units, including 1 entities, in source file trig_rom.vhd
-    Info (12022): Found design unit 1: trig_rom-rtl File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/trig_rom.vhd Line: 42
-    Info (12023): Found entity 1: trig_rom File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/trig_rom.vhd Line: 34
+    Info (12022): Found design unit 1: trig_rom-rtl File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/trig_rom.vhd Line: 27
+    Info (12023): Found entity 1: trig_rom File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/trig_rom.vhd Line: 19
 Info (12021): Found 2 design units, including 1 entities, in source file crt_effects.vhd
-    Info (12022): Found design unit 1: crt_effects-rtl File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/crt_effects.vhd Line: 64
-    Info (12023): Found entity 1: crt_effects File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/crt_effects.vhd Line: 43
+    Info (12022): Found design unit 1: crt_effects-rtl File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/crt_effects.vhd Line: 37
+    Info (12023): Found entity 1: crt_effects File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/crt_effects.vhd Line: 21
 Info (12021): Found 2 design units, including 1 entities, in source file start_screen.vhd
-    Info (12022): Found design unit 1: start_screen-rtl File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/start_screen.vhd Line: 48
-    Info (12023): Found entity 1: start_screen File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/start_screen.vhd Line: 34
+    Info (12022): Found design unit 1: start_screen-rtl File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/start_screen.vhd Line: 36
+    Info (12023): Found entity 1: start_screen File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/start_screen.vhd Line: 22
 Info (12021): Found 2 design units, including 1 entities, in source file screen_overlay.vhd
-    Info (12022): Found design unit 1: screen_overlay-rtl File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/screen_overlay.vhd Line: 66
-    Info (12023): Found entity 1: screen_overlay File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/screen_overlay.vhd Line: 36
+    Info (12022): Found design unit 1: screen_overlay-rtl File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/screen_overlay.vhd Line: 57
+    Info (12023): Found entity 1: screen_overlay File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/screen_overlay.vhd Line: 27
 Info (12127): Elaborating entity "RushTunnelFPGA" for the top level hierarchy
-Warning (10036): Verilog HDL or VHDL warning at RushTunnelFPGA.vhd(88): object "collision" assigned a value but never read File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/RushTunnelFPGA.vhd Line: 88
-Warning (10036): Verilog HDL or VHDL warning at RushTunnelFPGA.vhd(92): object "ring_collected_s" assigned a value but never read File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/RushTunnelFPGA.vhd Line: 92
-Info (12128): Elaborating entity "vga_controller" for hierarchy "vga_controller:u_vga" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/RushTunnelFPGA.vhd Line: 132
-Info (12128): Elaborating entity "trig_rom" for hierarchy "trig_rom:u_trig_tun" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/RushTunnelFPGA.vhd Line: 146
+Info (12128): Elaborating entity "vga_controller" for hierarchy "vga_controller:u_vga" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/RushTunnelFPGA.vhd Line: 128
+Info (12128): Elaborating entity "trig_rom" for hierarchy "trig_rom:u_trig_tun" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/RushTunnelFPGA.vhd Line: 140
 Warning (10542): VHDL Variable Declaration warning at math_real_vhdl1993.vhd(3004): used initial value expression for variable "NEGATIVE" because variable was never assigned a value File: c:/intelfpga_lite/23.1std/quartus/libraries/vhdl/ieee/1993/math_real_vhdl1993.vhd Line: 3004
-Info (12128): Elaborating entity "tunnel" for hierarchy "tunnel:u_tunnel" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/RushTunnelFPGA.vhd Line: 190
-Warning (10036): Verilog HDL or VHDL warning at tunnel.vhd(188): object "ship_hit" assigned a value but never read File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/tunnel.vhd Line: 188
-Warning (10036): Verilog HDL or VHDL warning at tunnel.vhd(211): object "ring1_depth_d" assigned a value but never read File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/tunnel.vhd Line: 211
-Warning (10036): Verilog HDL or VHDL warning at tunnel.vhd(213): object "ring1_active_d" assigned a value but never read File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/tunnel.vhd Line: 213
-Info (12128): Elaborating entity "altsyncram" for hierarchy "tunnel:u_tunnel|altsyncram:ROM_ship" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/tunnel.vhd Line: 279
-Info (12130): Elaborated megafunction instantiation "tunnel:u_tunnel|altsyncram:ROM_ship" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/tunnel.vhd Line: 279
-Info (12133): Instantiated megafunction "tunnel:u_tunnel|altsyncram:ROM_ship" with the following parameter: File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/tunnel.vhd Line: 279
+Info (12128): Elaborating entity "tunnel" for hierarchy "tunnel:u_tunnel" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/RushTunnelFPGA.vhd Line: 177
+Warning (10036): Verilog HDL or VHDL warning at tunnel.vhd(496): object "ship_dist" assigned a value but never read File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/tunnel.vhd Line: 496
+Info (12128): Elaborating entity "altsyncram" for hierarchy "tunnel:u_tunnel|altsyncram:ROM_ship" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/tunnel.vhd Line: 167
+Info (12130): Elaborated megafunction instantiation "tunnel:u_tunnel|altsyncram:ROM_ship" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/tunnel.vhd Line: 167
+Info (12133): Instantiated megafunction "tunnel:u_tunnel|altsyncram:ROM_ship" with the following parameter: File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/tunnel.vhd Line: 167
     Info (12134): Parameter "address_aclr_a" = "UNUSED"
     Info (12134): Parameter "address_aclr_b" = "NONE"
     Info (12134): Parameter "address_reg_b" = "CLOCK1"
@@ -2461,53 +2459,53 @@ Info (12133): Instantiated megafunction "tunnel:u_tunnel|altsyncram:ROM_ship" wi
 Info (12021): Found 1 design units, including 1 entities, in source file db/altsyncram_27p3.tdf
     Info (12023): Found entity 1: altsyncram_27p3 File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/db/altsyncram_27p3.tdf Line: 28
 Info (12128): Elaborating entity "altsyncram_27p3" for hierarchy "tunnel:u_tunnel|altsyncram:ROM_ship|altsyncram_27p3:auto_generated" File: c:/intelfpga_lite/23.1std/quartus/libraries/megafunctions/altsyncram.tdf Line: 792
-Info (12128): Elaborating entity "crt_effects" for hierarchy "crt_effects:u_crt" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/RushTunnelFPGA.vhd Line: 244
-Info (12128): Elaborating entity "start_screen" for hierarchy "start_screen:u_start" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/RushTunnelFPGA.vhd Line: 264
-Info (12128): Elaborating entity "screen_overlay" for hierarchy "screen_overlay:u_overlay" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/RushTunnelFPGA.vhd Line: 281
-Info (12128): Elaborating entity "snes_controller" for hierarchy "snes_controller:u_snes" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/RushTunnelFPGA.vhd Line: 306
-Info (12128): Elaborating entity "spaceship" for hierarchy "spaceship:u_ship" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/RushTunnelFPGA.vhd Line: 318
-Info (12128): Elaborating entity "obstacle_manager" for hierarchy "obstacle_manager:u_obs" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/RushTunnelFPGA.vhd Line: 335
-Warning (10027): Verilog HDL or VHDL warning at the obstacle_manager.vhd(287): index expression is not wide enough to address all of the elements in the array File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/obstacle_manager.vhd Line: 287
-Warning (10027): Verilog HDL or VHDL warning at the obstacle_manager.vhd(288): index expression is not wide enough to address all of the elements in the array File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/obstacle_manager.vhd Line: 288
-Warning (10027): Verilog HDL or VHDL warning at the obstacle_manager.vhd(289): index expression is not wide enough to address all of the elements in the array File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/obstacle_manager.vhd Line: 289
+Info (12128): Elaborating entity "crt_effects" for hierarchy "crt_effects:u_crt" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/RushTunnelFPGA.vhd Line: 227
+Info (12128): Elaborating entity "start_screen" for hierarchy "start_screen:u_start" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/RushTunnelFPGA.vhd Line: 243
+Info (12128): Elaborating entity "screen_overlay" for hierarchy "screen_overlay:u_overlay" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/RushTunnelFPGA.vhd Line: 256
+Info (12128): Elaborating entity "snes_controller" for hierarchy "snes_controller:u_snes" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/RushTunnelFPGA.vhd Line: 279
+Info (12128): Elaborating entity "spaceship" for hierarchy "spaceship:u_ship" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/RushTunnelFPGA.vhd Line: 289
+Info (12128): Elaborating entity "obstacle_manager" for hierarchy "obstacle_manager:u_obs" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/RushTunnelFPGA.vhd Line: 305
+Warning (10027): Verilog HDL or VHDL warning at the obstacle_manager.vhd(268): index expression is not wide enough to address all of the elements in the array File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/obstacle_manager.vhd Line: 268
+Warning (10027): Verilog HDL or VHDL warning at the obstacle_manager.vhd(269): index expression is not wide enough to address all of the elements in the array File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/obstacle_manager.vhd Line: 269
+Warning (10027): Verilog HDL or VHDL warning at the obstacle_manager.vhd(270): index expression is not wide enough to address all of the elements in the array File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/obstacle_manager.vhd Line: 270
 Info (278001): Inferred 35 megafunctions from design logic
-    Info (278004): Inferred divider/modulo megafunction ("lpm_divide") from the following logic: "screen_overlay:u_overlay|Mod4" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/screen_overlay.vhd Line: 485
-    Info (278004): Inferred divider/modulo megafunction ("lpm_divide") from the following logic: "screen_overlay:u_overlay|Div8" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/screen_overlay.vhd Line: 484
-    Info (278004): Inferred divider/modulo megafunction ("lpm_divide") from the following logic: "screen_overlay:u_overlay|Div3" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/screen_overlay.vhd Line: 427
-    Info (278004): Inferred divider/modulo megafunction ("lpm_divide") from the following logic: "screen_overlay:u_overlay|Mod2" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/screen_overlay.vhd Line: 427
-    Info (278004): Inferred divider/modulo megafunction ("lpm_divide") from the following logic: "screen_overlay:u_overlay|Div2" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/screen_overlay.vhd Line: 426
-    Info (278004): Inferred divider/modulo megafunction ("lpm_divide") from the following logic: "screen_overlay:u_overlay|Div4" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/screen_overlay.vhd Line: 428
-    Info (278004): Inferred divider/modulo megafunction ("lpm_divide") from the following logic: "screen_overlay:u_overlay|Div5" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/screen_overlay.vhd Line: 460
-    Info (278004): Inferred divider/modulo megafunction ("lpm_divide") from the following logic: "screen_overlay:u_overlay|Mod3" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/screen_overlay.vhd Line: 461
-    Info (278004): Inferred divider/modulo megafunction ("lpm_divide") from the following logic: "screen_overlay:u_overlay|Div6" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/screen_overlay.vhd Line: 460
-    Info (278004): Inferred divider/modulo megafunction ("lpm_divide") from the following logic: "screen_overlay:u_overlay|Div7" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/screen_overlay.vhd Line: 462
-    Info (278004): Inferred divider/modulo megafunction ("lpm_divide") from the following logic: "screen_overlay:u_overlay|Mod0" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/screen_overlay.vhd Line: 380
-    Info (278004): Inferred divider/modulo megafunction ("lpm_divide") from the following logic: "screen_overlay:u_overlay|Div0" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/screen_overlay.vhd Line: 379
-    Info (278004): Inferred divider/modulo megafunction ("lpm_divide") from the following logic: "screen_overlay:u_overlay|Mod1" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/screen_overlay.vhd Line: 399
-    Info (278004): Inferred divider/modulo megafunction ("lpm_divide") from the following logic: "screen_overlay:u_overlay|Div1" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/screen_overlay.vhd Line: 398
-    Info (278003): Inferred multiplier megafunction ("lpm_mult") from the following logic: "tunnel:u_tunnel|Mult10" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/tunnel.vhd Line: 854
-    Info (278003): Inferred multiplier megafunction ("lpm_mult") from the following logic: "tunnel:u_tunnel|Mult11" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/tunnel.vhd Line: 855
-    Info (278003): Inferred multiplier megafunction ("lpm_mult") from the following logic: "tunnel:u_tunnel|Mult12" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/tunnel.vhd Line: 856
-    Info (278003): Inferred multiplier megafunction ("lpm_mult") from the following logic: "tunnel:u_tunnel|Mult13" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/tunnel.vhd Line: 981
-    Info (278003): Inferred multiplier megafunction ("lpm_mult") from the following logic: "tunnel:u_tunnel|Mult16" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/tunnel.vhd Line: 984
-    Info (278003): Inferred multiplier megafunction ("lpm_mult") from the following logic: "tunnel:u_tunnel|Mult2" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/tunnel.vhd Line: 721
-    Info (278003): Inferred multiplier megafunction ("lpm_mult") from the following logic: "tunnel:u_tunnel|Mult5" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/tunnel.vhd Line: 724
-    Info (278003): Inferred multiplier megafunction ("lpm_mult") from the following logic: "tunnel:u_tunnel|Mult1" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/tunnel.vhd Line: 322
-    Info (278003): Inferred multiplier megafunction ("lpm_mult") from the following logic: "tunnel:u_tunnel|Mult0" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/tunnel.vhd Line: 322
-    Info (278003): Inferred multiplier megafunction ("lpm_mult") from the following logic: "tunnel:u_tunnel|Mult8" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/tunnel.vhd Line: 850
-    Info (278003): Inferred multiplier megafunction ("lpm_mult") from the following logic: "Mult0" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/RushTunnelFPGA.vhd Line: 174
-    Info (278003): Inferred multiplier megafunction ("lpm_mult") from the following logic: "Mult1" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/RushTunnelFPGA.vhd Line: 175
-    Info (278003): Inferred multiplier megafunction ("lpm_mult") from the following logic: "tunnel:u_tunnel|Mult14" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/tunnel.vhd Line: 982
-    Info (278003): Inferred multiplier megafunction ("lpm_mult") from the following logic: "tunnel:u_tunnel|Mult15" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/tunnel.vhd Line: 983
-    Info (278003): Inferred multiplier megafunction ("lpm_mult") from the following logic: "tunnel:u_tunnel|Mult7" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/tunnel.vhd Line: 849
-    Info (278003): Inferred multiplier megafunction ("lpm_mult") from the following logic: "tunnel:u_tunnel|Mult3" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/tunnel.vhd Line: 722
-    Info (278003): Inferred multiplier megafunction ("lpm_mult") from the following logic: "tunnel:u_tunnel|Mult4" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/tunnel.vhd Line: 723
-    Info (278003): Inferred multiplier megafunction ("lpm_mult") from the following logic: "tunnel:u_tunnel|Mult6" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/tunnel.vhd Line: 766
-    Info (278003): Inferred multiplier megafunction ("lpm_mult") from the following logic: "tunnel:u_tunnel|Mult9" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/tunnel.vhd Line: 851
-    Info (278003): Inferred multiplier megafunction ("lpm_mult") from the following logic: "screen_overlay:u_overlay|Mult1" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/screen_overlay.vhd Line: 323
-    Info (278003): Inferred multiplier megafunction ("lpm_mult") from the following logic: "screen_overlay:u_overlay|Mult0" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/screen_overlay.vhd Line: 320
-Info (12130): Elaborated megafunction instantiation "screen_overlay:u_overlay|lpm_divide:Mod4" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/screen_overlay.vhd Line: 485
-Info (12133): Instantiated megafunction "screen_overlay:u_overlay|lpm_divide:Mod4" with the following parameter: File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/screen_overlay.vhd Line: 485
+    Info (278004): Inferred divider/modulo megafunction ("lpm_divide") from the following logic: "screen_overlay:u_overlay|Mod4" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/screen_overlay.vhd Line: 476
+    Info (278004): Inferred divider/modulo megafunction ("lpm_divide") from the following logic: "screen_overlay:u_overlay|Div8" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/screen_overlay.vhd Line: 475
+    Info (278004): Inferred divider/modulo megafunction ("lpm_divide") from the following logic: "screen_overlay:u_overlay|Div3" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/screen_overlay.vhd Line: 418
+    Info (278004): Inferred divider/modulo megafunction ("lpm_divide") from the following logic: "screen_overlay:u_overlay|Mod2" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/screen_overlay.vhd Line: 418
+    Info (278004): Inferred divider/modulo megafunction ("lpm_divide") from the following logic: "screen_overlay:u_overlay|Div2" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/screen_overlay.vhd Line: 417
+    Info (278004): Inferred divider/modulo megafunction ("lpm_divide") from the following logic: "screen_overlay:u_overlay|Div4" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/screen_overlay.vhd Line: 419
+    Info (278004): Inferred divider/modulo megafunction ("lpm_divide") from the following logic: "screen_overlay:u_overlay|Div5" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/screen_overlay.vhd Line: 451
+    Info (278004): Inferred divider/modulo megafunction ("lpm_divide") from the following logic: "screen_overlay:u_overlay|Mod3" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/screen_overlay.vhd Line: 452
+    Info (278004): Inferred divider/modulo megafunction ("lpm_divide") from the following logic: "screen_overlay:u_overlay|Div6" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/screen_overlay.vhd Line: 451
+    Info (278004): Inferred divider/modulo megafunction ("lpm_divide") from the following logic: "screen_overlay:u_overlay|Div7" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/screen_overlay.vhd Line: 453
+    Info (278004): Inferred divider/modulo megafunction ("lpm_divide") from the following logic: "screen_overlay:u_overlay|Mod0" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/screen_overlay.vhd Line: 371
+    Info (278004): Inferred divider/modulo megafunction ("lpm_divide") from the following logic: "screen_overlay:u_overlay|Div0" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/screen_overlay.vhd Line: 370
+    Info (278004): Inferred divider/modulo megafunction ("lpm_divide") from the following logic: "screen_overlay:u_overlay|Mod1" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/screen_overlay.vhd Line: 390
+    Info (278004): Inferred divider/modulo megafunction ("lpm_divide") from the following logic: "screen_overlay:u_overlay|Div1" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/screen_overlay.vhd Line: 389
+    Info (278003): Inferred multiplier megafunction ("lpm_mult") from the following logic: "tunnel:u_tunnel|Mult10" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/tunnel.vhd Line: 596
+    Info (278003): Inferred multiplier megafunction ("lpm_mult") from the following logic: "tunnel:u_tunnel|Mult11" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/tunnel.vhd Line: 597
+    Info (278003): Inferred multiplier megafunction ("lpm_mult") from the following logic: "tunnel:u_tunnel|Mult12" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/tunnel.vhd Line: 598
+    Info (278003): Inferred multiplier megafunction ("lpm_mult") from the following logic: "tunnel:u_tunnel|Mult13" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/tunnel.vhd Line: 700
+    Info (278003): Inferred multiplier megafunction ("lpm_mult") from the following logic: "tunnel:u_tunnel|Mult16" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/tunnel.vhd Line: 703
+    Info (278003): Inferred multiplier megafunction ("lpm_mult") from the following logic: "tunnel:u_tunnel|Mult2" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/tunnel.vhd Line: 508
+    Info (278003): Inferred multiplier megafunction ("lpm_mult") from the following logic: "tunnel:u_tunnel|Mult5" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/tunnel.vhd Line: 511
+    Info (278003): Inferred multiplier megafunction ("lpm_mult") from the following logic: "tunnel:u_tunnel|Mult1" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/tunnel.vhd Line: 203
+    Info (278003): Inferred multiplier megafunction ("lpm_mult") from the following logic: "tunnel:u_tunnel|Mult0" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/tunnel.vhd Line: 203
+    Info (278003): Inferred multiplier megafunction ("lpm_mult") from the following logic: "tunnel:u_tunnel|Mult8" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/tunnel.vhd Line: 592
+    Info (278003): Inferred multiplier megafunction ("lpm_mult") from the following logic: "Mult0" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/RushTunnelFPGA.vhd Line: 165
+    Info (278003): Inferred multiplier megafunction ("lpm_mult") from the following logic: "Mult1" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/RushTunnelFPGA.vhd Line: 166
+    Info (278003): Inferred multiplier megafunction ("lpm_mult") from the following logic: "tunnel:u_tunnel|Mult14" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/tunnel.vhd Line: 701
+    Info (278003): Inferred multiplier megafunction ("lpm_mult") from the following logic: "tunnel:u_tunnel|Mult15" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/tunnel.vhd Line: 702
+    Info (278003): Inferred multiplier megafunction ("lpm_mult") from the following logic: "tunnel:u_tunnel|Mult7" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/tunnel.vhd Line: 591
+    Info (278003): Inferred multiplier megafunction ("lpm_mult") from the following logic: "tunnel:u_tunnel|Mult3" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/tunnel.vhd Line: 509
+    Info (278003): Inferred multiplier megafunction ("lpm_mult") from the following logic: "tunnel:u_tunnel|Mult4" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/tunnel.vhd Line: 510
+    Info (278003): Inferred multiplier megafunction ("lpm_mult") from the following logic: "tunnel:u_tunnel|Mult6" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/tunnel.vhd Line: 543
+    Info (278003): Inferred multiplier megafunction ("lpm_mult") from the following logic: "tunnel:u_tunnel|Mult9" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/tunnel.vhd Line: 593
+    Info (278003): Inferred multiplier megafunction ("lpm_mult") from the following logic: "screen_overlay:u_overlay|Mult1" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/screen_overlay.vhd Line: 314
+    Info (278003): Inferred multiplier megafunction ("lpm_mult") from the following logic: "screen_overlay:u_overlay|Mult0" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/screen_overlay.vhd Line: 311
+Info (12130): Elaborated megafunction instantiation "screen_overlay:u_overlay|lpm_divide:Mod4" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/screen_overlay.vhd Line: 476
+Info (12133): Instantiated megafunction "screen_overlay:u_overlay|lpm_divide:Mod4" with the following parameter: File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/screen_overlay.vhd Line: 476
     Info (12134): Parameter "LPM_WIDTHN" = "12"
     Info (12134): Parameter "LPM_WIDTHD" = "12"
     Info (12134): Parameter "LPM_NREPRESENTATION" = "SIGNED"
@@ -2525,8 +2523,8 @@ Info (12021): Found 1 design units, including 1 entities, in source file db/add_
     Info (12023): Found entity 1: add_sub_8pc File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/db/add_sub_8pc.tdf Line: 23
 Info (12021): Found 1 design units, including 1 entities, in source file db/lpm_abs_g0a.tdf
     Info (12023): Found entity 1: lpm_abs_g0a File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/db/lpm_abs_g0a.tdf Line: 25
-Info (12130): Elaborated megafunction instantiation "screen_overlay:u_overlay|lpm_divide:Div8" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/screen_overlay.vhd Line: 484
-Info (12133): Instantiated megafunction "screen_overlay:u_overlay|lpm_divide:Div8" with the following parameter: File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/screen_overlay.vhd Line: 484
+Info (12130): Elaborated megafunction instantiation "screen_overlay:u_overlay|lpm_divide:Div8" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/screen_overlay.vhd Line: 475
+Info (12133): Instantiated megafunction "screen_overlay:u_overlay|lpm_divide:Div8" with the following parameter: File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/screen_overlay.vhd Line: 475
     Info (12134): Parameter "LPM_WIDTHN" = "12"
     Info (12134): Parameter "LPM_WIDTHD" = "4"
     Info (12134): Parameter "LPM_NREPRESENTATION" = "SIGNED"
@@ -2540,8 +2538,8 @@ Info (12021): Found 1 design units, including 1 entities, in source file db/alt_
     Info (12023): Found entity 1: alt_u_div_07f File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/db/alt_u_div_07f.tdf Line: 27
 Info (12021): Found 1 design units, including 1 entities, in source file db/lpm_abs_1v9.tdf
     Info (12023): Found entity 1: lpm_abs_1v9 File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/db/lpm_abs_1v9.tdf Line: 23
-Info (12130): Elaborated megafunction instantiation "screen_overlay:u_overlay|lpm_divide:Div3" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/screen_overlay.vhd Line: 427
-Info (12133): Instantiated megafunction "screen_overlay:u_overlay|lpm_divide:Div3" with the following parameter: File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/screen_overlay.vhd Line: 427
+Info (12130): Elaborated megafunction instantiation "screen_overlay:u_overlay|lpm_divide:Div3" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/screen_overlay.vhd Line: 418
+Info (12133): Instantiated megafunction "screen_overlay:u_overlay|lpm_divide:Div3" with the following parameter: File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/screen_overlay.vhd Line: 418
     Info (12134): Parameter "LPM_WIDTHN" = "12"
     Info (12134): Parameter "LPM_WIDTHD" = "3"
     Info (12134): Parameter "LPM_NREPRESENTATION" = "SIGNED"
@@ -2555,36 +2553,36 @@ Info (12021): Found 1 design units, including 1 entities, in source file db/alt_
     Info (12023): Found entity 1: alt_u_div_v6f File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/db/alt_u_div_v6f.tdf Line: 27
 Info (12021): Found 1 design units, including 1 entities, in source file db/lpm_abs_0v9.tdf
     Info (12023): Found entity 1: lpm_abs_0v9 File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/db/lpm_abs_0v9.tdf Line: 23
-Info (12130): Elaborated megafunction instantiation "screen_overlay:u_overlay|lpm_divide:Div2" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/screen_overlay.vhd Line: 426
-Info (12133): Instantiated megafunction "screen_overlay:u_overlay|lpm_divide:Div2" with the following parameter: File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/screen_overlay.vhd Line: 426
+Info (12130): Elaborated megafunction instantiation "screen_overlay:u_overlay|lpm_divide:Div2" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/screen_overlay.vhd Line: 417
+Info (12133): Instantiated megafunction "screen_overlay:u_overlay|lpm_divide:Div2" with the following parameter: File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/screen_overlay.vhd Line: 417
     Info (12134): Parameter "LPM_WIDTHN" = "12"
     Info (12134): Parameter "LPM_WIDTHD" = "4"
     Info (12134): Parameter "LPM_NREPRESENTATION" = "SIGNED"
     Info (12134): Parameter "LPM_DREPRESENTATION" = "SIGNED"
     Info (12134): Parameter "LPM_HINT" = "LPM_REMAINDERPOSITIVE=FALSE"
-Info (12130): Elaborated megafunction instantiation "screen_overlay:u_overlay|lpm_divide:Div4" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/screen_overlay.vhd Line: 428
-Info (12133): Instantiated megafunction "screen_overlay:u_overlay|lpm_divide:Div4" with the following parameter: File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/screen_overlay.vhd Line: 428
+Info (12130): Elaborated megafunction instantiation "screen_overlay:u_overlay|lpm_divide:Div4" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/screen_overlay.vhd Line: 419
+Info (12133): Instantiated megafunction "screen_overlay:u_overlay|lpm_divide:Div4" with the following parameter: File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/screen_overlay.vhd Line: 419
     Info (12134): Parameter "LPM_WIDTHN" = "12"
     Info (12134): Parameter "LPM_WIDTHD" = "3"
     Info (12134): Parameter "LPM_NREPRESENTATION" = "SIGNED"
     Info (12134): Parameter "LPM_DREPRESENTATION" = "SIGNED"
     Info (12134): Parameter "LPM_HINT" = "LPM_REMAINDERPOSITIVE=FALSE"
-Info (12130): Elaborated megafunction instantiation "screen_overlay:u_overlay|lpm_divide:Div6" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/screen_overlay.vhd Line: 460
-Info (12133): Instantiated megafunction "screen_overlay:u_overlay|lpm_divide:Div6" with the following parameter: File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/screen_overlay.vhd Line: 460
+Info (12130): Elaborated megafunction instantiation "screen_overlay:u_overlay|lpm_divide:Div6" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/screen_overlay.vhd Line: 451
+Info (12133): Instantiated megafunction "screen_overlay:u_overlay|lpm_divide:Div6" with the following parameter: File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/screen_overlay.vhd Line: 451
     Info (12134): Parameter "LPM_WIDTHN" = "12"
     Info (12134): Parameter "LPM_WIDTHD" = "4"
     Info (12134): Parameter "LPM_NREPRESENTATION" = "SIGNED"
     Info (12134): Parameter "LPM_DREPRESENTATION" = "SIGNED"
     Info (12134): Parameter "LPM_HINT" = "LPM_REMAINDERPOSITIVE=FALSE"
-Info (12130): Elaborated megafunction instantiation "screen_overlay:u_overlay|lpm_divide:Div7" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/screen_overlay.vhd Line: 462
-Info (12133): Instantiated megafunction "screen_overlay:u_overlay|lpm_divide:Div7" with the following parameter: File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/screen_overlay.vhd Line: 462
+Info (12130): Elaborated megafunction instantiation "screen_overlay:u_overlay|lpm_divide:Div7" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/screen_overlay.vhd Line: 453
+Info (12133): Instantiated megafunction "screen_overlay:u_overlay|lpm_divide:Div7" with the following parameter: File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/screen_overlay.vhd Line: 453
     Info (12134): Parameter "LPM_WIDTHN" = "12"
     Info (12134): Parameter "LPM_WIDTHD" = "4"
     Info (12134): Parameter "LPM_NREPRESENTATION" = "SIGNED"
     Info (12134): Parameter "LPM_DREPRESENTATION" = "SIGNED"
     Info (12134): Parameter "LPM_HINT" = "LPM_REMAINDERPOSITIVE=FALSE"
-Info (12130): Elaborated megafunction instantiation "screen_overlay:u_overlay|lpm_divide:Mod0" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/screen_overlay.vhd Line: 380
-Info (12133): Instantiated megafunction "screen_overlay:u_overlay|lpm_divide:Mod0" with the following parameter: File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/screen_overlay.vhd Line: 380
+Info (12130): Elaborated megafunction instantiation "screen_overlay:u_overlay|lpm_divide:Mod0" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/screen_overlay.vhd Line: 371
+Info (12133): Instantiated megafunction "screen_overlay:u_overlay|lpm_divide:Mod0" with the following parameter: File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/screen_overlay.vhd Line: 371
     Info (12134): Parameter "LPM_WIDTHN" = "10"
     Info (12134): Parameter "LPM_WIDTHD" = "10"
     Info (12134): Parameter "LPM_NREPRESENTATION" = "SIGNED"
@@ -2598,8 +2596,8 @@ Info (12021): Found 1 design units, including 1 entities, in source file db/alt_
     Info (12023): Found entity 1: alt_u_div_m9f File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/db/alt_u_div_m9f.tdf Line: 27
 Info (12021): Found 1 design units, including 1 entities, in source file db/lpm_abs_e0a.tdf
     Info (12023): Found entity 1: lpm_abs_e0a File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/db/lpm_abs_e0a.tdf Line: 25
-Info (12130): Elaborated megafunction instantiation "screen_overlay:u_overlay|lpm_divide:Div0" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/screen_overlay.vhd Line: 379
-Info (12133): Instantiated megafunction "screen_overlay:u_overlay|lpm_divide:Div0" with the following parameter: File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/screen_overlay.vhd Line: 379
+Info (12130): Elaborated megafunction instantiation "screen_overlay:u_overlay|lpm_divide:Div0" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/screen_overlay.vhd Line: 370
+Info (12133): Instantiated megafunction "screen_overlay:u_overlay|lpm_divide:Div0" with the following parameter: File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/screen_overlay.vhd Line: 370
     Info (12134): Parameter "LPM_WIDTHN" = "10"
     Info (12134): Parameter "LPM_WIDTHD" = "4"
     Info (12134): Parameter "LPM_NREPRESENTATION" = "SIGNED"
@@ -2611,8 +2609,8 @@ Info (12021): Found 1 design units, including 1 entities, in source file db/abs_
     Info (12023): Found entity 1: abs_divider_fbg File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/db/abs_divider_fbg.tdf Line: 29
 Info (12021): Found 1 design units, including 1 entities, in source file db/alt_u_div_s6f.tdf
     Info (12023): Found entity 1: alt_u_div_s6f File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/db/alt_u_div_s6f.tdf Line: 27
-Info (12130): Elaborated megafunction instantiation "screen_overlay:u_overlay|lpm_divide:Mod1" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/screen_overlay.vhd Line: 399
-Info (12133): Instantiated megafunction "screen_overlay:u_overlay|lpm_divide:Mod1" with the following parameter: File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/screen_overlay.vhd Line: 399
+Info (12130): Elaborated megafunction instantiation "screen_overlay:u_overlay|lpm_divide:Mod1" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/screen_overlay.vhd Line: 390
+Info (12133): Instantiated megafunction "screen_overlay:u_overlay|lpm_divide:Mod1" with the following parameter: File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/screen_overlay.vhd Line: 390
     Info (12134): Parameter "LPM_WIDTHN" = "11"
     Info (12134): Parameter "LPM_WIDTHD" = "11"
     Info (12134): Parameter "LPM_NREPRESENTATION" = "SIGNED"
@@ -2626,8 +2624,8 @@ Info (12021): Found 1 design units, including 1 entities, in source file db/alt_
     Info (12023): Found entity 1: alt_u_div_q9f File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/db/alt_u_div_q9f.tdf Line: 27
 Info (12021): Found 1 design units, including 1 entities, in source file db/lpm_abs_f0a.tdf
     Info (12023): Found entity 1: lpm_abs_f0a File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/db/lpm_abs_f0a.tdf Line: 25
-Info (12130): Elaborated megafunction instantiation "screen_overlay:u_overlay|lpm_divide:Div1" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/screen_overlay.vhd Line: 398
-Info (12133): Instantiated megafunction "screen_overlay:u_overlay|lpm_divide:Div1" with the following parameter: File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/screen_overlay.vhd Line: 398
+Info (12130): Elaborated megafunction instantiation "screen_overlay:u_overlay|lpm_divide:Div1" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/screen_overlay.vhd Line: 389
+Info (12133): Instantiated megafunction "screen_overlay:u_overlay|lpm_divide:Div1" with the following parameter: File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/screen_overlay.vhd Line: 389
     Info (12134): Parameter "LPM_WIDTHN" = "11"
     Info (12134): Parameter "LPM_WIDTHD" = "4"
     Info (12134): Parameter "LPM_NREPRESENTATION" = "SIGNED"
@@ -2639,8 +2637,8 @@ Info (12021): Found 1 design units, including 1 entities, in source file db/abs_
     Info (12023): Found entity 1: abs_divider_gbg File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/db/abs_divider_gbg.tdf Line: 29
 Info (12021): Found 1 design units, including 1 entities, in source file db/alt_u_div_u6f.tdf
     Info (12023): Found entity 1: alt_u_div_u6f File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/db/alt_u_div_u6f.tdf Line: 27
-Info (12130): Elaborated megafunction instantiation "tunnel:u_tunnel|lpm_mult:Mult10" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/tunnel.vhd Line: 854
-Info (12133): Instantiated megafunction "tunnel:u_tunnel|lpm_mult:Mult10" with the following parameter: File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/tunnel.vhd Line: 854
+Info (12130): Elaborated megafunction instantiation "tunnel:u_tunnel|lpm_mult:Mult10" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/tunnel.vhd Line: 596
+Info (12133): Instantiated megafunction "tunnel:u_tunnel|lpm_mult:Mult10" with the following parameter: File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/tunnel.vhd Line: 596
     Info (12134): Parameter "LPM_WIDTHA" = "4"
     Info (12134): Parameter "LPM_WIDTHB" = "4"
     Info (12134): Parameter "LPM_WIDTHP" = "8"
@@ -2652,8 +2650,8 @@ Info (12133): Instantiated megafunction "tunnel:u_tunnel|lpm_mult:Mult10" with t
     Info (12134): Parameter "MAXIMIZE_SPEED" = "5"
 Info (12021): Found 1 design units, including 1 entities, in source file db/mult_j8t.tdf
     Info (12023): Found entity 1: mult_j8t File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/db/mult_j8t.tdf Line: 29
-Info (12130): Elaborated megafunction instantiation "tunnel:u_tunnel|lpm_mult:Mult13" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/tunnel.vhd Line: 981
-Info (12133): Instantiated megafunction "tunnel:u_tunnel|lpm_mult:Mult13" with the following parameter: File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/tunnel.vhd Line: 981
+Info (12130): Elaborated megafunction instantiation "tunnel:u_tunnel|lpm_mult:Mult13" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/tunnel.vhd Line: 700
+Info (12133): Instantiated megafunction "tunnel:u_tunnel|lpm_mult:Mult13" with the following parameter: File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/tunnel.vhd Line: 700
     Info (12134): Parameter "LPM_WIDTHA" = "11"
     Info (12134): Parameter "LPM_WIDTHB" = "9"
     Info (12134): Parameter "LPM_WIDTHP" = "20"
@@ -2665,8 +2663,8 @@ Info (12133): Instantiated megafunction "tunnel:u_tunnel|lpm_mult:Mult13" with t
     Info (12134): Parameter "MAXIMIZE_SPEED" = "6"
 Info (12021): Found 1 design units, including 1 entities, in source file db/mult_e4t.tdf
     Info (12023): Found entity 1: mult_e4t File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/db/mult_e4t.tdf Line: 29
-Info (12130): Elaborated megafunction instantiation "tunnel:u_tunnel|lpm_mult:Mult1" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/tunnel.vhd Line: 322
-Info (12133): Instantiated megafunction "tunnel:u_tunnel|lpm_mult:Mult1" with the following parameter: File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/tunnel.vhd Line: 322
+Info (12130): Elaborated megafunction instantiation "tunnel:u_tunnel|lpm_mult:Mult1" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/tunnel.vhd Line: 203
+Info (12133): Instantiated megafunction "tunnel:u_tunnel|lpm_mult:Mult1" with the following parameter: File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/tunnel.vhd Line: 203
     Info (12134): Parameter "LPM_WIDTHA" = "10"
     Info (12134): Parameter "LPM_WIDTHB" = "10"
     Info (12134): Parameter "LPM_WIDTHP" = "20"
@@ -2678,8 +2676,8 @@ Info (12133): Instantiated megafunction "tunnel:u_tunnel|lpm_mult:Mult1" with th
     Info (12134): Parameter "MAXIMIZE_SPEED" = "6"
 Info (12021): Found 1 design units, including 1 entities, in source file db/mult_oct.tdf
     Info (12023): Found entity 1: mult_oct File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/db/mult_oct.tdf Line: 29
-Info (12130): Elaborated megafunction instantiation "tunnel:u_tunnel|lpm_mult:Mult8" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/tunnel.vhd Line: 850
-Info (12133): Instantiated megafunction "tunnel:u_tunnel|lpm_mult:Mult8" with the following parameter: File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/tunnel.vhd Line: 850
+Info (12130): Elaborated megafunction instantiation "tunnel:u_tunnel|lpm_mult:Mult8" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/tunnel.vhd Line: 592
+Info (12133): Instantiated megafunction "tunnel:u_tunnel|lpm_mult:Mult8" with the following parameter: File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/tunnel.vhd Line: 592
     Info (12134): Parameter "LPM_WIDTHA" = "5"
     Info (12134): Parameter "LPM_WIDTHB" = "5"
     Info (12134): Parameter "LPM_WIDTHP" = "10"
@@ -2691,8 +2689,8 @@ Info (12133): Instantiated megafunction "tunnel:u_tunnel|lpm_mult:Mult8" with th
     Info (12134): Parameter "MAXIMIZE_SPEED" = "5"
 Info (12021): Found 1 design units, including 1 entities, in source file db/mult_r2t.tdf
     Info (12023): Found entity 1: mult_r2t File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/db/mult_r2t.tdf Line: 29
-Info (12130): Elaborated megafunction instantiation "lpm_mult:Mult0" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/RushTunnelFPGA.vhd Line: 174
-Info (12133): Instantiated megafunction "lpm_mult:Mult0" with the following parameter: File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/RushTunnelFPGA.vhd Line: 174
+Info (12130): Elaborated megafunction instantiation "lpm_mult:Mult0" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/RushTunnelFPGA.vhd Line: 165
+Info (12133): Instantiated megafunction "lpm_mult:Mult0" with the following parameter: File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/RushTunnelFPGA.vhd Line: 165
     Info (12134): Parameter "LPM_WIDTHA" = "9"
     Info (12134): Parameter "LPM_WIDTHB" = "10"
     Info (12134): Parameter "LPM_WIDTHP" = "19"
@@ -2712,8 +2710,8 @@ Info (12131): Elaborated megafunction instantiation "lpm_mult:Mult0|multcore:mul
 Info (12021): Found 1 design units, including 1 entities, in source file db/add_sub_ikh.tdf
     Info (12023): Found entity 1: add_sub_ikh File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/db/add_sub_ikh.tdf Line: 23
 Info (12131): Elaborated megafunction instantiation "lpm_mult:Mult0|altshift:external_latency_ffs", which is child of megafunction instantiation "lpm_mult:Mult0" File: c:/intelfpga_lite/23.1std/quartus/libraries/megafunctions/lpm_mult.tdf Line: 352
-Info (12130): Elaborated megafunction instantiation "tunnel:u_tunnel|lpm_mult:Mult7" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/tunnel.vhd Line: 849
-Info (12133): Instantiated megafunction "tunnel:u_tunnel|lpm_mult:Mult7" with the following parameter: File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/tunnel.vhd Line: 849
+Info (12130): Elaborated megafunction instantiation "tunnel:u_tunnel|lpm_mult:Mult7" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/tunnel.vhd Line: 591
+Info (12133): Instantiated megafunction "tunnel:u_tunnel|lpm_mult:Mult7" with the following parameter: File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/tunnel.vhd Line: 591
     Info (12134): Parameter "LPM_WIDTHA" = "5"
     Info (12134): Parameter "LPM_WIDTHB" = "5"
     Info (12134): Parameter "LPM_WIDTHP" = "10"
@@ -2723,8 +2721,8 @@ Info (12133): Instantiated megafunction "tunnel:u_tunnel|lpm_mult:Mult7" with th
     Info (12134): Parameter "INPUT_A_IS_CONSTANT" = "NO"
     Info (12134): Parameter "INPUT_B_IS_CONSTANT" = "NO"
     Info (12134): Parameter "MAXIMIZE_SPEED" = "5"
-Info (12130): Elaborated megafunction instantiation "tunnel:u_tunnel|lpm_mult:Mult6" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/tunnel.vhd Line: 766
-Info (12133): Instantiated megafunction "tunnel:u_tunnel|lpm_mult:Mult6" with the following parameter: File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/tunnel.vhd Line: 766
+Info (12130): Elaborated megafunction instantiation "tunnel:u_tunnel|lpm_mult:Mult6" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/tunnel.vhd Line: 543
+Info (12133): Instantiated megafunction "tunnel:u_tunnel|lpm_mult:Mult6" with the following parameter: File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/tunnel.vhd Line: 543
     Info (12134): Parameter "LPM_WIDTHA" = "10"
     Info (12134): Parameter "LPM_WIDTHB" = "6"
     Info (12134): Parameter "LPM_WIDTHP" = "16"
@@ -2744,8 +2742,8 @@ Info (12131): Elaborated megafunction instantiation "tunnel:u_tunnel|lpm_mult:Mu
 Info (12021): Found 1 design units, including 1 entities, in source file db/add_sub_ngh.tdf
     Info (12023): Found entity 1: add_sub_ngh File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/db/add_sub_ngh.tdf Line: 23
 Info (12131): Elaborated megafunction instantiation "tunnel:u_tunnel|lpm_mult:Mult6|altshift:external_latency_ffs", which is child of megafunction instantiation "tunnel:u_tunnel|lpm_mult:Mult6" File: c:/intelfpga_lite/23.1std/quartus/libraries/megafunctions/lpm_mult.tdf Line: 352
-Info (12130): Elaborated megafunction instantiation "tunnel:u_tunnel|lpm_mult:Mult9" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/tunnel.vhd Line: 851
-Info (12133): Instantiated megafunction "tunnel:u_tunnel|lpm_mult:Mult9" with the following parameter: File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/tunnel.vhd Line: 851
+Info (12130): Elaborated megafunction instantiation "tunnel:u_tunnel|lpm_mult:Mult9" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/tunnel.vhd Line: 593
+Info (12133): Instantiated megafunction "tunnel:u_tunnel|lpm_mult:Mult9" with the following parameter: File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/tunnel.vhd Line: 593
     Info (12134): Parameter "LPM_WIDTHA" = "3"
     Info (12134): Parameter "LPM_WIDTHB" = "5"
     Info (12134): Parameter "LPM_WIDTHP" = "8"
@@ -2770,8 +2768,8 @@ Info (12131): Elaborated megafunction instantiation "tunnel:u_tunnel|lpm_mult:Mu
 Info (12131): Elaborated megafunction instantiation "tunnel:u_tunnel|lpm_mult:Mult9|multcore:mult_core|mul_lfrg:$00035", which is child of megafunction instantiation "tunnel:u_tunnel|lpm_mult:Mult9" File: c:/intelfpga_lite/23.1std/quartus/libraries/megafunctions/multcore.tdf Line: 1015
 Info (12131): Elaborated megafunction instantiation "tunnel:u_tunnel|lpm_mult:Mult9|multcore:mult_core|mul_lfrg:$00037", which is child of megafunction instantiation "tunnel:u_tunnel|lpm_mult:Mult9" File: c:/intelfpga_lite/23.1std/quartus/libraries/megafunctions/multcore.tdf Line: 1026
 Info (12131): Elaborated megafunction instantiation "tunnel:u_tunnel|lpm_mult:Mult9|altshift:external_latency_ffs", which is child of megafunction instantiation "tunnel:u_tunnel|lpm_mult:Mult9" File: c:/intelfpga_lite/23.1std/quartus/libraries/megafunctions/lpm_mult.tdf Line: 352
-Info (12130): Elaborated megafunction instantiation "screen_overlay:u_overlay|lpm_mult:Mult1" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/screen_overlay.vhd Line: 323
-Info (12133): Instantiated megafunction "screen_overlay:u_overlay|lpm_mult:Mult1" with the following parameter: File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/screen_overlay.vhd Line: 323
+Info (12130): Elaborated megafunction instantiation "screen_overlay:u_overlay|lpm_mult:Mult1" File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/screen_overlay.vhd Line: 314
+Info (12133): Instantiated megafunction "screen_overlay:u_overlay|lpm_mult:Mult1" with the following parameter: File: C:/Users/Thomas/Documents/Uliege/ICDesign/Local_TunnelRush/Project/screen_overlay.vhd Line: 314
     Info (12134): Parameter "LPM_WIDTHA" = "4"
     Info (12134): Parameter "LPM_WIDTHB" = "7"
     Info (12134): Parameter "LPM_WIDTHP" = "11"
@@ -2796,16 +2794,16 @@ Info (286030): Timing-Driven Synthesis is running
 Info (17049): 12 registers lost all their fanouts during netlist optimizations.
 Info (16010): Generating hard_block partition "hard_block:auto_generated_inst"
     Info (16011): Adding 0 node(s), including 0 DDIO, 0 PLL, 0 transceiver and 0 LCELL
-Info (21057): Implemented 7648 device resources after synthesis - the final resource count might be different
+Info (21057): Implemented 7634 device resources after synthesis - the final resource count might be different
     Info (21058): Implemented 2 input pins
     Info (21059): Implemented 16 output pins
-    Info (21061): Implemented 7596 logic cells
+    Info (21061): Implemented 7582 logic cells
     Info (21064): Implemented 12 RAM segments
     Info (21062): Implemented 22 DSP elements
-Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 15 warnings
+Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 10 warnings
     Info: Peak virtual memory: 4964 megabytes
-    Info: Processing ended: Fri May  8 15:33:20 2026
-    Info: Elapsed time: 00:00:33
-    Info: Total CPU time (on all processors): 00:00:43
+    Info: Processing ended: Sun May 10 14:20:07 2026
+    Info: Elapsed time: 00:00:31
+    Info: Total CPU time (on all processors): 00:00:42
 
 

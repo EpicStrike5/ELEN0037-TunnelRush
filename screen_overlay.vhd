@@ -5,33 +5,24 @@ use work.game_over_font.all;    -- GAME_OVER constant array
 use work.press_start_font.all;  -- FONT constant array
 use work.title_font.all;        -- TITLE_FONT constant array ("TUNNEL RUSH")
 
--- ================================================================
+--
 -- screen_overlay.vhd
--- ================================================================
--- Last stage in the rendering pipeline.  Placed AFTER crt_effects
--- so the tunnel image (already CRT-processed) can be passed through
--- or replaced by the UI screens.
 --
--- PIPELINE ALIGNMENT
---   tunnel.vhd   : 2-clock pipeline (stage 0 + stage 1)
---   crt_effects  : 1-clock pipeline (delays hpos/vpos internally)
---   screen_overlay: 1-clock pipeline (delays hpos/vpos 3 stages here)
---   Total        : 4-clock delay from hpos/vpos input to VGA pins
+-- Input   : Clock, frame tick and VGA scan position
+--           Game state from spaceship.vhd
+--           Processed tunnel image from crt_effects.vhd
+--           Start-screen particle data from start_screen.vhd
+--           BCD score from RushTunnelFPGA.vhd
+-- Output  : Final VGA RGB pixel (4-clock total pipeline)
+-- Utility : Last rendering stage.  Composites by game state :
 --
---   At rising edge T this module receives crt_r/g/b which correspond
---   to the pixel that was at hpos[T-3]/vpos[T-3].
---   hpos_d3 (the OLD value read inside the process) = hpos[T-3]. ✓
+--					IDLE      — particle squares + title + press-start text
+--					PLAYING   — tunnel pass-through + score HUD
+--					GAME OVER — bouncing "GAME OVER" banner + high score
 --
--- RENDERING MODES (selected by game_state)
---   "00" IDLE      : black background + coloured particle squares
---                    + neon-cyan "TUNNEL RUSH" title
---                    + white "PRESS START" text at bottom.
---   "01" PLAYING   : tunnel + CRT effects pass straight through
---                    + gold score (top-left).
---   "10" GAME OVER : black background + red "GAME OVER" text that
---                    bounces around the screen like a DVD logo
---                    + amber "BEST XXX" high score below it.
--- ================================================================
+--           Tracks all-time high score in a local register.
+--           Bounce motion driven by frame_tick
+--
 
 entity screen_overlay is
     port (

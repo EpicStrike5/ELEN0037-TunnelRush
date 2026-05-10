@@ -1,23 +1,23 @@
 library ieee;
 use ieee.std_logic_1164.all;
 
--- ================================================================
+--
 -- title_font.vhd
--- ================================================================
--- Bitmap definitions for the "TUNNEL RUSH" title string.
--- Format: 7 rows × 5 columns per character.
--- '1' = pixel on,  '0' = pixel off (transparent).
--- Access pattern: TITLE_FONT(char_index)(row)(col)
--- "TUNNEL RUSH" = 11 characters (indices 0-10).
--- ================================================================
+--
+-- Type    : VHDL package (no ports, no hardware)
+-- Exports : 5×7 pixel bitmap data for each letter in "TUNNEL RUSH"
+-- Utility : Font constant array consumed by screen_overlay.vhd
+--           to render the game title on the start screen
+--
 
 package title_font is
 
+    -- Type names prefixed tf_ to avoid conflicts with other font packages
     type tf_row_t  is array (0 to 4) of std_logic;
     type tf_char_t is array (0 to 6) of tf_row_t;
     type tf_font_t is array (0 to 10) of tf_char_t;
 
-    -- ── T ─────────────────────────────────────────────────────────
+    -- T
     constant TF_T : tf_char_t := (
         ('1','1','1','1','1'),
         ('0','0','1','0','0'),
@@ -28,7 +28,7 @@ package title_font is
         ('0','0','1','0','0')
     );
 
-    -- ── U ─────────────────────────────────────────────────────────
+    -- U
     constant TF_U : tf_char_t := (
         ('1','0','0','0','1'),
         ('1','0','0','0','1'),
@@ -39,7 +39,7 @@ package title_font is
         ('0','1','1','1','0')
     );
 
-    -- ── N ─────────────────────────────────────────────────────────
+    -- N
     constant TF_N : tf_char_t := (
         ('1','0','0','0','1'),
         ('1','1','0','0','1'),
@@ -50,7 +50,7 @@ package title_font is
         ('1','0','0','0','1')
     );
 
-    -- ── E ─────────────────────────────────────────────────────────
+    -- E
     constant TF_E : tf_char_t := (
         ('1','1','1','1','1'),
         ('1','0','0','0','0'),
@@ -61,7 +61,7 @@ package title_font is
         ('1','1','1','1','1')
     );
 
-    -- ── L ─────────────────────────────────────────────────────────
+    -- L
     constant TF_L : tf_char_t := (
         ('1','0','0','0','0'),
         ('1','0','0','0','0'),
@@ -72,7 +72,7 @@ package title_font is
         ('1','1','1','1','1')
     );
 
-    -- ── Space ─────────────────────────────────────────────────────
+    -- Space
     constant TF_SP : tf_char_t := (
         ('0','0','0','0','0'),
         ('0','0','0','0','0'),
@@ -83,7 +83,7 @@ package title_font is
         ('0','0','0','0','0')
     );
 
-    -- ── R ─────────────────────────────────────────────────────────
+    -- R
     constant TF_R : tf_char_t := (
         ('1','1','1','1','0'),
         ('1','0','0','0','1'),
@@ -94,7 +94,7 @@ package title_font is
         ('1','0','0','1','0')
     );
 
-    -- ── S ─────────────────────────────────────────────────────────
+    -- S
     constant TF_S : tf_char_t := (
         ('0','1','1','1','1'),
         ('1','0','0','0','0'),
@@ -105,7 +105,7 @@ package title_font is
         ('1','1','1','1','0')
     );
 
-    -- ── H ─────────────────────────────────────────────────────────
+    -- H
     constant TF_H : tf_char_t := (
         ('1','0','0','0','1'),
         ('1','0','0','0','1'),
@@ -116,8 +116,7 @@ package title_font is
         ('1','0','0','0','1')
     );
 
-    -- ── "TUNNEL RUSH" array ────────────────────────────────────────
-    -- Index:  0=T  1=U  2=N  3=N  4=E  5=L  6=[space]  7=R  8=U  9=S  10=H
+    -- "TUNNEL RUSH": 0=T 1=U 2=N 3=N 4=E 5=L 6=space 7=R 8=U 9=S 10=H
     constant TITLE_FONT : tf_font_t := (
         0  => TF_T,
         1  => TF_U,

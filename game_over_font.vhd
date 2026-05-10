@@ -1,20 +1,21 @@
 library ieee;
 use ieee.std_logic_1164.all;
-use ieee.numeric_std.all;
 
--- ================================================================
+--
 -- game_over_font.vhd
--- ================================================================
--- Bitmap definitions for the "GAME OVER" string.
--- Format: 7 rows × 5 columns per character.
--- '1' = pixel on (white/red),  '0' = pixel off (transparent/black).
--- ================================================================
+--
+-- Type    : VHDL package
+-- Exports : 5×7 pixel bitmap data for each letter in "GAME OVER"
+-- Utility : Font constant array consumed by screen_overlay.vhd
+--           to render the game-over banner
+--
 
 package game_over_font is
 
-    -- Type definitions for one character (7 rows × 5 columns)
-    type bitmap_row is array (0 to 4) of std_logic;
-    type bitmap_t   is array (0 to 6) of bitmap_row;
+    -- 5-column row and 7-row character types
+    type bitmap_row        is array (0 to 4) of std_logic;
+    type bitmap_t          is array (0 to 6) of bitmap_row;
+    type game_over_array_t is array (0 to 8) of bitmap_t;
 
     -- G
     constant CH_G : bitmap_t := (
@@ -104,9 +105,7 @@ package game_over_font is
         ('0','0','0','0','0')
     );
 
-    -- Full "GAME OVER" string: indices 0=G 1=A 2=M 3=E 4=Space 5=O 6=V 7=E 8=R
-    type game_over_array_t is array (0 to 8) of bitmap_t;
-
+    -- "GAME OVER": indices 0=G 1=A 2=M 3=E 4=space 5=O 6=V 7=E 8=R
     constant GAME_OVER : game_over_array_t := (
         0 => CH_G,
         1 => CH_A,

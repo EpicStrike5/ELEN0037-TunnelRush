@@ -2,29 +2,20 @@ library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
--- ================================================================
+--
 -- snes_controller.vhd
--- ================================================================
--- Reads a Super Nintendo (SNES) controller via its serial protocol.
--- Outputs a 16-bit button register, active high (pressed = '1').
 --
--- Protocol (active low on DATA, active high for LATCH/CLK):
---   1. Assert LATCH high for 12 us  → controller latches all buttons
---   2. De-assert LATCH
---   3. Bit 0 (B) is immediately available on DATA (active low)
---   4. 15 more CLK pulses shift out bits 1..15
---      Data is stable during CLK high; changes on CLK falling edge
--- Repeat at ~60 Hz (every 833 333 clk_50 cycles).
+-- Input   : 50 MHz clock and serial data line from the SNES pad
+-- Output  : Latch and clock lines to the SNES pad
+--           16-bit parallel button register (active high) :
 --
--- Button index (bit 0 = first bit):
---   0:B  1:Y  2:Sel  3:Start  4:Up  5:Down  6:Left  7:Right
---   8:A  9:X  10:L   11:R     12-15: always '1' (inactive)
+--					bit 3 — Start
+--					bit 6 — Right
+--					bit 7 — Left
 --
--- Pin mapping (from QSF):
---   gp_latch → GP_L_1  (PIN_L14)
---   gp_clk   → GP_C_1  (PIN_K15)
---   gp_data  ← GP_D_1  (PIN_J16)
--- ================================================================
+-- Utility : Reads a Super Nintendo controller via its 16-bit serial protocol
+--           at ~60 Hz.  Button state forwarded to spaceship.vhd and start_screen.vhd
+--
 
 entity snes_controller is
     port (
@@ -38,21 +29,18 @@ end snes_controller;
 
 architecture rtl of snes_controller is
 
-    -- Timing at 50 MHz
-    constant HALF_US      : integer := 50;          -- 1 us = 50 cycles
-    constant LATCH_CYCLES : integer := 600;         -- 12 us latch pulse
-    constant BIT_CYCLES   : integer := 600;         -- 12 us per bit period
-    constant FRAME_CYCLES : integer := 833333;      -- ~60 Hz frame
+    -- Timing constants at 50 MHz
+    constant LATCH_CYCLES : integer := 600;    -- 12 µs latch pulse
+    constant BIT_CYCLES   : integer := 600;    -- 12 µs per bit period
+    constant FRAME_CYCLES : integer := 833333; -- ~60 Hz poll rate
 
     type state_t is (S_WAIT, S_LATCH, S_BIT_LOW, S_BIT_HIGH, S_DONE);
     signal state : state_t := S_WAIT;
 
-    signal timer   : integer range 0 to FRAME_CYCLES - 1 := 0;
-    signal bit_cnt : integer range 0 to 15 := 0;
-
-    signal shift_reg  : std_logic_vector(15 downto 0) := (others => '0');
-    signal buttons_r  : std_logic_vector(15 downto 0) := (others => '0');
-
+    signal timer      : integer range 0 to FRAME_CYCLES - 1 := 0;
+    signal bit_cnt    : integer range 0 to 15               := 0;
+    signal shift_reg  : std_logic_vector(15 downto 0)       := (others => '0');
+    signal buttons_r  : std_logic_vector(15 downto 0)       := (others => '0');
     signal gp_clk_r   : std_logic := '1';
     signal gp_latch_r : std_logic := '0';
 
@@ -67,7 +55,7 @@ begin
         if rising_edge(clk_50) then
             case state is
 
-                -- ---- Wait for next frame ----
+                -- Wait for next 60 Hz poll cycle
                 when S_WAIT =>
                     gp_latch_r <= '0';
                     gp_clk_r   <= '1';
@@ -79,22 +67,21 @@ begin
                         timer <= timer + 1;
                     end if;
 
-                -- ---- Pulse LATCH high for 12 us ----
+                -- Assert LATCH high for 12 µs to latch all buttons
                 when S_LATCH =>
                     gp_latch_r <= '1';
                     gp_clk_r   <= '1';
                     if timer = LATCH_CYCLES - 1 then
-                        timer      <= 0;
-                        gp_latch_r <= '0';
-                        -- Bit 0 (B) is now on DATA; CLK stays high, sample it
-                        shift_reg(0) <= not gp_data;  -- active low → invert
+                        timer        <= 0;
+                        gp_latch_r   <= '0';
+                        shift_reg(0) <= not gp_data; -- bit 0 (B) immediately on DATA
                         bit_cnt      <= 1;
-                        state        <= S_BIT_LOW;    -- next: clock low for bit 1
+                        state        <= S_BIT_LOW;
                     else
                         timer <= timer + 1;
                     end if;
 
-                -- ---- CLK low phase (controller shifts to next bit) ----
+                -- CLK low phase — controller shifts to next bit
                 when S_BIT_LOW =>
                     gp_clk_r <= '0';
                     if timer = BIT_CYCLES/2 - 1 then
@@ -104,12 +91,12 @@ begin
                         timer <= timer + 1;
                     end if;
 
-                -- ---- CLK high phase (sample DATA) ----
+                -- CLK high phase — sample DATA (active low → invert)
                 when S_BIT_HIGH =>
                     gp_clk_r <= '1';
                     if timer = BIT_CYCLES/2 - 1 then
-                        timer <= 0;
-                        shift_reg(bit_cnt) <= not gp_data;   -- active low → invert
+                        timer                  <= 0;
+                        shift_reg(bit_cnt) <= not gp_data;
                         if bit_cnt = 15 then
                             state <= S_DONE;
                         else
@@ -120,7 +107,7 @@ begin
                         timer <= timer + 1;
                     end if;
 
-                -- ---- Latch output register, return to wait ----
+                -- Latch completed shift register to output, return to idle
                 when S_DONE =>
                     buttons_r <= shift_reg;
                     timer     <= 0;

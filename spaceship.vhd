@@ -2,48 +2,25 @@ library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
--- ================================================================
--- spaceship.vhd  —  Operius physics FSM  (with tunnel-lag inertia)
--- ================================================================
--- Motion model
--- ─────────────
---   ship_rel_ang_r  — true fast position (used only internally as the
---                     lag source; never exported directly).
 --
---   tunnel_disp_r   — lagged displayed position.  Recovers toward
---                     ship_rel_ang_r at 1/2^LAG_SHIFT per frame.
---                     This IS what is exported as ship_rel_angle.
+-- spaceship.vhd
 --
---   ship_scr_angle  = BOTTOM_ANGLE + (ship_rel_ang_r − tunnel_disp_r)
---                     Ship sprite appears offset from the bottom spoke
---                     by the current lag amount.
+-- Input   : Clock and frame tick
+--           SNES directional and start button state
+--           Pixel collision flag from tunnel.vhd
+--           Wave spawn tick from obstacle_manager.vhd
+-- Output  : Game state (IDLE / PLAYING / GAME OVER)
+--           Rotation angles for trig_rom.vhd :
 --
---   tunnel_angle    = BOTTOM_ANGLE − tunnel_disp_r
---                     Tunnel counter-rotates using the lagged position.
+--					tunnel_angle   — tunnel counter-rotation (visual lag)
+--					ship_scr_angle — ship sprite screen position
+--					ship_rel_angle — true angular position (collision)
 --
---   ship_rel_angle  = tunnel_disp_r   ← KEY DESIGN CHOICE
---                     Collision detection and obstacle placement both
---                     use the VISUAL (lagged) position.  The player
---                     dies when their visual position is on a blocked
---                     face — never "for no reason".
+--           Difficulty level and new-game reset pulse
+-- Utility : Main game FSM.  Implements angular physics with inertia,
+--           tunnel visual lag, and wave-based difficulty ramp.
+--           Connects to trig_rom, obstacle_manager, tunnel, screen_overlay
 --
--- Visual inertia effect
--- ─────────────────────
---   Hold button → ship_rel_ang_r races ahead, tunnel lags →
---   sprite swings off the bottom spoke (≤ ~17° / ~86 px at MAX_VEL).
---   Release → drag kills velocity in ~3 frames, tunnel catches up
---   over ~8 frames → sprite drifts back to bottom.
---
--- Speed tuning (change these constants)
--- ────────────────────────────────────────
---   INIT_DIFF    4   starting difficulty (0 = slowest, 15 = fastest)
---                    ↑ crank this up to test higher starting speeds
---   MAX_VEL    400   max angular speed per frame  (was 256)
---   ACCEL       32   velocity increment per frame held  (was 24)
---   DRAG_SHIFT   2   drag = vel >> 2  (~3-frame half-life)
---   LAG_SHIFT    3   tunnel recovery = diff >> 3 per frame (~8-frame τ)
---   DIFF_FRAMES 300  frames between automatic difficulty increments
--- ================================================================
 
 entity spaceship is
     port (
@@ -51,13 +28,11 @@ entity spaceship is
         frame_tick     : in  std_logic;
         buttons        : in  std_logic_vector(15 downto 0);
         collision      : in  std_logic;
-        -- State
+        wave_tick      : in  std_logic;
         game_state     : out std_logic_vector(1 downto 0);
-        -- Angles (16-bit unsigned, 0-65535 = 0°-360°)
         tunnel_angle   : out std_logic_vector(15 downto 0);
         ship_scr_angle : out std_logic_vector(15 downto 0);
-        ship_rel_angle : out std_logic_vector(15 downto 0);  -- = tunnel_disp_r
-        -- Control
+        ship_rel_angle : out std_logic_vector(15 downto 0);
         reset_game     : out std_logic;
         difficulty     : out std_logic_vector(4 downto 0)
     );
@@ -65,54 +40,51 @@ end spaceship;
 
 architecture rtl of spaceship is
 
-    constant BTN_START    : integer := 3;
-    constant BTN_LEFT     : integer := 7;
-    constant BTN_RIGHT    : integer := 6;
+    -- Button indices
+    constant BTN_START : integer := 3;
+    constant BTN_LEFT  : integer := 7;
+    constant BTN_RIGHT : integer := 6;
 
-    -- ── Speed / feel ─────────────────────────────────────────────────
-    constant INIT_DIFF    : integer := 10;    -- starting difficulty (0-20)
-    constant MAX_DIFF     : integer := 20;    -- difficulty cap
-    -- MAX_VEL / ACCEL are per-difficulty variables (see lookup in S_PLAYING).
-    -- Rule: at every level, half-turn frames < obstacle travel frames.
-    constant DRAG_SHIFT   : integer := 2;     -- drag = vel >> 2  (~3-frame half-life)
-    constant LAG_SHIFT    : integer := 2;     -- tunnel recovery = diff >> 2  (lag_ss = 4×vel ≤ 19°)
-    -- ─────────────────────────────────────────────────────────────────
+    -- Difficulty ramp parameters
+    constant INIT_DIFF      : integer := 10;  -- starting difficulty (0..20)
+    constant MAX_DIFF       : integer := 20;
+    constant WAVES_PER_DIFF : integer := 5;   -- obstacle waves to survive per difficulty step
 
-    constant BOTTOM_ANGLE : integer := 16384;   -- 90° = ship at screen bottom
-    constant DIFF_FRAMES  : integer := 300;   -- frames between difficulty increments (~4 s)
+    -- Physics parameters
+    constant DRAG_SHIFT : integer := 2;  -- drag = vel >> 2  (~3-frame half-life)
+    constant LAG_SHIFT  : integer := 2;  -- tunnel lag recovery = diff >> 2 per frame
+
+    -- Angle encoding: 0–65535 = 0°–360°; ship rests at 90° (screen bottom)
+    constant BOTTOM_ANGLE : integer := 16384;
 
     type state_t is (S_IDLE, S_PLAYING, S_GAME_OVER);
     signal state : state_t := S_IDLE;
 
-    signal ship_rel_ang_r : unsigned(15 downto 0) := (others => '0'); -- fast/true
-    signal tunnel_disp_r  : unsigned(15 downto 0) := (others => '0'); -- lagged/visual
+    signal ship_rel_ang_r : unsigned(15 downto 0) := (others => '0'); -- true (fast) position
+    signal tunnel_disp_r  : unsigned(15 downto 0) := (others => '0'); -- lagged display position
     signal ship_rel_vel   : signed(15 downto 0)   := (others => '0');
     signal difficulty_r   : unsigned(4 downto 0)  := (others => '0');
-    signal diff_cnt       : integer range 0 to DIFF_FRAMES - 1 := 0;
+    signal wave_cnt       : integer range 0 to WAVES_PER_DIFF - 1 := 0;
     signal buttons_prev   : std_logic_vector(15 downto 0) := (others => '0');
     signal reset_r        : std_logic := '0';
 
 begin
 
+    -- FSM state encoding
     game_state <= "00" when state = S_IDLE    else
                   "01" when state = S_PLAYING  else
                   "10";
 
-    -- Ship sprite drifts away from bottom by exactly the lag offset.
+    -- Ship sprite drifts off bottom spoke by the current inertia lag amount
     ship_scr_angle <= std_logic_vector(
                           to_unsigned(BOTTOM_ANGLE, 16)
                         + (ship_rel_ang_r - tunnel_disp_r));
 
-    -- Tunnel counter-rotates using the lagged (visual) position.
+    -- Tunnel counter-rotates using the lagged (visual) position
     tunnel_angle   <= std_logic_vector(
                           to_unsigned(BOTTOM_ANGLE, 16) - tunnel_disp_r);
 
-    -- Export the TRUE (fast) position for collision and obstacle placement.
-    -- Proof: ship sprite tunnel-space position = ship_scr_angle − tunnel_angle
-    --   = (BOTTOM_ANGLE + lag) − (BOTTOM_ANGLE − tunnel_disp_r)
-    --   = lag + tunnel_disp_r = ship_rel_ang_r  ← matches collision exactly.
-    -- tunnel_disp_r is a rendering lag only; it does not change where the
-    -- sprite visually sits relative to the tunnel walls.
+    -- True position exported for collision detection
     ship_rel_angle <= std_logic_vector(ship_rel_ang_r);
 
     difficulty  <= std_logic_vector(difficulty_r);
@@ -126,15 +98,13 @@ begin
         variable drag       : signed(15 downto 0);
         variable lag_diff   : signed(15 downto 0);
         variable lag_step   : signed(15 downto 0);
-        variable max_vel_v  : integer range 200 to 700;
-        variable accel_v    : integer range 16 to 56;
+        variable max_vel_v  : integer range 200 to 850;
+        variable accel_v    : integer range 16 to 68;
     begin
         if rising_edge(clk_50) then
             reset_r <= '0';
 
-            -- ── Collision: polled every clock (not just frame_tick) ───────
-            -- obstacle_manager asserts collision one cycle after frame_tick;
-            -- checking here catches that single-cycle pulse.
+            -- Collision check: polled every clock to catch the single-cycle pulse
             if state = S_PLAYING and collision = '1' then
                 state        <= S_GAME_OVER;
                 ship_rel_vel <= (others => '0');
@@ -148,12 +118,11 @@ begin
 
                 case state is
 
-                    -- ── IDLE ──────────────────────────────────────────────
+                    -- IDLE: wait for Start button, keep tunnel in sync with ship
                     when S_IDLE =>
-                        ship_rel_vel <= (others => '0');
-                        difficulty_r <= (others => '0');
-                        diff_cnt     <= 0;
-                        -- No lag while idle — keep tunnel display in sync.
+                        ship_rel_vel  <= (others => '0');
+                        difficulty_r  <= (others => '0');
+                        wave_cnt      <= 0;
                         tunnel_disp_r <= ship_rel_ang_r;
 
                         if start_edge = '1' then
@@ -161,21 +130,15 @@ begin
                             reset_r        <= '1';
                             ship_rel_ang_r <= (others => '0');
                             tunnel_disp_r  <= (others => '0');
-                            -- Start at INIT_DIFF instead of 0 for faster pacing.
-                            -- Change the INIT_DIFF constant at the top of this file.
                             difficulty_r   <= to_unsigned(INIT_DIFF, 5);
-                            diff_cnt       <= 0;
+                            wave_cnt       <= 0;
                         end if;
 
-                    -- ── PLAYING ───────────────────────────────────────────
+                    -- PLAYING: angular physics + tunnel lag + difficulty ramp
                     when S_PLAYING =>
-                        -- Per-difficulty speed lookup (tied to adv_div thresholds).
-                        -- Starts at MAX_VEL=400 (d=9-11, INIT_DIFF=10), tops at 700.
-                        -- Steady-state visual lag = 4×MAX_VEL (LAG_SHIFT=2):
-                        --   d<3:  200→3200 units≈5°   d=3-5: 250→4°
-                        --   d=6-8:300→8°   d=9-11:400→11°
-                        --   d=12-14:550→15°  d≥15:700→19°
-                        if    to_integer(difficulty_r) >= 15 then max_vel_v := 700; accel_v := 56;
+                        -- Per-difficulty speed lookup (MAX_VEL and ACCEL scale with difficulty)
+                        if    to_integer(difficulty_r) >= 18 then max_vel_v := 850; accel_v := 68;
+                        elsif to_integer(difficulty_r) >= 15 then max_vel_v := 700; accel_v := 56;
                         elsif to_integer(difficulty_r) >= 12 then max_vel_v := 550; accel_v := 44;
                         elsif to_integer(difficulty_r) >= 9  then max_vel_v := 400; accel_v := 32;
                         elsif to_integer(difficulty_r) >= 6  then max_vel_v := 300; accel_v := 24;
@@ -183,7 +146,7 @@ begin
                         else                                        max_vel_v := 200; accel_v := 16;
                         end if;
 
-                        -- Ship physics
+                        -- Angular velocity: accelerate, decelerate, or apply drag
                         new_vel := ship_rel_vel;
                         if right_held = '1' then
                             new_vel := ship_rel_vel + accel_v;
@@ -208,9 +171,7 @@ begin
                         ship_rel_ang_r <= ship_rel_ang_r
                                         + unsigned(resize(new_vel, 16));
 
-                        -- Tunnel lag: move tunnel_disp_r 1/4 of the way
-                        -- toward ship_rel_ang_r each frame (LAG_SHIFT=2).
-                        -- Minimum ±1 guarantees convergence when diff < 4.
+                        -- Tunnel lag: tunnel_disp_r recovers 1/4 toward ship_rel_ang_r per frame
                         lag_diff := signed(ship_rel_ang_r - tunnel_disp_r);
                         lag_step := shift_right(lag_diff, LAG_SHIFT);
                         if lag_step = 0 and lag_diff /= 0 then
@@ -220,19 +181,19 @@ begin
                         end if;
                         tunnel_disp_r <= unsigned(signed(tunnel_disp_r) + lag_step);
 
-                        -- Difficulty ramp
-                        if diff_cnt = DIFF_FRAMES - 1 then
-                            diff_cnt <= 0;
-                            if difficulty_r < to_unsigned(MAX_DIFF, 5) then
-                                difficulty_r <= difficulty_r + 1;
+                        -- Difficulty ramp: increment every WAVES_PER_DIFF waves survived
+                        if wave_tick = '1' then
+                            if wave_cnt = WAVES_PER_DIFF - 1 then
+                                wave_cnt <= 0;
+                                if difficulty_r < to_unsigned(MAX_DIFF, 5) then
+                                    difficulty_r <= difficulty_r + 1;
+                                end if;
+                            else
+                                wave_cnt <= wave_cnt + 1;
                             end if;
-                        else
-                            diff_cnt <= diff_cnt + 1;
                         end if;
 
-                    -- ── GAME OVER ─────────────────────────────────────────
-                    -- Tunnel continues to catch up so the ship drifts smoothly
-                    -- back to the bottom spoke while the game-over screen shows.
+                    -- GAME OVER: tunnel continues to catch up; wait for Start to return to IDLE
                     when S_GAME_OVER =>
                         lag_diff := signed(ship_rel_ang_r - tunnel_disp_r);
                         lag_step := shift_right(lag_diff, LAG_SHIFT);
@@ -249,8 +210,8 @@ begin
                         end if;
 
                 end case;
-            end if;  -- frame_tick
-        end if;  -- rising_edge
+            end if;
+        end if;
     end process;
 
 end rtl;
