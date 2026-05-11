@@ -70,7 +70,7 @@ end obstacle_manager;
 
 architecture rtl of obstacle_manager is
 
-    constant OBS_SPAWN_DEPTH   : integer := 75;   -- log-depth at which new obstacles appear
+    constant OBS_SPAWN_DEPTH   : integer := 80;   -- log-depth at which new obstacles appear
     constant OBS_COLLIDE_DEPTH : integer := 140;  -- log-depth at which slots are retired
     constant BASE_SPAWN        : integer := 360;  -- spawn interval at difficulty 0 (frames)
     constant MIN_SPAWN         : integer := 36;   -- minimum spawn interval (0.5 s at 72 Hz)
@@ -141,19 +141,23 @@ begin
         end if;
     end process;
 
-    -- Obstacle advance divisor and step: frames per advance tick, units per tick
-    -- d>=18: adv_div=1 and adv_step=2 (advance 2 depth units every frame)
+    -- Obstacle advance divisor and step: frames per advance tick, units per tick.
+    -- Schedule is derived from the constraint: travel_time < spawn_interval.
+    -- With OBS_SPAWN_DEPTH=80 and ship depth=129, depth_to_travel=49 units.
+    --   adv_step=2, adv_div=1 : travel=25 fr  (needed for d>=15 where spawn<=60)
+    --   adv_step=1, adv_div=1 : travel=49 fr  (safe for d=9..14 where spawn=80..180)
+    --   adv_step=1, adv_div=2 : travel=98 fr  (safe for d=6..8  where spawn=200..240)
+    --   adv_step=1, adv_div=3 : travel=147 fr (safe for d=3..5  where spawn=260..300)
+    --   adv_step=1, adv_div=4 : travel=196 fr (safe for d=0..2  where spawn=320..360)
     process(difficulty)
         variable d : integer;
     begin
         d := to_integer(unsigned(difficulty));
-        if    d >= 18 then adv_div <= 1; adv_step <= to_unsigned(2, 8);
-        elsif d >= 15 then adv_div <= 1; adv_step <= to_unsigned(1, 8);
-        elsif d >= 12 then adv_div <= 2; adv_step <= to_unsigned(1, 8);
-        elsif d >= 9  then adv_div <= 3; adv_step <= to_unsigned(1, 8);
-        elsif d >= 6  then adv_div <= 4; adv_step <= to_unsigned(1, 8);
-        elsif d >= 3  then adv_div <= 5; adv_step <= to_unsigned(1, 8);
-        else               adv_div <= 6; adv_step <= to_unsigned(1, 8);
+        if    d >= 15 then adv_div <= 1; adv_step <= to_unsigned(2, 8);
+        elsif d >= 9  then adv_div <= 1; adv_step <= to_unsigned(1, 8);
+        elsif d >= 6  then adv_div <= 2; adv_step <= to_unsigned(1, 8);
+        elsif d >= 3  then adv_div <= 3; adv_step <= to_unsigned(1, 8);
+        else               adv_div <= 4; adv_step <= to_unsigned(1, 8);
         end if;
     end process;
 

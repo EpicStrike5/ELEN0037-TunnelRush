@@ -13,19 +13,30 @@ simulation/
 
 # ── Quartus generated files ───────────────────────────────────────────────────
 
-*.bak           # automatic source backups
-*.qws           # workspace window layout (personal)
-*.cdf           # chain/programmer setup (board-specific)
-*.rpt           # timing / fitter reports
+# Automatic source backups
+*.bak
+# Workspace window layout (personal)
+*.qws
+# Chain/programmer setup (board-specific)
+*.cdf
+# Timing / fitter reports
+*.rpt
 *.summary
-*.smsg          # suppressed messages
-*.pin           # pin report
+# Suppressed messages
+*.smsg
+# Pin report
+*.pin
 *.done
-*.jdi           # JTAG debug info
-*.stp           # SignalTap II capture setup
-*.sld           # SignalTap II debug file
-*.qdb           # Quartus database snapshot
-*.rcf           # resource constraint file
-*.xml           # generated XML reports
-*.csv           # generated CSV reports
-*.txt           # generated text logs (Quartus writes these, not our sources)
+# JTAG debug info
+*.jdi
+# SignalTap II
+*.stp
+*.sld
+# Quartus database snapshot
+*.qdb
+# Resource constraint file
+*.rcf
+# Generated XML / CSV / text reports
+*.xml
+*.csv
+*.txt

@@ -45,10 +45,8 @@ architecture rtl of spaceship is
     constant BTN_LEFT  : integer := 7;
     constant BTN_RIGHT : integer := 6;
 
-    -- Difficulty ramp parameters
-    constant INIT_DIFF      : integer := 10;  -- starting difficulty (0..20)
-    constant MAX_DIFF       : integer := 20;
-    constant WAVES_PER_DIFF : integer := 5;   -- obstacle waves to survive per difficulty step
+    -- Fixed difficulty (constant speed — no ramp)
+    constant INIT_DIFF      : integer := 12;  -- fixed difficulty level (0..20)
 
     -- Physics parameters
     constant DRAG_SHIFT : integer := 2;  -- drag = vel >> 2  (~3-frame half-life)
@@ -64,9 +62,10 @@ architecture rtl of spaceship is
     signal tunnel_disp_r  : unsigned(15 downto 0) := (others => '0'); -- lagged display position
     signal ship_rel_vel   : signed(15 downto 0)   := (others => '0');
     signal difficulty_r   : unsigned(4 downto 0)  := (others => '0');
-    signal wave_cnt       : integer range 0 to WAVES_PER_DIFF - 1 := 0;
     signal buttons_prev   : std_logic_vector(15 downto 0) := (others => '0');
-    signal reset_r        : std_logic := '0';
+    signal reset_r          : std_logic := '0';
+    signal collision_armed  : std_logic := '0';  -- gate: disarmed for first frame after game start
+    signal collision_prev   : std_logic := '0';  -- debounce: require 2 consecutive clocks of collision
 
 begin
 
@@ -104,8 +103,20 @@ begin
         if rising_edge(clk_50) then
             reset_r <= '0';
 
-            -- Collision check: polled every clock to catch the single-cycle pulse
-            if state = S_PLAYING and collision = '1' then
+            -- Collision check: polled every clock to catch the single-cycle pulse.
+            -- collision_armed is '0' for the first frame after game start so that
+            -- stale pipeline values from the previous game cannot trigger an
+            -- immediate game-over on the very first clock in S_PLAYING.
+            -- collision_prev debounces: cos_t/sin_t (combinational) update one clock
+            -- before ship_x_r/ship_y_r (registered) after each frame_tick, so the
+            -- tunnel collision process can produce a 1-clock false hit when the ship
+            -- is near a face boundary.  Requiring two consecutive high cycles
+            -- eliminates that glitch while being imperceptible for real collisions
+            -- (which last ~11 frames = ~7.6 million clocks).
+            collision_prev <= collision;
+            if state = S_PLAYING and collision = '1' and collision_prev = '1'
+               and collision_armed = '1'
+            then
                 state        <= S_GAME_OVER;
                 ship_rel_vel <= (others => '0');
             end if;
@@ -121,25 +132,26 @@ begin
                     -- IDLE: wait for Start button, keep tunnel in sync with ship
                     when S_IDLE =>
                         ship_rel_vel  <= (others => '0');
-                        difficulty_r  <= (others => '0');
-                        wave_cnt      <= 0;
+                        difficulty_r  <= to_unsigned(INIT_DIFF, 5);
                         tunnel_disp_r <= ship_rel_ang_r;
 
                         if start_edge = '1' then
-                            state          <= S_PLAYING;
-                            reset_r        <= '1';
-                            ship_rel_ang_r <= (others => '0');
-                            tunnel_disp_r  <= (others => '0');
-                            difficulty_r   <= to_unsigned(INIT_DIFF, 5);
-                            wave_cnt       <= 0;
+                            state           <= S_PLAYING;
+                            reset_r         <= '1';
+                            collision_armed <= '0';  -- disarm; re-armed on first frame in S_PLAYING
+                            collision_prev  <= '0';  -- clear debounce history
+                            ship_rel_ang_r  <= (others => '0');
+                            tunnel_disp_r   <= (others => '0');
                         end if;
 
                     -- PLAYING: angular physics + tunnel lag + difficulty ramp
                     when S_PLAYING =>
+                        collision_armed <= '1';  -- arm after first frame (pipeline has had time to flush)
+
                         -- Per-difficulty speed lookup (MAX_VEL and ACCEL scale with difficulty)
                         if    to_integer(difficulty_r) >= 18 then max_vel_v := 850; accel_v := 68;
-                        elsif to_integer(difficulty_r) >= 15 then max_vel_v := 700; accel_v := 56;
-                        elsif to_integer(difficulty_r) >= 12 then max_vel_v := 550; accel_v := 44;
+                        elsif to_integer(difficulty_r) >= 15 then max_vel_v := 750; accel_v := 56;
+                        elsif to_integer(difficulty_r) >= 12 then max_vel_v := 590; accel_v := 44;
                         elsif to_integer(difficulty_r) >= 9  then max_vel_v := 400; accel_v := 32;
                         elsif to_integer(difficulty_r) >= 6  then max_vel_v := 300; accel_v := 24;
                         elsif to_integer(difficulty_r) >= 3  then max_vel_v := 250; accel_v := 20;
@@ -181,18 +193,6 @@ begin
                         end if;
                         tunnel_disp_r <= unsigned(signed(tunnel_disp_r) + lag_step);
 
-                        -- Difficulty ramp: increment every WAVES_PER_DIFF waves survived
-                        if wave_tick = '1' then
-                            if wave_cnt = WAVES_PER_DIFF - 1 then
-                                wave_cnt <= 0;
-                                if difficulty_r < to_unsigned(MAX_DIFF, 5) then
-                                    difficulty_r <= difficulty_r + 1;
-                                end if;
-                            else
-                                wave_cnt <= wave_cnt + 1;
-                            end if;
-                        end if;
-
                     -- GAME OVER: tunnel continues to catch up; wait for Start to return to IDLE
                     when S_GAME_OVER =>
                         lag_diff := signed(ship_rel_ang_r - tunnel_disp_r);
@@ -205,8 +205,7 @@ begin
                         tunnel_disp_r <= unsigned(signed(tunnel_disp_r) + lag_step);
 
                         if start_edge = '1' then
-                            state        <= S_IDLE;
-                            difficulty_r <= (others => '0');
+                            state <= S_IDLE;
                         end if;
 
                 end case;
